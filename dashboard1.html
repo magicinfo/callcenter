@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="libs/bootstrap.css">
+    <script src="libs/jquery-2.1.4.min.js"></script>
+   <!-- <script src="libs/react.min.js"></script>
+    <script src="libs/react-dom.min.js"></script>-->
+
+    <style>
+        body{
+            background-image: url('css/bg.jpg');
+            background-size: cover;
+
+
+        }
+        .panel-gray{
+            background-color: #ECF0F1;
+            box-shadow: 3px 3px 5px #333333;
+        }
+
+        .panel-number{
+            text-align: center;
+            height: 12em;
+            position: relative;
+        }
+        .panel-number2{
+            text-align: center;
+            position: relative;
+        }
+        .panel-number>div{
+         /*   height: 85px;*/
+        }
+        .number{
+            white-space:nowrap ;
+            position: absolute;
+            margin: auto;
+            left: 0;
+            right: 0;
+            top: 12px;
+            background-color: white;
+            border-radius: 100%;
+            width: 1.6em;
+          /* height: 60px;*/
+            font-size: 5em;
+            text-align: center;
+
+
+        }
+        .panel-text{
+            position: absolute;
+            bottom: 12px;
+            margin: auto;
+            left: 0;
+            right: 0;
+            font-size: 24px;
+            text-align: center;
+        }
+        .number2{
+            background-color: white;
+            border-radius: 100%;
+            width: 1.6em;
+            font-size: 4em;
+            margin-right: 12px;
+        }
+
+        .panel-text2{
+            line-height: 0.9em;
+            margin-top: 20px;
+            font-size: 2em;
+        }
+        .one-line{
+            white-space: nowrap;
+        }
+        .panel-img{
+            height: 190px;
+            background-image: url('css/agent.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default panel-gray">
+                    <div class="panel-number">
+                        <style>
+                            .n-s{
+                                border-radius: 0;
+                                font-size: 4em;
+                                width: 80%;
+                                line-height: 1.7em;
+
+                            }
+                            .n-s .word{
+                                font-size: 0.5em;
+                            }
+                        </style>
+                        <div class="num_cont">
+                            <div class="number n-s">
+                                <div class="value"><span class="num">1</span><span class="word">m</span> <span  class="num">46</span><span class="word">s</span></div>
+                            </div>
+                        </div>
+
+                        <div class="panel-text">Avarage answer time</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default  panel-gray">
+                    <div class="panel-number">
+                        <div class="number">
+                            <div class="value">46</div>
+                        </div>
+                        <div class="panel-text">Calls in queue</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default panel-gray">
+                    <div class="number">
+                        <div class="value">46</div>
+                    </div>
+                    <div class="panel-number">
+                        <div class="panel-text">Agents available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--                                              //////////////////////////////////////////////////////////-->
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default  panel-gray">
+                    <div class="panel-body">
+                            <div class="panel-number2">
+                                <div class="row">
+                                            <div class="pull-right number2">
+                                                <div class="value">468</div>
+                                            </div>
+                                    <div class="panel-text2">Calls handled</div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="pull-right number2">
+                                        <div class="value">80</div>
+                                    </div>
+                                    <div class="panel-text2">Service level</div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default  panel-gray">
+                    <div class="panel-body">
+                        <div class="panel-number2">
+                            <div class="row">
+
+                                <div class="pull-right number2">
+                                    <div class="value">46</div>
+                                </div>
+                                <div class="panel-text2">Calls in queue</div>
+                            </div>
+                            <div class="row">
+                                <div class="pull-right number2">
+                                    <div class="value">46</div>
+                                </div>
+                                <div class="panel-text2">Calls in queue</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default  panel-gray panel-img">
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+
+        </div>
+    </div>
+    <div id="Agends" class="col-sm-4">
+                <div class="panel panel-default panel-gary panel2">
+                    <style>
+                        #Agends li{
+                            text-decoration: none;
+                            list-style: none;
+                        }
+
+                    </style>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div id="Legebds">
+                                <div class="col-lg-6">
+                                    <ul  class="list-group">
+                                        <li>
+                                            Legend 1
+                                            <span class="icon"></span><span class="text"></span><span class="num"></span>
+
+                                        </li>
+                                        <li>
+                                            Legend 2
+
+                                        </li>
+                                        <li>
+                                            Legend 3
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <ul  class="list-group">
+                                        <li>
+                                            Legend 5
+
+                                        </li>
+                                        <li>
+                                            Legend 6
+
+                                        </li>
+                                        <li>
+                                            Legend 7
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div id="listtable"></div>
+                        </div>
+
+                    </div>
+                </div>
+
+           <!-- <div class="col-sm-6">
+                <div class="panel panel-default">
+                    p3
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                        <div id="listtable" class="panel-gray"></div>
+                    </div>
+            </div>
+        </div>-->
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src="list/BasicList.js"></script>
+<script type="text/javascript" src="list/App.js"></script>
+
+<script type="text/javascript" src="list/Service.js"></script>
+<!--<script type="text/javascript" src="out/list/ListComp.js"></script>-->
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://107.170.97.252/IS&S/OakvilleDashboard/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Oakville dashboard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="./Oakville dashboard_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Oakville dashboard_files/custom.css">
+<script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="conf" src="./Oakville dashboard_files/conf.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="./Oakville dashboard_files/jquery.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="marionette" src="./Oakville dashboard_files/backbone.marionette.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="app" src="./Oakville dashboard_files/app.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="underscore" src="./Oakville dashboard_files/underscore.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="layout/layout" src="./Oakville dashboard_files/layout.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone" src="./Oakville dashboard_files/backbone.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="handlebars" src="./Oakville dashboard_files/handlebars.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="hbs" src="./Oakville dashboard_files/hbs.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="partials/head/views/head" src="./Oakville dashboard_files/head.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="partials/body/body" src="./Oakville dashboard_files/body.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="partials/footer/footer" src="./Oakville dashboard_files/footer.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="collections/ticketsStats" src="./Oakville dashboard_files/ticketsStats.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="collections/agentStatuses" src="./Oakville dashboard_files/agentStatuses.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="collections/queueStatuses" src="./Oakville dashboard_files/queueStatuses.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="partials/head/views/left" src="./Oakville dashboard_files/left.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="partials/head/views/right" src="./Oakville dashboard_files/right.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="helpers/eqWindowHeight" src="./Oakville dashboard_files/eqWindowHeight.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="hbs/handlebars" src="./Oakville dashboard_files/handlebars(1).js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="hbs/underscore" src="./Oakville dashboard_files/underscore(1).js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="hbs/json2" src="./Oakville dashboard_files/json2.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="partials/body/firstRow" src="./Oakville dashboard_files/firstRow.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="partials/body/secondaryRow" src="./Oakville dashboard_files/secondaryRow.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="papaParse" src="./Oakville dashboard_files/papaparse.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="moment" src="./Oakville dashboard_files/moment.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="helpers/Time" src="./Oakville dashboard_files/Time.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/agentStatus" src="./Oakville dashboard_files/agentStatus.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="twix" src="./Oakville dashboard_files/twix.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="models/queueStatus" src="./Oakville dashboard_files/queueStatus.js"></script></head>
+<body>
+<!--[if lt IE 10]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<div id="main"><div><section class="dashboard-head clearfix" id="telephonyHeader"><table class="dashboard-head-table"><!--
+<div class="head-column-left col-xs-6"></div>
+<div class="head-column-right col-xs-6 text-inverted"></div>-->
+
+<tbody><tr>
+    <td class="head-column-left"><div><h2 class="primary-header primary-header--head text-center text-inverted">Current service level</h2>
+
+<div class="row head-row" style="height: 150px;">
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix">
+            <div class="col-xs-4 head-cell__key">
+                Average <br>
+                Answer
+                <span class="head-cell__key--scaled">Time</span>
+            </div>
+            <div class="col-xs-8 head-cell__value head-cell__value--wider">
+                    <div class="value--time">1 m</div>
+                    <div class="value--time">56 secs</div>
+                <!--<span class="value--success"></span>-->
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix">
+            <div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Service</span>
+                Level
+            </div>
+            <div class="col-xs-6 head-cell__value head-cell__value--warning">
+                <span class="value--warning">77</span>
+            </div>
+            <!--<div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Calls</span>
+                Offered
+            </div>
+            <div class="col-xs-6 head-cell__value head-cell__value--warning">
+                <span class="value--warning">28</span>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+<div class="row head-row" style="height: 150px;">
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix">
+            <div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Calls</span>
+                Handled
+            </div>
+            <div class="col-xs-6 head-cell__value">
+                <span class="value--info">247</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix">
+            <div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Calls</span>
+                In queue
+            </div>
+            <div class="col-xs-6 head-cell__value head-cell__value--danger">
+                <span class="value--danger">0</span>
+            </div>
+        </div>
+    </div>
+</div></div></td>
+    <td class="head-column-right text-inverted"><div><h2 class="primary-header primary-header--head text-center">Average talk time</h2>
+
+<div class="row head-row" style="height: 150px;">
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix head-cell--right">
+            <div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Agents</span>
+                Available
+            </div>
+            <div class="col-xs-6 head-cell__value head-cell__value--warning">
+                <span id="agentsAmount" class="value--warning">10</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix head-cell--right">
+            <div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Tickets</span>
+                Created
+            </div>
+            <div class="col-xs-6 head-cell__value head-cell__value--wider">
+                <span class="value--success value--success--scaled">31</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row head-row" style="height: 150px;">
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix head-cell--right">
+            <div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Tickets</span>
+                Closed(24 hrs)
+            </div>
+            <div class="col-xs-6 head-cell__value head-cell__value--wider">
+                <span class="value--success value--success--scaled">16</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 head-cell-outer">
+        <div class="head-cell clearfix head-cell--right">
+            <div class="col-xs-6 head-cell__key">
+                <span class="head-cell__key--scaled">Agents</span>
+                Snapshot
+            </div>
+            <div class="col-xs-6 clearfix">
+                <figure class="head-agent-figure pull-right">
+                    <img src="./Oakville dashboard_files/agent.png" alt="">
+                    <span class="phone-icon"></span>
+                </figure>
+            </div>
+        </div>
+    </div>
+</div></div></td>
+</tr>
+<tr class="addition-row">
+    <td class="head-column-bottom-left"></td>
+    <td class="head-column-bottom-right"></td>
+</tr></tbody></table></section>
+<section class="page-body" id="telephonyBody"><div class="telephony-wrapper"><h2 class="primary-header primary-header--body">Agent status</h2>
+
+<div class="container-fluid telephony-table">
+    <div class="row primary-row"><div><div class="body-item text-center first-body-element">3494</div><div class="body-item text-center">7401</div><div class="body-item text-center">7402</div><div class="body-item text-center">7403</div><div class="body-item text-center">7405</div><div class="body-item text-center">7406</div><div class="body-item text-center">7407</div><div class="body-item text-center">7492</div><div class="body-item text-center">7493</div><div class="body-item text-center">3494</div><div class="body-item text-center">7401</div><div class="body-item text-center">7402</div><div class="body-item text-center">7403</div><div class="body-item text-center">7405</div><div class="body-item text-center">7406</div><div class="body-item text-center">7407</div><div class="body-item text-center">7492</div><div class="body-item text-center">7493</div><div class="body-item text-center">7701</div></div></div>
+    <div class="row secondary-row"><div><div class="text-center agency-cell body-item first-body-element"><figure>
+    <p><img src="./Oakville dashboard_files/busy.png" alt=""></p>
+    <figcaption></figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>5h 35m</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/idle.png" alt=""></p>
+    <figcaption>2min 56sec</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>2d 0h</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>14min 59sec</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>1d 20h</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>21h 59m</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/busy.png" alt=""></p>
+    <figcaption></figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/busy.png" alt=""></p>
+    <figcaption></figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/busy.png" alt=""></p>
+    <figcaption></figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>5h 35m</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/idle.png" alt=""></p>
+    <figcaption>2min 56sec</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>2d 0h</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>14min 59sec</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>1d 20h</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/offline.png" alt=""></p>
+    <figcaption>21h 59m</figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/busy.png" alt=""></p>
+    <figcaption></figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/busy.png" alt=""></p>
+    <figcaption></figcaption>
+</figure></div><div class="text-center agency-cell body-item"><figure>
+    <p><img src="./Oakville dashboard_files/idle.png" alt=""></p>
+    <figcaption>2min 51sec</figcaption>
+</figure></div></div></div>
+</div>
+</div></section>
+<section class="dashboard-footer" id="SharePointSection"><div><h2 class="text-center primary-header primary-header--footer">Year to date stats</h2>
+<table class="page-table table-footer">
+    <tbody><tr>
+        <td class="clearfix footer-top-cell-1">
+            <div class="col-xs-6 footer-circle-outer">
+                <div class="footer-circle footer-circle--left text-center">
+                    <!--<span class="footer-circle__value footer-circle__value-3x"></span>
+                    <span class="footer-circle__value footer-circle__value-05x"></span>
+                    <span class="footer-circle__value footer-circle__value-1x"></span>-->
+                    <span class="footer-circle__value footer-circle__value-3x">N/A</span>
+                    <span class="footer-circle__value footer-circle__value-05x">seconds</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2015</span>
+                </div>
+            </div>
+            <div class="col-xs-6 footer-circle-outer">
+                <div class="footer-circle footer-circle--right text-inverted text-center">
+                    <span class="footer-circle__value footer-circle__value-3x">116</span>
+                    <span class="footer-circle__value footer-circle__value-05x">seconds</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2016</span>
+                </div>
+            </div>
+        </td>
+        <td class="clearfix footer-top-cell-2">
+            <div class="col-xs-6 footer-circle-outer">
+                <div class="footer-circle footer-circle--left text-center">
+                    <span class="footer-circle__value footer-circle__value-2x">N/A</span>
+                    <span class="footer-circle__value footer-circle__value-1x">calls</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2015</span>
+                </div>
+            </div>
+            <div class="col-xs-6 footer-circle-outer">
+                <div class="footer-circle footer-circle--right text-inverted text-center">
+                    <span class="footer-circle__value footer-circle__value-2x">247</span>
+                    <span class="footer-circle__value footer-circle__value-1x">calls</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2016</span>
+                </div>
+            </div>
+        </td>
+        <td class="clearfix footer-top-cell-3">
+            <div class="col-xs-6 footer-circle-outer">
+                <div class="footer-circle footer-circle--left text-center">
+                    <span class="footer-circle__value footer-circle__value-2x">14269</span>
+                    <span class="footer-circle__value footer-circle__value-1x">tickets</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2015</span>
+                </div>
+            </div>
+            <div class="col-xs-6 footer-circle-outer">
+                <div class="footer-circle footer-circle--right text-inverted text-center">
+                    <span class="footer-circle__value footer-circle__value-2x">3090</span>
+                    <span class="footer-circle__value footer-circle__value-1x">tickets</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2016</span>
+                </div>
+            </div>
+        </td>
+        <td class="clearfix footer-top-cell-4">
+            <div class="col-xs-6">
+                <div class="footer-circle footer-circle--left text-center">
+                    <span class="footer-circle__value footer-circle__value-2x">10579</span>
+                    <span class="footer-circle__value footer-circle__value-1x">tickets</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2015</span>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="footer-circle footer-circle--right text-inverted text-center">
+                    <span class="footer-circle__value footer-circle__value-2x">2346</span>
+                    <span class="footer-circle__value footer-circle__value-1x">tickets</span>
+                    <span class="footer-circle__value footer-circle__value-1x">2016</span>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr class="header-inverted text-center">
+        <td class="footer-bottom-cell footer-bottom-cell-1">AVERAGE ANSWER TIME</td>
+        <td class="footer-bottom-cell footer-bottom-cell-2">CALLS HANDLED</td>
+        <td class="footer-bottom-cell footer-bottom-cell-3">TICKETS CREATED</td>
+        <td class="footer-bottom-cell footer-bottom-cell-4">TICKETS CLOSED (24HRS)</td>
+    </tr>
+</tbody></table></div></section></div></div>
+
+<script data-main="js/conf" src="./Oakville dashboard_files/require.js"></script>
+
+</body></html>
