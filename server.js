@@ -126,3 +126,4 @@ setInterval(function(){
     loadData();
 },25000);
 
+loadData();
