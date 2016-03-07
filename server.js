@@ -13,7 +13,8 @@ var  db = new sqlite3.Database('data/'+dbfile);
 var fs = require('fs');
 var util = require('util');
 var date = new Date();
-var log_file = fs.createWriteStream(__dirname + '/data/debug'+(date.getMonth()+'-'+date.getDate()+'T'+date.getHours()+'-'+date.getMinutes())+'.log', {flags : 'w'});
+var logfilename =  '/data/debug'+(date.getMonth()+'-'+date.getDate()+'T'+date.getHours()+'-'+date.getMinutes())+'.log';
+var log_file = fs.createWriteStream(__dirname +logfilename, {flags : 'w'});
 
 var Log = function (d){
     var t =  new Date().toISOString().substr(0, 19);
@@ -123,5 +124,5 @@ var insertInDb = function(ar){
 
 setInterval(function(){
     loadData();
-},5000);
+},25000);
 
