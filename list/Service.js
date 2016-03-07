@@ -7,6 +7,7 @@ var service;
     var Service = (function () {
         function Service() {
             this.ON_DATA = 'ON_DATA';
+            this.ON_HELP_DESK = 'ON_HELP_DESK';
             this.dispatcher = $({});
         }
         Service.prototype.loadData = function () {
@@ -19,7 +20,18 @@ var service;
         };
         Service.prototype.start = function () {
             var _this = this;
+            this.loadData();
+            this.loadHelpDesk();
             this.interval = setInterval(function () { _this.loadData(); }, 2000);
+        };
+        Service.prototype.loadHelpDesk = function () {
+            var _this = this;
+            $.get('rem/getCsv').done(function (data) {
+                console.log(data);
+                _this.dispatcher.triggerHandler(_this.ON_HELP_DESK, data);
+            }).fail(function (reason) {
+                console.log(reason);
+            });
         };
         Service.service = new Service();
         return Service;

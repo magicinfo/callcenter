@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="libs/bootstrap.css">
+    <link rel="stylesheet" href="libs/font-awesome.css">
     <script src="libs/jquery-2.1.4.min.js"></script>
-   <!-- <script src="libs/react.min.js"></script>
-    <script src="libs/react-dom.min.js"></script>-->
+     <script src="libs/underscore-min.js"></script>
+
 
     <style>
         body{
@@ -104,7 +105,7 @@
                         </style>
                         <div class="num_cont">
                             <div class="number n-s">
-                                <div class="value"><span class="num">1</span><span class="word">m</span> <span  class="num">46</span><span class="word">s</span></div>
+                                <div class="value"><span id="avTimeMin" class="num">0</span><span id="avTimeMinW"  class="word">m</span> <span id="avTimeSec" class="num">0</span><span id="avTimeSecW" class="word">s</span></div>
                             </div>
                         </div>
 
@@ -117,7 +118,7 @@
                 <div class="panel panel-default  panel-gray">
                     <div class="panel-number">
                         <div class="number">
-                            <div class="value">46</div>
+                            <div id="inqueue" class="value">-</div>
                         </div>
                         <div class="panel-text">Calls in queue</div>
                     </div>
@@ -126,7 +127,7 @@
             <div class="col-sm-4">
                 <div class="panel panel-default panel-gray">
                     <div class="number">
-                        <div class="value">46</div>
+                        <div id="agendsTotal" class="value">-</div>
                     </div>
                     <div class="panel-number">
                         <div class="panel-text">Agents available</div>
@@ -142,14 +143,14 @@
                             <div class="panel-number2">
                                 <div class="row">
                                             <div class="pull-right number2">
-                                                <div class="value">468</div>
+                                                <div id="calsHandled" class="value">-</div>
                                             </div>
                                     <div class="panel-text2">Calls handled</div>
 
                                 </div>
                                 <div class="row">
                                     <div class="pull-right number2">
-                                        <div class="value">80</div>
+                                        <div id="ServiceLevel" class="value">-</div>
                                     </div>
                                     <div class="panel-text2">Service level</div>
                                 </div>
@@ -165,15 +166,15 @@
                             <div class="row">
 
                                 <div class="pull-right number2">
-                                    <div class="value">46</div>
+                                    <div id="TicketsCreated" class="value">-</div>
                                 </div>
-                                <div class="panel-text2">Calls in queue</div>
+                                <div class="panel-text2">Tickets Created</div>
                             </div>
                             <div class="row">
                                 <div class="pull-right number2">
-                                    <div class="value">46</div>
+                                    <div id="TicketsClosed" class="value">-</div>
                                 </div>
-                                <div class="panel-text2">Calls in queue</div>
+                                <div class="panel-text2">Tickets Closed (24h)</div>
                             </div>
                         </div>
                     </div>
@@ -200,51 +201,81 @@
                             list-style: none;
                         }
 
+                        .fa-phone-square{
+                            color: green;
+                        }
+                        .fa-hourglass-half{
+                            color: darkorange;
+                        }
+                        .fa-times-circle{
+                            color: firebrick;
+
+                        }
                     </style>
                     <div class="panel-body">
                         <div class="row">
-                            <div id="Legebds">
-                                <div class="col-lg-6">
-                                    <ul  class="list-group">
-                                        <li>
-                                            Legend 1
-                                            <span class="icon"></span><span class="text"></span><span class="num"></span>
+                            <div id="Legends">
+                                <div class="col-sm-12">
+                                    <style>
+                                        #Legends .num{
+                                            border-radius: 50%;
+                                            background-color: white;
+                                            font-size: 24px;
+                                        }
+                                        #Legends table{
+                                            display: table;
+                                            width: 100%;
+                                        }
 
-                                        </li>
-                                        <li>
-                                            Legend 2
+                                    </style>
 
-                                        </li>
-                                        <li>
-                                            Legend 3
+                                    <table  class="list-group">
+                                        <tr>
+                                            <td class="icon"><span class="fa fa-times-circle"></span></td>
+                                            <td class="text">Offline</td>
+                                            <td id="Offline" class="num"></td>
+                                            <td>&nbsp;&nbsp;</td>
+                                            <td class="icon"><span class="fa fa-phone-square"></span></td>
+                                            <td class="text">ACD</td>
+                                            <td class="num"></td>
 
-                                        </li>
+                                        </tr>
+                                        <tr>
+                                            <td class="icon"><span class="fa fa-hourglass-half"></span></td>
+                                            <td class="text">Idle</td>
+                                            <td id="Ac" class="num"></td>
+                                            <td>&nbsp;&nbsp;</td>
+                                            <td class="icon"></td>
+                                            <td class="text"></td>
+                                            <td  class="num"></td>
 
-                                    </ul>
+                                        </tr>
+                                        <tr>
+                                            <td class="icon"><span class="fa fa-minus-circle"></span></td>
+                                            <td class="text"> Busy </td>
+                                            <td id="BusyCount" class="num"></td>
+                                            <td>&nbsp;&nbsp;</td>
+                                            <td class="icon"></td>
+                                            <td class="text"></td>
+                                            <td  class="num"></td>
+
+
+                                        </tr>
+
+                                    </table>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <ul  class="list-group">
-                                        <li>
-                                            Legend 5
-
-                                        </li>
-                                        <li>
-                                            Legend 6
-
-                                        </li>
-                                        <li>
-                                            Legend 7
-
-                                        </li>
-
-                                    </ul>
-                                </div>
                             </div>
-
                         </div>
                         <div class="row">
-                            <div id="listtable"></div>
+                            <style>
+                                .fa-minus-circle{
+                                    color: #c80000;
+                                }
+
+                            </style>
+                            <div id="listtable">
+                            </div>
                         </div>
 
                     </div>
@@ -268,8 +299,9 @@
 
 </div>
 
-
+<script type="text/javascript" src="list/Graphs.js"></script>
 <script type="text/javascript" src="list/BasicList.js"></script>
+<script type="text/javascript" src="list/FieldsUpdate.js"></script>
 <script type="text/javascript" src="list/App.js"></script>
 
 <script type="text/javascript" src="list/Service.js"></script>

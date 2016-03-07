@@ -1,27 +1,27 @@
 @font-face {
     font-family: 'AvenirLTStd-Heavy';
-    src: url('../fonts/AvenirLTStd-Heavy.eot');
-    src: local('☺'), url('../fonts/AvenirLTStd-Heavy.woff') format('woff'),
-    url('../fonts/AvenirLTStd-Heavy.ttf') format('truetype'),
-    url('../fonts/AvenirLTStd-Heavy.svg') format('svg');
+    src: url('../libs/fonts/AvenirLTStd-Heavy.eot');
+    src: local('☺'), url('../libs/fonts/AvenirLTStd-Heavy.woff') format('woff'),
+    url('../libs/fonts/AvenirLTStd-Heavy.ttf') format('truetype'),
+    url('../libs/fonts/AvenirLTStd-Heavy.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: 'AvenirLTStd-Black';
-    src: url('../fonts/AvenirLTStd-Black.eot');
-    src: local('☺'), url('../fonts/AvenirLTStd-Black.woff') format('woff'),
-    url('../fonts/AvenirLTStd-Black.ttf') format('truetype'),
-    url('../fonts/AvenirLTStd-Black.svg') format('svg');
+    src: url('../libs/fonts/AvenirLTStd-Black.eot');
+    src: local('☺'), url('../libs/fonts/AvenirLTStd-Black.woff') format('woff'),
+    url('../libs/fonts/AvenirLTStd-Black.ttf') format('truetype'),
+    url('../libs/fonts/AvenirLTStd-Black.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family: "MyriadProRegular";
-    src: url("../fonts/MyriadProRegular.eot");
-    src: url("../fonts/MyriadProRegular.eot?#iefix")format("embedded-opentype"),
-    url("../fonts/MyriadProRegular.woff") format("woff"),
-    url("../fonts/MyriadProRegular.ttf") format("truetype");
+    src: url("../libs/fonts/MyriadProRegular.eot");
+    src: url("../libs/fonts/MyriadProRegular.eot?#iefix")format("embedded-opentype"),
+    url("../libs/fonts/MyriadProRegular.woff") format("woff"),
+    url("../libs/fonts/MyriadProRegular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
 }
