@@ -1,6 +1,6 @@
 <?php
 $out = new StdClass();
-$db= new PDO('sqlite:../data/status2.db');
+$db= new PDO('sqlite:../data/status5.db');
 
 $sql = 'select * from status order by id desc limit 100';
 

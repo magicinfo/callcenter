@@ -101,8 +101,7 @@ var insertInDb = function(ar){
              var inqueue = item.NumCallsInQueue[0];
              var prev = prevValues[i]
              if(prev.htime == htime && prev.inqueue == inqueue && prev.level == level ){
-
-                 console.log('skip');
+               //  console.log('skip');
              }else{
                  prevValues[i].htime = htime;
                  prevValues[i].inqueue = inqueue;
