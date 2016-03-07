@@ -37,9 +37,14 @@ $xml = simplexml_load_file($url);
 
 function getTimeout($servertime,$time){
 	$time = str_replace('T',' ',$time);
-	$date1=date_create($time);
-	$date2=date_create($servertime);
+
+
+	return  strtotime($servertime)-strtotime($time);
+
+$date1=date_create($time);
+$date2=date_create($servertime);
 	$diff=date_diff($date1,$date2);
+
 	 if($diff->d) 	 return $diff->d . 'd ' . $diff->h . 'h';
 	else if($diff->h) return $diff->h.'h '.$diff->i.'m';
 	 else return $diff->i.'m '.$diff->s.'s';
@@ -56,7 +61,7 @@ foreach($xml->children() as $node){
 	$item->code = isset($mb[$code])?$mb[$code]:0;
 	$item->state=isset($ps[$state])?$ps[$state]:0;
 	$time = (string)$node->EventDateTime;
-	if($time)$item->timeout =getTimeout($servertime,$time);
+	if($time)$item->timeout = getTimeout($servertime,$time);
 	$list[] = $item;
 
 }

@@ -124,6 +124,6 @@ var insertInDb = function(ar){
 
 setInterval(function(){
     loadData();
-},25000);
+},60000);
 
 loadData();

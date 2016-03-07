@@ -2,7 +2,7 @@ define([
     'jquery',
     'backbone',
     'marionette',
-    'layout/layout'
+    'layout'
 ], function($, Backbone, Marionette, Layout) {
     'use strict';
 

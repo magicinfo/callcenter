@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="libs/font-awesome.css">
     <script src="libs/jquery-2.1.4.min.js"></script>
      <script src="libs/underscore-min.js"></script>
+    <script src="libs/Chart.js"></script>
 
 
     <style>
@@ -208,8 +209,11 @@
                             color: darkorange;
                         }
                         .fa-times-circle{
-                            color: firebrick;
+                            color: #b26435;
 
+                        }
+                        .fa-clock-o{
+                            color: #b26c94;
                         }
                     </style>
                     <div class="panel-body">
@@ -233,11 +237,11 @@
                                         <tr>
                                             <td class="icon"><span class="fa fa-times-circle"></span></td>
                                             <td class="text">Offline</td>
-                                            <td id="Offline" class="num"></td>
+                                            <td id="OfflineCount" class="num"></td>
                                             <td>&nbsp;&nbsp;</td>
                                             <td class="icon"><span class="fa fa-phone-square"></span></td>
                                             <td class="text">ACD</td>
-                                            <td class="num"></td>
+                                            <td class="num" id="AcdCount"></td>
 
                                         </tr>
                                         <tr>
@@ -245,9 +249,9 @@
                                             <td class="text">Idle</td>
                                             <td id="Ac" class="num"></td>
                                             <td>&nbsp;&nbsp;</td>
-                                            <td class="icon"></td>
-                                            <td class="text"></td>
-                                            <td  class="num"></td>
+                                            <td class="icon"><span class="fa fa-clock-o"></span></td>
+                                            <td class="text">Lunch</td>
+                                            <td  class="num" id="LounchCount"></td>
 
                                         </tr>
                                         <tr>

@@ -22,7 +22,7 @@ var service;
             var _this = this;
             this.loadData();
             this.loadHelpDesk();
-            this.interval = setInterval(function () { _this.loadData(); }, 2000);
+            this.interval = setInterval(function () { _this.loadData(); }, 60000);
         };
         Service.prototype.loadHelpDesk = function () {
             var _this = this;

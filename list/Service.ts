@@ -23,7 +23,7 @@ module service{
         start():void{
             this.loadData();
             this.loadHelpDesk();
-            this.interval = setInterval(()=>{ this.loadData();},  2000);
+            this.interval = setInterval(()=>{ this.loadData();},  60000);
 
         }
         loadHelpDesk():void{
