@@ -20,8 +20,12 @@ var url = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/
         res.on('end', function() {
             parseString(str, function (err, xml) {
                // console.log(xml.ArrayOfXMLQueue.XMLQueue);
-                var ar = xml.ArrayOfXMLQueue.XMLQueue;
-                insertInDb(ar);
+                if(err) return
+                if(xml && xml.ArrayOfXMLQueue && !xml.ArrayOfXMLQueue.XMLQueue){
+                    var ar = xml.ArrayOfXMLQueue.XMLQueue;
+                    insertInDb(ar);
+                }
+
             });
         });
 
