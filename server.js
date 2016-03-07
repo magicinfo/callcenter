@@ -6,8 +6,19 @@ var http = require('http');
 var parseString = require('xml2js').parseString;
 
 var sqlite3 = require('sqlite3').verbose();
-var  db = new sqlite3.Database('data/status2.db');
+var dbfile = 'status5.db';
 
+var  db = new sqlite3.Database('data/'+dbfile);
+
+var fs = require('fs');
+var util = require('util');
+var date = new Date();
+var log_file = fs.createWriteStream(__dirname + '/data/debug'+(date.getMonth()+'-'+date.getDate()+'T'+date.getHours()+'-'+date.getMinutes())+'.log', {flags : 'w'});
+
+var Log = function (d){
+    var t =  new Date().toISOString().substr(0, 19);
+    log_file.write(t+'    '+util.format(d) + '\n');
+}
 var url = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/queuestatus.xml';
  var loadData = function(){
     var req = http.get(url, function(res) {
@@ -28,6 +39,9 @@ var url = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/
                 if(xml && xml.ArrayOfXMLQueue && xml.ArrayOfXMLQueue.XMLQueue){
                     var ar = xml.ArrayOfXMLQueue.XMLQueue;
                     insertInDb(ar);
+                }else {
+                    console.log(str);
+                    Log(str);
                 }
 
             });
@@ -42,24 +56,36 @@ var url = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/
     });
 }
 
+var isTableExists
 var createTable = function(){
-   return db.run("CREATE TABLE status (id INTEGER PRIMARY KEY AUTOINCREMENT, idq TEXT, name TEXT, stamp INTEGER, htime INTEGER , level INTEGER, inqueue INTEGER)");
+    var sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='status'";
+    var res = db.all(sql,function(err,row){
+        console.log(row);
+        console.log(err);
+        if(row.length==0){
+            db.run("CREATE TABLE status (id INTEGER PRIMARY KEY AUTOINCREMENT, idq TEXT, name TEXT, stamp INTEGER, htime INTEGER , level INTEGER, inqueue INTEGER)");
+
+        }else  isTableExists =true;
+
+    });
+    console.log(res);
+
+   //return db.run("CREATE TABLE status (id INTEGER PRIMARY KEY AUTOINCREMENT, idq TEXT, name TEXT, stamp INTEGER, htime INTEGER , level INTEGER, inqueue INTEGER)");
 }
 
-var prevhtime1;
-var prevlevel1;
-var prvonqueue1;
-var prevhtime2;
-var prevlevel2;
-var prvonqueue2;
+
 
 
 
 var prevValues=[{htime:0,inqueue:0,level:0},{htime:0,inqueue:0,level:0}];
 
 var insertInDb = function(ar){
-   // createTable();
-    //return;
+  if(!isTableExists){
+      createTable();
+      return;
+  }
+
+
    // db.serialize(function() {
          var stmt =  db.prepare("INSERT INTO status (idq, name,stamp, htime,level,inqueue ) VALUES (?,?,?,?,?,?)");
        /// console.log(stmt);
@@ -83,6 +109,7 @@ var insertInDb = function(ar){
                  prevValues[i].level = level;
                  stmt.run([ item.QueueID[0],item.Name[0],stamp,htime,level,inqueue]);
                  console.log('insert');
+                 Log('inserted');
              }
 
 
@@ -90,7 +117,7 @@ var insertInDb = function(ar){
        res =  stmt.finalize();
         //console.log(res);
 
-console.log('tick')
+
    // });
 }
 
