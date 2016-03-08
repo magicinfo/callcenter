@@ -1,3 +1,4 @@
+/*
 @font-face {
     font-family: 'AvenirLTStd-Heavy';
     src: url('../libs/fonts/AvenirLTStd-Heavy.eot');
@@ -25,6 +26,7 @@
     font-style: normal;
     font-weight: normal;
 }
+*/
 
 /*OVERALL*/
 
@@ -78,7 +80,7 @@ body .row {
 /* HEAD */
 
 .dashboard-head {
-    font-family: 'AvenirLTStd-Heavy';
+   /* font-family: 'AvenirLTStd-Heavy';*/
 }
 
 .primary-header--head {
@@ -226,7 +228,7 @@ body .row {
 }
 
 .phone-icon {
-    background: url('../img/VOICE_IDLE.png') no-repeat;
+    background: url('VOICE_IDLE.png') no-repeat;
     width: 55px;
     background-size: 55px 55px;
     height: 55px;
@@ -300,7 +302,7 @@ body .row {
 }
 
 .secondary-row figcaption {
-    font: 2.854em 'AvenirLTStd-Heavy';
+    font: 2.854em ;/*'AvenirLTStd-Heavy';*/
     font-size: 1.2vw;
     text-transform: none;
 }
@@ -308,7 +310,7 @@ body .row {
 /* FOOTER */
 
 .dashboard-footer {
-    font-family: 'AvenirLTStd-Heavy';
+   /* font-family: 'AvenirLTStd-Heavy';*/
 }
 
 .dashboard-footer > div {

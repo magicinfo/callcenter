@@ -33,10 +33,10 @@ var desh;
             var s;
             var t = this.currentTime;
             var d;
-            console.log('showtime  ' + t);
+            //console.log('showtime  '+t);
             var out = '';
             if (t > 60 * 60) {
-                console.log(t);
+                //  console.log(t);
                 if (t > 24 * 60 * 60) {
                     d = Math.floor(t / (24 * 60 * 60));
                     h = t - (d * 24 * 60 * 60);

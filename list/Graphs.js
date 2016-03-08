@@ -4,6 +4,7 @@
 ///<reference path="../typings/jquery.d.ts"/>
 ///<reference path="Service.ts"/>
 ///<reference path="BasicList.ts"/>
+///<reference path="../typings/chart.d.ts"/>
 var callcenter;
 (function (callcenter) {
     var Graphs = (function () {
@@ -14,6 +15,9 @@ var callcenter;
             });
         }
         Graphs.prototype.setData = function (data) {
+            this.setAvTime(data);
+        };
+        Graphs.prototype.setAvTime = function (data) {
         };
         return Graphs;
     })();

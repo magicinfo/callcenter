@@ -22,6 +22,7 @@ var Log = function (d){
 }
 var url = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/queuestatus.xml';
  var loadData = function(){
+     console.log('load');
     var req = http.get(url, function(res) {
         // save the data
         var str = '';
@@ -117,6 +118,7 @@ var insertInDb = function(ar){
        res =  stmt.finalize();
         //console.log(res);
 
+    console.log('_end_');
 
    // });
 }

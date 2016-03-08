@@ -69,11 +69,11 @@ module desh{
             var s:number;
             var t :number = this.currentTime;
             var d:number;
-console.log('showtime  '+t);
+//console.log('showtime  '+t);
 
             var out:string ='';
             if(t>60*60){
-                console.log(t);
+              //  console.log(t);
                 if(t>24*60*60){
                     d=Math.floor(t/(24*60*60));
                     h = t - (d*24*60*60);

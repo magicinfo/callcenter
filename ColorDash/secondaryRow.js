@@ -20,7 +20,6 @@ define([
 
             this.listenTo(this.model, 'add change remove', this.render);
         },
-
         render: function() {
             var tpl = Handlebars.compile(this.template({model: this.model}));
             this.$el.html(tpl);
