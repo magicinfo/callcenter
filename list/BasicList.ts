@@ -58,11 +58,11 @@ module desh{
             this.current = this.getClass(item.state.icon);
             this.$icon.addClass(this.current);
             this.setTime(item.timeout);
-
-
         }
+
         lastTime:number;
         currentTime:number;
+
         showTime():void{
             var h:number;
             var m:number;

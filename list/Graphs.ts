@@ -27,6 +27,7 @@ module callcenter{
         }
 
         private setData(data){
+            console.log(data);
                 this.setAvTime(data);
         }
 

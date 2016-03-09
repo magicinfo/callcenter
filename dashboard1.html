@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="libs/font-awesome.css">
     <script src="libs/jquery-2.1.4.min.js"></script>
      <script src="libs/underscore-min.js"></script>
+    <script src="libs/papaparse.js"></script>
     <script src="libs/Chart.js"></script>
 
 
@@ -14,8 +15,6 @@
         body{
             background-image: url('css/bg.jpg');
             background-size: cover;
-
-
         }
         .panel-gray{
             background-color: #ECF0F1;
@@ -103,13 +102,26 @@
                             .n-s .word{
                                 font-size: 0.5em;
                             }
+                            #avTimeView .num{
+                                margin-right: -12px;;
+                            }
                         </style>
                         <div class="num_cont">
+                            <script id="AvTimeTempalte" type="text/template">
+                                        <span  class="num"><%=v1%></span>
+                                        <span  class="word"><%=v2%></span>
+                                        <span  class="num"><%=v3%></span>
+                                        <span  class="word"><%=v4%></span>
+                            </script>
                             <div class="number n-s">
-                                <div class="value"><span id="avTimeMin" class="num">0</span><span id="avTimeMinW"  class="word">m</span> <span id="avTimeSec" class="num">0</span><span id="avTimeSecW" class="word">s</span></div>
+                                <div id="avTimeView" class="value">
+                                    <span id="avTimeMin" class="num">0</span>
+                                    <span id="avTimeMinW"  class="word">m</span>
+                                    <span id="avTimeSec" class="num">0</span>
+                                    <span id="avTimeSecW" class="word">s</span>
+                                </div>
                             </div>
                         </div>
-
                         <div class="panel-text">Avarage answer time</div>
                     </div>
                 </div>
@@ -210,11 +222,11 @@
                     width: 100%;
                 }
 
-.graph-bar{
-    max-width: 50px;
-    float: left;
-    margin-left: 25px;
-}
+                .graph-bar{
+                    max-width: 50px;
+                    float: left;
+                    margin-left: 25px;
+                }
                 .graph-container{
                     width: 150px;
                     display: inline-block;
@@ -230,7 +242,7 @@
                             <div id="AvarageTimeGraph" class="row">
                                 <div class="graph-container">
                                     <div class="graph-bar">
-                                        <div>213</div>
+                                        <div id="AvTime">213</div>
                                             <div id="avTime1" class="ch1">
 
                                             </div>

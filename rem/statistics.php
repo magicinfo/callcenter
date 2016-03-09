@@ -12,7 +12,10 @@ $sql = "select * from status WHERE stamp BETWEEN $fromN AND $toN order by id des
 
 
 $res = $db->query($sql);
-if($res) $res = $res->fetchAll(PDO::FETCH_OBJ);
+if($res){
+$res = $res->fetchAll(PDO::FETCH_OBJ);
+foreach($res as $itm)$itm->time= date("Y-m-d H:i:s",$itm->stamp);
+}
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
 $out->result=$res;

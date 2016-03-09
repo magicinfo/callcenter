@@ -26,7 +26,6 @@ define([
             });
 
             filteredResponse[6].year = moment().subtract(1, 'y').year();
-
             filteredResponse[5].year = moment().subtract(1, 'y').year();
             //filteredResponse[5] = TimeHelpers.roundedAverageAnswer(filteredResponse[5].value);
 

@@ -15,6 +15,7 @@ var callcenter;
             });
         }
         Graphs.prototype.setData = function (data) {
+            console.log(data);
             this.setAvTime(data);
         };
         Graphs.prototype.setAvTime = function (data) {

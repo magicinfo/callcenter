@@ -7,8 +7,6 @@
 ///<reference path="FieldsUpdate.ts"/>
 ///<reference path="Graphs.ts"/>
 
-
-
 $(document).ready(function(){
 
    service.Service.service.start();
