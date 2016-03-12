@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62715cc6-9119-44cb-b73c-ba0da6715498" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/status5.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/com/ScriptImport.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/typings/chartist.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/typings/d3.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/typings/moment-node.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/typings/moment.d.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/typings/papaparse.d.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard3.html" afterPath="$PROJECT_DIR$/dashboard3.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphs/Test2.js" afterPath="$PROJECT_DIR$/graphs/Test2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphs/Test2.ts" afterPath="$PROJECT_DIR$/graphs/Test2.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rem/statistics.php" afterPath="$PROJECT_DIR$/rem/statistics.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="callcenter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -552,9 +540,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="56" y="-8" width="1872" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19247547" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19247547" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19813278" sideWeight="0.51799345" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19813278" sideWeight="0.48200655" order="0" side_tool="true" content_ui="tabs" />
