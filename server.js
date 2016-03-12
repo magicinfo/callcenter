@@ -3,6 +3,7 @@
  */
 
 var http = require('http');
+
 var parseString = require('xml2js').parseString;
 
 var sqlite3 = require('sqlite3').verbose();
@@ -20,6 +21,8 @@ var Log = function (d){
     var t =  new Date().toISOString().substr(0, 19);
     log_file.write(t+'    '+util.format(d) + '\n');
 }
+
+
 var url = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/queuestatus.xml';
 var url2 = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/agentstatus.xml';
 
