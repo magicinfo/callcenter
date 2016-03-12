@@ -6,11 +6,14 @@ var http = require('http');
 var parseString = require('xml2js').parseString;
 
 var sqlite3 = require('sqlite3').verbose();
-var dbfile = 'status7.db';
+var dbfile = 'status6.db';
+
 var  db = new sqlite3.Database('data/'+dbfile);
+
 var fs = require('fs');
 var Q = require('q');
 var _  = require('underscore');
+
 var util = require('util');
 var date = new Date();
 var logfilename =  '/data/debug'+(date.getMonth()+'-'+date.getDate()+'T'+date.getHours()+'-'+date.getMinutes())+'.log';
@@ -79,25 +82,17 @@ var loadXMLData = function(url){
 }
 
 
-/////////////////////////////////////////////
-var isTableStatus;
-var createTableStatus = function(callBack){
+
+var isTableExists
+var createTable = function(){
     var sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='status'";
     var res = db.all(sql,function(err,row){
         console.log(row);
         console.log(err);
         if(row.length==0){
-            db.run("CREATE TABLE status (id INTEGER PRIMARY KEY AUTOINCREMENT, idq TEXT, name TEXT, r_stamp INTEGER, s_stamp INTEGER, h_time INTEGER , level INTEGER, inqueue INTEGER, flag INTEGER)");
-            setTimeout(function(){
-                isTableStatus =true;
-                callBack();
-            },100);
-        }else {
-            isTableStatus =true;
-            setTimeout(function(){
-                callBack();
-            },100);
-        }
+            db.run("CREATE TABLE status (id INTEGER PRIMARY KEY AUTOINCREMENT, idq TEXT, name TEXT, r_stamp INTEGER, s_stamp INTEGER, h_time INTEGER , level INTEGER, inqueue INTEGER)");
+
+        }else  isTableExists =true;
 
     });
     console.log(res);
@@ -105,72 +100,54 @@ var createTableStatus = function(callBack){
    //return db.run("CREATE TABLE status (id INTEGER PRIMARY KEY AUTOINCREMENT, idq TEXT, name TEXT, stamp INTEGER, htime INTEGER , level INTEGER, inqueue INTEGER)");
 }
 
-//////////////////////////////////
-var isTableAgents;
-var createTableAgents = function(callBack){
-    var sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='agents'";
-    var res = db.all(sql,function(err,row){
-       // console.log(row);
-        console.log('error '+err);
-        if(row.length==0){
-            db.run("CREATE TABLE agents (id INTEGER PRIMARY KEY AUTOINCREMENT, ids TEXT, busy_reason TEXT, state TEXT, flag INTEGER, s_stamp INTEGER)");
-
-            setTimeout(function(){
-                isTableAgents =true;
-                callBack();
-            },100);
-        }else {
-            isTableAgents =true;
-            setTimeout(function(){
-                isTableAgents =true;
-                callBack();
-            },100);
-        }
-
-    });
-   // console.log(res);
-
-    //return db.run("CREATE TABLE status (id INTEGER PRIMARY KEY AUTOINCREMENT, idq TEXT, name TEXT, stamp INTEGER, htime INTEGER , level INTEGER, inqueue INTEGER)");
-}
-
-
-var insertAgentsStatus = function(IDS,makeBusyReason,states,flag){
-    if(!isTableAgents){
-        var onCreated = function(){
-            insertAgentsStatus(IDS,makeBusyReason,states,flag);
-        }
-        createTableAgents(onCreated);
-        return;
-    }
-    var now = Math.round(Date.now()/1000);
-    var sql ="INSERT INTO agents (ids, busy_reason,state, s_stamp, flag ) VALUES (?,?,?,"+now+",?)";
-   var res = db.run(sql,[IDS.toString(),makeBusyReason.toString(),states.toString(),flag]);
-   return res
-}
 
 
 
-var insertStatus = function(ar,flag){
-  if(!isTableStatus){
-      var onCreated = function(){
-          insertStatus(ar,flag);
-      }
-      createTableStatus(onCreated);
+
+var prevValues=[{htime:0,inqueue:0,level:0},{htime:0,inqueue:0,level:0}];
+
+var insertInDb = function(ar){
+  if(!isTableExists){
+      createTable();
       return;
   }
 
    // db.serialize(function() {
 
-    var now = Math.round(Date.now()/1000);
-    var sql = "INSERT INTO status (idq, name, r_stamp, s_stamp, h_time, level, inqueue, flag ) VALUES (?,?,?,"+now+",?,?,?,"+flag+")";
+    var now = Number(Date.now()+''.substr(0,10));
+    var sql = "INSERT INTO status (idq, name, r_stamp, s_stamp, h_time, level, inqueue ) VALUES (?,?,?,"+now+",?,?,?)";
+         var stmt =  db.prepare(sql);
+       /// console.log(stmt);
 
+    var res;
          for(var i= 0,n=ar.length;i<n;i++){
              var item =  ar[i];
-       var res =   db.run(sql,[item.QueueID,item.Name,item.EventDateTime,item.AverageHandlingTime,item.ServiceLevel,item.NumCallsInQueue]);
+             var time  = item.EventDateTime[0];
+             var stamp = Date.parse(time)/1000;
+             time = item.AverageHandlingTime[0];
+             var arr = time.split(':');
+             var htime = (+arr[0])*3600 + (+arr[1])*60 + (+arr[2]);
+             var level = item.ServiceLevel[0];
+             var inqueue = item.NumCallsInQueue[0];
+             var prev = prevValues[i]
+             if(prev.htime == htime && prev.inqueue == inqueue && prev.level == level ){
+               //  console.log('skip');
+             }else{
+
+                 prevValues[i].htime = htime;
+                 prevValues[i].inqueue = inqueue;
+                 prevValues[i].level = level;
+                 var values = [ item.QueueID[0],item.Name[0],stamp,htime,level,inqueue];
+                res =  db.run(sql,values);
+               //  stmt.run([ item.QueueID[0],item.Name[0],stamp,htime,level,inqueue]);
+                 console.log('insert');
+                 Log('inserted');
+             }
+
 
          }
       // res =  stmt.finalize();
-
+       console.log(res);
 
     console.log('_end_');
 
@@ -182,51 +159,25 @@ var MB;
 var ST;
 var count = 0;
 
-var AST;
-
 var onDataLoaded = function(ar1,ar2){
-    var sum;
     count++;
-
-    ////////////////////////////////////////////////////////////////////////////
-    var allStat=[];
-    ar1.map(function(v){
-        allStat.push(v.AverageHandlingTime);
-        allStat.push(v.ServiceLevel);
-        allStat.push(v.NumCallsInQueue);
-    });
-
-    if(AST){
-      sum =  _.difference(allStat,AST).length +  _.difference(AST,allStat).length ;
-        if(sum)insertStatus(ar1,sum);
-    }else insertStatus(ar1,0);
-
-    AST = allStat;
-
-
-   /////////////////////////////////////////////////////////////////////
-    var MakeBusyReason = [];
+var MakeBusyReason = [];
     var  State =[];
     var IDS=[];
-
     ar2.map(function(v){
         MakeBusyReason.push(v.MakeBusyReason);
         State.push(v.State);
-        IDS.push(v.AgentID);
+       IDS.push(v.AgentID);
     });
 
-
     if(MB){
-        sum =  _.difference(State,ST).length+ _.difference(ST,State).length ;
+       var sum =  _.difference(State,ST).length+ _.difference(ST,State).length ;
         sum += _.difference(MB,MakeBusyReason).length+ _.difference(MakeBusyReason,MB).length;
 
-        if(sum) insertAgentsStatus(IDS,MakeBusyReason,State,sum);
-        //console.log(sum);
-    }else insertAgentsStatus(IDS,MakeBusyReason,State,0);
+        console.log(sum);
+    }
     ST = State;
     MB = MakeBusyReason;
-
-
 console.log(count);
 }
 
