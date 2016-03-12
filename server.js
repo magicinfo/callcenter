@@ -237,6 +237,6 @@ var onLoadErrror = function(err,err2){
 
 setInterval(function(){
     loadData(onDataLoaded,onLoadErrror);
-},6000);
+},60000);
 
 loadData(onDataLoaded,onLoadErrror);
