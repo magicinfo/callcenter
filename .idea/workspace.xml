@@ -2,14 +2,85 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="62715cc6-9119-44cb-b73c-ba0da6715498" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/list/FieldsUpdate2.ts" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rem/RestoreTimeline.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data0/f1457991553.dat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data0/f1457992098.dat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data0/f1457992566.dat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/bootstrap-datetimepicker.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/bootstrap-datetimepicker.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libs/chartist-plugin-vertical-line.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/list/FieldsUpdate2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/list/FieldsUpdate2.js.map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rem/Test.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rem/data0/f1457976393.dat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rem/data0/f1457976710.dat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/rem/getCurrent.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/saveurl.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/settings.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/status.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/success_3-14.log" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/timer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/typings/bootstrap.v3.datetimepicker.d.ts" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T16-36.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T16-39.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T16-40.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T16-41.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T16-42.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T16-48.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-27.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-37.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-41.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-42.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-43.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-44.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-46.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-47.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-56.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T17-57.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-0.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-2.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-4.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-43.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-46.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-47.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-5.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-50.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-51.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-54.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-57.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-58.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-6.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T18-9.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-10.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-12.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-2.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-21.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-22.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-3.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T19-5.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-11.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-13.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-14.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-16.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-17.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-21.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-24.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-28.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-29.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-44.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-45.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-48.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-50.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-51.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-53.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-11T20-54.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2-7T11-45.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/debug2_7T11-45.log" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/status7.db" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/rem/getfile.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/dashboard3.html" afterPath="$PROJECT_DIR$/dashboard3.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphs/Test2.js" afterPath="$PROJECT_DIR$/graphs/Test2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphs/Test2.js.map" afterPath="$PROJECT_DIR$/graphs/Test2.js.map" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graphs/Test2.ts" afterPath="$PROJECT_DIR$/graphs/Test2.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rem/statistics.php" afterPath="$PROJECT_DIR$/rem/statistics.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/list/FieldsUpdate2.ts" afterPath="$PROJECT_DIR$/list/FieldsUpdate2.ts" />
     </list>
     <ignored path="callcenter.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,51 +102,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dashboard1.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dashboard1.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.7272725">
-              <caret line="114" column="37" selection-start-line="109" selection-start-column="27" selection-end-line="114" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Test2.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Test2.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/graphs/Test2.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FieldsUpdate.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/list/FieldsUpdate.ts">
+      <file leaf-file-name="Test.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rem/Test.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="99" column="26" selection-start-line="99" selection-start-column="26" selection-end-line="99" selection-end-column="26" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FieldsUpdate2.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/list/FieldsUpdate2.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.18255034">
-              <caret line="74" column="56" selection-start-line="74" selection-start-column="56" selection-end-line="74" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chartist.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libs/chartist.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.581818">
-              <caret line="174" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.65384614">
+              <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -84,8 +125,8 @@
       <file leaf-file-name="dashboard3.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dashboard3.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.3207545">
-              <caret line="63" column="37" selection-start-line="63" selection-start-column="37" selection-end-line="63" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="87" column="67" selection-start-line="87" selection-start-column="67" selection-end-line="87" selection-end-column="67" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -149,18 +190,8 @@
                 <element signature="n#style#0;n#tspan#0;n#text#0;n#svg#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#text#1;n#svg#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#tspan#0;n#text#1;n#svg#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <marker date="1457921670896" expanded="true" signature="10195:10211" placeholder="{...}" />
+                <marker date="1457932598976" expanded="true" signature="10242:10258" placeholder="{...}" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScriptImport.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/com/ScriptImport.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -168,28 +199,8 @@
       <file leaf-file-name="LineChartArea2.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/LineChartArea2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1923075">
-              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.v3.datetimepicker.d.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/typings/bootstrap.v3.datetimepicker.d.ts">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="29" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="statistics.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rem/statistics.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.846153">
-              <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -213,11 +224,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/rem/deskscreen.php" />
-        <option value="$PROJECT_DIR$/rem/getagents.php" />
-        <option value="$PROJECT_DIR$/rem/status1.json" />
-        <option value="$PROJECT_DIR$/rem/status2.json" />
-        <option value="$PROJECT_DIR$/rem/PersonState.json" />
         <option value="$PROJECT_DIR$/.babel" />
         <option value="$PROJECT_DIR$/list/ListComp.jsx" />
         <option value="$PROJECT_DIR$/rem/queue.php" />
@@ -259,6 +265,15 @@
         <option value="$PROJECT_DIR$/libs/chartist.css" />
         <option value="$PROJECT_DIR$/graphs/Test2.ts" />
         <option value="$PROJECT_DIR$/dashboard3.html" />
+        <option value="$PROJECT_DIR$/rem/Test.php" />
+        <option value="$PROJECT_DIR$/successd2-14T11-35.log" />
+        <option value="$PROJECT_DIR$/success_2-14T11-37.log" />
+        <option value="$PROJECT_DIR$/success_3-14.log" />
+        <option value="$PROJECT_DIR$/rem/getfile.php" />
+        <option value="$PROJECT_DIR$/status.js" />
+        <option value="$PROJECT_DIR$/saveurl.php" />
+        <option value="$PROJECT_DIR$/settings.json" />
+        <option value="$PROJECT_DIR$/timer.js" />
         <option value="$PROJECT_DIR$/list/FieldsUpdate2.ts" />
       </list>
     </option>
@@ -273,9 +288,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="56" />
-    <option name="y" value="-8" />
-    <option name="width" value="1872" />
+    <option name="x" value="65" />
+    <option name="y" value="4" />
+    <option name="width" value="1817" />
     <option name="height" value="1096" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -303,8 +318,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -323,36 +336,10 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="callcenter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="callcenter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="rem" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="callcenter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="callcenter" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -365,18 +352,19 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp\www\callcenter" />
+      <recent name="C:\wamp\www\callcenter\list" />
+      <recent name="C:\wamp\www\callcenter\com" />
+      <recent name="C:\wamp\www\callcenter\graphs" />
+      <recent name="C:\wamp\www\callcenter\data" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\wamp\www\callcenter" />
       <recent name="C:\wamp\www\callcenter\data" />
       <recent name="C:\wamp\www\callcenter\libs" />
       <recent name="C:\wamp\www\callcenter\libs\fonts" />
       <recent name="C:\wamp\www\callcenter\css" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\wamp\www\callcenter\list" />
-      <recent name="C:\wamp\www\callcenter\com" />
-      <recent name="C:\wamp\www\callcenter" />
-      <recent name="C:\wamp\www\callcenter\graphs" />
-      <recent name="C:\wamp\www\callcenter\data" />
     </key>
   </component>
   <component name="RunManager">
@@ -476,21 +464,27 @@
       <option name="project" value="LOCAL" />
       <updated>1457816300657</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="FieldUpdate2">
+      <created>1457923289692</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1457923289692</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="56" y="-8" width="1872" height="1096" extended-state="6" />
+    <frame x="65" y="4" width="1817" height="1096" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19247547" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17369309" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19813278" sideWeight="0.5114504" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19813278" sideWeight="0.48854962" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.033195022" sideWeight="0.50926936" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36618257" sideWeight="0.41765037" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.4958904" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32987553" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36618257" sideWeight="0.58506" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36618257" sideWeight="0.58234966" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -520,69 +514,14 @@
     <MESSAGE value="new server" />
     <MESSAGE value="60 second" />
     <MESSAGE value="remove files" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove files" />
+    <MESSAGE value="FieldUpdate2" />
+    <option name="LAST_COMMIT_MESSAGE" value="FieldUpdate2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ColorDash/left.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3797251">
-          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ColorDash/body.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5773196">
-          <caret line="54" column="38" selection-start-line="54" selection-start-column="38" selection-end-line="54" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ColorDash/head.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.51890033">
-          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ColorDash/layout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3797251">
-          <caret line="13" column="81" selection-start-line="13" selection-start-column="73" selection-end-line="13" selection-end-column="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ColorDash/agentStatuses.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.7817869">
-          <caret line="61" column="37" selection-start-line="61" selection-start-column="37" selection-end-line="61" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ColorDash/agentStatus.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ColorDash/eqWindowHeight.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.37285224">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ColorDash/firstRow.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.52577317">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ColorDash/moment.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -798,14 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="13" selection-start-line="42" selection-start-column="13" selection-end-line="42" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/typings/chartist.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -826,13 +757,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.13691275">
           <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/rem/statistics.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.846153">
+        <state vertical-scroll-proportion="0.0">
           <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
           <folding />
         </state>
@@ -840,16 +770,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/chartist.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.581818">
-          <caret line="174" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/graphs/Test2.ts">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <caret line="174" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -862,26 +784,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LineChartArea2.html">
+    <entry file="file://$PROJECT_DIR$/dashboard1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1923075">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        <state vertical-scroll-proportion="-74.53846">
+          <caret line="114" column="37" selection-start-line="109" selection-start-column="27" selection-end-line="114" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dashboard1.html">
+    <entry file="file://$PROJECT_DIR$/list/FieldsUpdate.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.7272725">
-          <caret line="114" column="37" selection-start-line="109" selection-start-column="27" selection-end-line="114" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="99" column="26" selection-start-line="99" selection-start-column="26" selection-end-line="99" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dashboard3.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.3207545">
-          <caret line="63" column="37" selection-start-line="63" selection-start-column="37" selection-end-line="63" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="67" selection-start-line="87" selection-start-column="67" selection-end-line="87" selection-end-column="67" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#1;n#div#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -945,23 +867,95 @@
             <element signature="n#style#0;n#tspan#0;n#text#0;n#svg#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#text#1;n#svg#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#tspan#0;n#text#1;n#svg#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1457921670896" expanded="true" signature="10195:10211" placeholder="{...}" />
+            <marker date="1457932598976" expanded="true" signature="10242:10258" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/list/FieldsUpdate.ts">
+    <entry file="file://$PROJECT_DIR$/LineChartArea2.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="26" selection-start-line="99" selection-start-column="26" selection-end-line="99" selection-end-column="26" />
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rem/Test.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.65384614">
+          <caret line="1" column="23" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/success_3-14.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26243567">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/success_3-14.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="35.31218">
+          <caret line="1216" column="0" selection-start-line="1216" selection-start-column="0" selection-end-line="1216" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21269296">
+          <caret line="54" column="18" selection-start-line="54" selection-start-column="18" selection-end-line="54" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/list/FieldsUpdate2.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18255034">
-          <caret line="74" column="56" selection-start-line="74" selection-start-column="56" selection-end-line="74" selection-end-column="56" />
+        <state vertical-scroll-proportion="-1.3910806">
+          <caret line="75" column="49" selection-start-line="75" selection-start-column="49" selection-end-line="75" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67066896">
+          <caret line="25" column="80" selection-start-line="25" selection-start-column="80" selection-end-line="25" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/saveurl.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.064150944">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12208258">
+          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/status.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.62092626">
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphs/Test2.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="1" selection-start-line="5" selection-start-column="1" selection-end-line="5" selection-end-column="45" />
           <folding />
         </state>
       </provider>
