@@ -6,7 +6,7 @@
     ///<reference path="Service.ts"/>
 
 
-module desh{
+module dash{
 
     interface VOState{
         code:string;
@@ -138,18 +138,19 @@ module desh{
         $AcdCount:JQuery;
 
         constructor(public $view:JQuery) {
-
             this.$LounchCount = $('#LounchCount');
             this.$BusyCount = $('#BusyCount');
             this.$OfflineCount = $('#OfflineCount');
             this.$AcdCount = $('#AcdCount');
             this.$table = $('<table>').addClass('table').appendTo($view);
             this.$tbody = $('<tbody>').appendTo(this.$table);
+
             service.Service.service.dispatcher.on(service.Service.service.ON_DATA,(evt,data)=>{
                 var agenss = data.agents;
                 this.setData(agenss);
             })
         }
+
         busyCount:number;
         offlineCount:number;
         lunchCount:number;
@@ -159,6 +160,14 @@ module desh{
             this.$OfflineCount.text(this.offlineCount);
             this.$LounchCount.text(this.lunchCount);
             this.$AcdCount.text(this.acdCount);
+        }
+
+        private loadData():void{
+            $.get('rem/agents').done((data)=>{
+                this.dispatcher.triggerHandler(this.ON_DATA,data);
+            }).fail((reason)=>{
+                console.log(reason);
+            })
         }
 
         getPosition(stat:string):number{
@@ -179,7 +188,7 @@ module desh{
                 default : return 9;
             }
         }
-
+        
         setData(data:VOItem[]){
             this.busyCount = 0;
             this.offlineCount = 0;

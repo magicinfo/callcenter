@@ -11,9 +11,10 @@ var logfilename = function(){
     return '_'+(date.getMonth()+1)+'-'+date.getDate()+'.log';
 }
 
-var url='saveurl.php';
+
 
 var settings = JSON.parse(fs.readFileSync("settings.json"));
+var url=settings.php;
 var str = __dirname;
 var ind  = str.indexOf('public_html');
 if(ind==-1){
