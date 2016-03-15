@@ -46,7 +46,7 @@ module dash{
         constructor(item:any){
             this.id = item.id;
             this.$view=$('<tr>');
-            this.$icon = $('<td>').addClass('fa').appendTo(this.$view);
+            this.$icon = $('<span>').addClass('fa').appendTo($('<td>').appendTo(this.$view));
             this.$id = $('<td>').appendTo(this.$view);
             this.$timeout = $('<td>').appendTo(this.$view);
             this.setData(item);
@@ -96,6 +96,7 @@ module dash{
                 else this.$timeout.text(s+'sec');
             }
         }
+
         setTime(timeout:any):void{
             var time:number = Number(timeout);
             if(isNaN(time) || time<0){
@@ -126,7 +127,7 @@ module dash{
                 case 'acd': return 'fa-phone-square';
                 case 'notAcd': return 'fa-phone';
                 case 'idle': return 'fa-hourglass-half';
-                case 'outbound': return 'fa-phone';
+                case 'outbound': return 'fa-hashtag';
                 default: console.log(' no icon for '+stat);
                     return stat;
             }
@@ -192,9 +193,6 @@ module dash{
             for(var i=0,n=ar.length;i<n;i++){
                 var item = ar[i];
                 item.stamp = stamp;
-               // console.log(item.state.code);
-               // item.pos = this.getPosition(item.state.icon);
-               // console.log( item.pos);
             }
 
             var ar2 = _.sortBy(ar,'sort');
