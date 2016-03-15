@@ -44,11 +44,10 @@ module callcente2{
         $TicketsCreated:JQuery;
         $TicketsClosed:JQuery;
         private collection:any={}
-        constructor(public $view:JQuery){
-            var opts={
-                avTime:'avTime',
-                agendsTotal:'agendsTotal'
-            }
+        constructor(public $view:JQuery,opts){
+
+                opts.avTime='avTime',
+                opts.agendsTotal='agendsTotal';
 
             this.collection['avTime'] = new TemplateCopm('#avTimeView','#AvTimeTempalte');
           //  this.collection['agendsTotal'] = new FieldComp('#agendsTotal');
@@ -65,8 +64,11 @@ module callcente2{
            // service.Service.service.dispatcher.on( service.Service.service.ON_DATA,(evt,data)=>this.setData(data))
             //service.Service.service.dispatcher.on( service.Service.service.ON_HELP_DESK,(evt,data)=>this.onHelpDeskData(data));
 
-            this.loadData();
-            this.timer = setInterval(()=>{ this.loadData();},2000);
+
+           if(opts.auto){
+                this.loadData();
+                this.timer = setInterval(()=>{ this.loadData();},2000);
+            }
         }
 
         timer:number;

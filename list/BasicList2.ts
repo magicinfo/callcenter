@@ -5,6 +5,9 @@
     ///<reference path="../typings/underscore.d.ts"/>
     ///<reference path="Service.ts"/>
 
+interface JQuery{
+    nanoScroller():JQuery
+}
 
 module dash{
 
@@ -19,14 +22,13 @@ module dash{
         icon:string;
         msg:string;
     }
-    interface VOItem{
+    interface VOAgent{
         id:number;
-        name:string;
-        code:VOCode;
-        state:VOState;
+        b_r:number;
+        t:number;
+        icon:string;
+        sort:number;
         stamp:number;
-        timeout:string;
-        pos:number;
     }
 
 
@@ -50,14 +52,13 @@ module dash{
             this.setData(item);
         }
 
-        setData(item:VOItem):void{
-            if(this.id==7406) console.log(item.timeout,item);
+        setData(item:VOAgent):void{
             this.stamp = item.stamp;
             this.$id.text(item.id);
             this.$icon.removeClass(this.current);
-            this.current = this.getClass(item.state.icon);
+            this.current = this.getClass(item.icon);
             this.$icon.addClass(this.current);
-            this.setTime(item.timeout);
+            this.setTime(item.t);
         }
 
         lastTime:number;
@@ -123,6 +124,11 @@ module dash{
                 case 'offline': return 'fa-times-circle';
                 case 'lunch': return 'fa-clock-o';
                 case 'acd': return 'fa-phone-square';
+                case 'notAcd': return 'fa-phone';
+                case 'idle': return 'fa-hourglass-half';
+                case 'outbound': return 'fa-phone';
+                default: console.log(' no icon for '+stat);
+                    return stat;
             }
         }
 
@@ -142,13 +148,8 @@ module dash{
             this.$BusyCount = $('#BusyCount');
             this.$OfflineCount = $('#OfflineCount');
             this.$AcdCount = $('#AcdCount');
-            this.$table = $('<table>').addClass('table').appendTo($view);
-            this.$tbody = $('<tbody>').appendTo(this.$table);
-
-            service.Service.service.dispatcher.on(service.Service.service.ON_DATA,(evt,data)=>{
-                var agenss = data.agents;
-                this.setData(agenss);
-            })
+            this.$tbody = $('#AgentsList');
+           this.loadData();
         }
 
         busyCount:number;
@@ -162,34 +163,24 @@ module dash{
             this.$AcdCount.text(this.acdCount);
         }
 
+        currentDate:string = '2016-03-15T10:58:34';
+
+        url:string = 'http://front-desk.ca/mi/callcenter/rem/getagents.php?date=';
         private loadData():void{
-            $.get('rem/agents').done((data)=>{
-                this.dispatcher.triggerHandler(this.ON_DATA,data);
+            $.get(this.url+this.currentDate).done((data)=>{
+              console.log(data);
+                this.currentDate = data.stamp;
+                var agents = data.result.list;
+                this.setData(agents);
+                $("#AgentsScroll").nanoScroller();
             }).fail((reason)=>{
                 console.log(reason);
             })
         }
 
-        getPosition(stat:string):number{
-         // console.log(stat);
-            switch (stat){
-                case 'busy':
-                    this.busyCount++;
-                    return 1;
-                case 'offline':
-                    this.offlineCount++;
-                    return 6;
-                case 'lunch':
-                    this.lunchCount++;
-                    return 3;
-                case 'acd':
-                    this.acdCount++;
-                    return 4;
-                default : return 9;
-            }
-        }
+
         
-        setData(data:VOItem[]){
+        setData(data:VOAgent[]){
             this.busyCount = 0;
             this.offlineCount = 0;
             this.lunchCount =0;
@@ -202,11 +193,11 @@ module dash{
                 var item = ar[i];
                 item.stamp = stamp;
                // console.log(item.state.code);
-                item.pos = this.getPosition(item.state.icon);
+               // item.pos = this.getPosition(item.state.icon);
                // console.log( item.pos);
             }
 
-            var ar2 = _.sortBy(ar,'pos');
+            var ar2 = _.sortBy(ar,'sort');
             for(var i=0,n=ar2.length;i<n;i++) {
                 var item = ar2[i];
                 if(this.collection[item.id]) this.collection[item.id].setData(item);

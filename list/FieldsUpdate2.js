@@ -30,15 +30,13 @@ var callcente2;
     })();
     callcente2.FieldComp = FieldComp;
     var FieldsUpdate = (function () {
-        function FieldsUpdate($view) {
+        function FieldsUpdate($view, opts) {
             var _this = this;
             this.$view = $view;
             this.collection = {};
             this.current = 1457586000 + (60 * 60 * 7);
-            var opts = {
-                avTime: 'avTime',
-                agendsTotal: 'agendsTotal'
-            };
+            opts.avTime = 'avTime',
+                opts.agendsTotal = 'agendsTotal';
             this.collection['avTime'] = new TemplateCopm('#avTimeView', '#AvTimeTempalte');
             //  this.collection['agendsTotal'] = new FieldComp('#agendsTotal');
             this.collection['inqueue'] = new FieldComp('#inqueue');
@@ -51,8 +49,10 @@ var callcente2;
             //  this.$TicketsClosed = $('#TicketsClosed');
             // service.Service.service.dispatcher.on( service.Service.service.ON_DATA,(evt,data)=>this.setData(data))
             //service.Service.service.dispatcher.on( service.Service.service.ON_HELP_DESK,(evt,data)=>this.onHelpDeskData(data));
-            this.loadData();
-            this.timer = setInterval(function () { _this.loadData(); }, 2000);
+            if (opts.auto) {
+                this.loadData();
+                this.timer = setInterval(function () { _this.loadData(); }, 2000);
+            }
         }
         FieldsUpdate.prototype.loadData = function () {
             var _this = this;

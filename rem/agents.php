@@ -1,23 +1,102 @@
 <?
+ini_set('display_errors', 1);
+error_reporting(E_ALL ^ E_NOTICE);
 $out = new stdClass();
-$queue = 'http://107.170.97.252/IS&S/OakvilleDashboard/js/ajax/Oakville_public/queuestatus.xml';
-$queue = simplexml_load_file($queue);
-$ar = array();
-$servertime;
+$folder = '../agents/data0/';
 
-foreach($queue->children() as $node){
-	$item = new stdClass();
-	$item->id=(string) $node->QueueID;
-	$item->name=(string) $node->Name;
-	$time = (string) $node->EventDateTime;
-	$item->now=str_replace('T',' ',$time);
-	$item->handlingtime = (string) $node->AverageHandlingTime;
-	$item->level = (string) $node->ServiceLevel;
-	$item->inqueue = (string) $node->NumCallsInQueue;
-	$item->answered =(string) $node->NumCallsAnswered;
-	$ar[] = $item;
+$id=isset($_GET['id'])?$_GET['id']:0;
+if($id===0) die('hoh');
+$result=0;
+$out= new stdClass();
+$files = scandir($folder);
+
+if($id=='all'){	
+	$result=array();	
+	foreach($files as $file){
+		$item = new stdClass();		
+		$num = (int) substr($file,1,-4);		
+		$item->stamp = $num;
+		$result[]= $item;
+	}
+	
+	$out->result = $result;
+}else {
+	foreach($files as $file){		
+		$num = (int) substr($file,1,-4);
+		if($num==$id) {
+			$result = parseFile($folder.'/'.$file);
+			//sortBySort($result->list);		
+			break;
+		}		
+	}
+	
+	$out->result = $result;
+}
+
+
+
+
+
+function parseFile($filename){
+	function sortBySort($ar){
+		
+ usort($ar, function ($a, $b) {
+    if((int)$a->sort == (int)$b->sort){ return 0 ; }
+    return ($a->sort < $b->sort) ? -1 : 1;
+});
 
 }
+	$xml = simplexml_load_file($filename);
+	$list = array();
+	$mb = getAsObject('MakeBusyReason.json');
+	$ps = getAsObject('PersonState.json');
+	$states=array();
+	$out=new stdClass();
+	foreach($xml->children() as $node){
+		$item = new StdClass();
+		//$item->name = (string)$node->Name;
+		$item->id = (int)$node->AgentID;
+		
+		$state = (string) $node->State;
+		if(isset($ps[$state])){	
+				
+			$item->icon = $ps[$state]->icon;
+			$item->msg = $ps[$state]->msg;
+			$item->sort = $ps[$state]->id;
+			if(isset($states[$item->icon]))$states[$item->icon]++;
+			else $states[$item->icon]=1;
+		}		 
+		$code = (int) $node->MakeBusyReason;
+		$item->b_r = $code;
+		//$item->code = isset($mb[$code])?$mb[$code]:0;		
+		$time = (string)$node->EventDateTime;
+		$item->t = $time;
+		//if($time)$item->timeout = getTimeout($servertime,$time);
+		$list[] = $item;	
+	}
+		usort($list, function ($a, $b) {
+										if((int)$a->sort == (int)$b->sort){ return 0 ; }
+										return ($a->sort < $b->sort) ? -1 : 1;
+									});
+	
+	$out->states = $states;
+	$out->list = $list;
+	return $out;
+	//return $mb;
+
+}
+
+function getAsObject($filename){
+	$ar = json_decode(file_get_contents($filename));
+	$out = array();
+	foreach($ar as $val)$out[$val->code] = $val;
+	return $out;
+}
+
+header('Content-type: application/json');
+echo json_encode($out);
+
+exit();
 
 
 $servertime = $item->now;
@@ -52,19 +131,7 @@ $date2=date_create($servertime);
 }
 
 $list = array();
-foreach($xml->children() as $node){
-	$item = new StdClass();
-	$item->name = (string)$node->Name;
-	$item->id = (int)$node->AgentID;
-	$state = (string) $node->State;
-	$code = (int) $node->MakeBusyReason;
-	$item->code = isset($mb[$code])?$mb[$code]:0;
-	$item->state=isset($ps[$state])?$ps[$state]:0;
-	$time = (string)$node->EventDateTime;
-	if($time)$item->timeout = getTimeout($servertime,$time);
-	$list[] = $item;
 
-}
 
 $out->agents = $list;
 header('Content-type: application/json');
