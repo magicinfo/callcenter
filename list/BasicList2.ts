@@ -4,10 +4,12 @@
     ///<reference path="../typings/jquery.d.ts"/>
     ///<reference path="../typings/underscore.d.ts"/>
     ///<reference path="Service.ts"/>
+///<reference path="../com/Registry.ts"/>
 
 interface JQuery{
     nanoScroller():JQuery
 }
+
 
 module dash{
 
@@ -125,11 +127,11 @@ module dash{
                 case 'offline': return 'fa-times-circle';
                 case 'lunch': return 'fa-clock-o';
                 case 'acd': return 'fa-phone-square';
-                case 'notAcd': return 'fa-phone';
+                case 'nonACD': return 'fa-phone';
                 case 'idle': return 'fa-hourglass-half';
                 case 'outbound': return 'fa-hashtag';
                 default: console.log(' no icon for '+stat);
-                    return stat;
+                    return 'fa-question ';
             }
         }
 
@@ -144,13 +146,29 @@ module dash{
         $LounchCount:JQuery;
         $AcdCount:JQuery;
 
-        constructor(public $view:JQuery) {
+
+        gevents:JQuery;
+        gdata:any;
+        R:Registry;
+        constructor(public $view:JQuery,opt:any) {
+
             this.$LounchCount = $('#LounchCount');
             this.$BusyCount = $('#BusyCount');
             this.$OfflineCount = $('#OfflineCount');
             this.$AcdCount = $('#AcdCount');
             this.$tbody = $('#AgentsList');
-           this.loadData();
+
+            if(Registry.data[Registry.CURRENT_DATE]){
+               this.currentDate =  Registry.data[Registry.CURRENT_DATE];
+                Registry.event.on(Registry.LOAD_DATA,(evt,date)=>{
+                  //  console.log(Registry.LOAD_DATA,date);
+                    this.loadData(date);
+                });
+            }else{
+                setInterval(()=>{this.loadData(this.currentDate)},5000);
+            }
+
+            this.loadData(this.currentDate);
         }
 
         busyCount:number;
@@ -164,13 +182,17 @@ module dash{
             this.$AcdCount.text(this.acdCount);
         }
 
-        currentDate:string = '2016-03-15T10:58:34';
+        currentDate:string = '2016-03-15T7:58:34';
 
-        url:string = 'http://front-desk.ca/mi/callcenter/rem/getagents.php?date=';
-        private loadData():void{
-            $.get(this.url+this.currentDate).done((data)=>{
-              console.log(data);
+        url:string = 'http://front-desk.ca/mi/callcenter/rem/getagents?date=';
+        private loadData(date:string):void{
+            this.currentDate = date;
+           // console.log(this.currentDate);
+            $.get(this.url+date).done((data)=>{
+           //   console.log(data);
                 this.currentDate = data.stamp;
+                Registry.event.triggerHandler(Registry.LIST_NEW_DATE,data.stamp)
+                Registry.event.triggerHandler(Registry.LIST_NEW_DATA,data);
                 var agents = data.result.list;
                 this.setData(agents);
                 $("#AgentsScroll").nanoScroller();
@@ -186,7 +208,7 @@ module dash{
             this.offlineCount = 0;
             this.lunchCount =0;
             this.acdCount=0;
-           console.log(data);
+           //console.log(data);
             var ar = data;
             if(!data) return;
             var stamp:number = new Date().getSeconds();

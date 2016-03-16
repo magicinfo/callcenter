@@ -5,6 +5,7 @@
 ///<reference path="Service.ts"/>
 ///<reference path="BasicList.ts"/>
 ///<reference path="../typings/moment.d.ts"/>
+///<reference path="../com/Registry.ts"/>
 var callcente2;
 (function (callcente2) {
     var TemplateCopm = (function () {
@@ -34,15 +35,20 @@ var callcente2;
             var _this = this;
             this.$view = $view;
             this.collection = {};
+            this.url = 'http://front-desk.ca/mi/callcenter/rem/getStatus?date=';
             this.current = 1457586000 + (60 * 60 * 7);
+            Registry.event.on(Registry.LOAD_DATA, function (evt, date) {
+                _this.loadData(date);
+            });
             opts.avTime = 'avTime',
                 opts.agendsTotal = 'agendsTotal';
             this.collection['avTime'] = new TemplateCopm('#avTimeView', '#AvTimeTempalte');
             //  this.collection['agendsTotal'] = new FieldComp('#agendsTotal');
             this.collection['inqueue'] = new FieldComp('#inqueue');
-            this.collection['current'] = new FieldComp('#CurrntTime');
+            this.collection['current'] = new FieldComp('#CurrentTime');
             this.collection['date'] = new FieldComp('#CurrntDate');
             this.collection['level'] = new FieldComp('#ServiceLevel');
+            this.collection['answd'] = new FieldComp('#Answered');
             //  this.collection['TicketsCreated'] = new FieldComp('#TicketsCreated');
             // this.collection['TicketsClosedSameDay'] = new FieldComp('#TicketsClosed');
             // this.$TicketsCreated = $('#TicketsCreated');
@@ -50,22 +56,23 @@ var callcente2;
             // service.Service.service.dispatcher.on( service.Service.service.ON_DATA,(evt,data)=>this.setData(data))
             //service.Service.service.dispatcher.on( service.Service.service.ON_HELP_DESK,(evt,data)=>this.onHelpDeskData(data));
             if (opts.auto) {
-                this.loadData();
-                this.timer = setInterval(function () { _this.loadData(); }, 2000);
             }
         }
-        FieldsUpdate.prototype.loadData = function () {
+        FieldsUpdate.prototype.loadData = function (date) {
             var _this = this;
-            this.current += (60 * 5);
-            $.get('rem/getCurrent?stamp=' + this.current).done(function (res) {
-                console.log(res);
-                var obj = res.result[0];
+            this.currentDate = date;
+            // console.log('loadData '+date);
+            // this.current+=(60*5);
+            $.get(this.url + this.currentDate).done(function (res) {
+                //  console.log(res);
+                var obj = res.result.list[0];
                 _this.collection['level'].setData(obj.level);
-                _this.collection['inqueue'].setData(obj.inqueue);
-                var t = _this.formattime(obj.htime);
+                _this.collection['inqueue'].setData(obj.queue);
+                var t = _this.formattime(obj.AHT);
                 _this.collection['avTime'].setData(t);
-                _this.collection['current'].setData(moment.unix(_this.current).format('LT'));
-                _this.collection['date'].setData(moment.unix(obj.stamp).format('LL'));
+                _this.collection['answd'].setData(obj.answd);
+                _this.collection['current'].setData(moment(obj.t).format('MMM DD  h:mm'));
+                //  this.collection['date'].setData(moment.unix(obj.stamp).format('LL'));
             });
         };
         FieldsUpdate.prototype.onHelpDeskData = function (data) {
@@ -92,6 +99,7 @@ var callcente2;
             var out = {};
             var m;
             var s;
+            // console.log('formattime  '+data);
             var num = Number(data);
             if (!isNaN(num)) {
                 m = Math.floor(num / 60);
@@ -102,7 +110,6 @@ var callcente2;
                 out.v4 = 's';
                 return out;
             }
-            console.log(data);
             var out = {};
             var ht = data.split(':');
             s = Number(ht[2]);
@@ -116,14 +123,13 @@ var callcente2;
                 out.v2 = 'm';
             }
             if (s == 0) {
-                out.v3 = '';
+                out.v3 = '0';
                 out.v4 = '';
             }
             else {
                 out.v3 = s;
                 out.v4 = 's';
             }
-            console.log(out);
             return out;
         };
         return FieldsUpdate;

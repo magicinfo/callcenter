@@ -5,6 +5,8 @@
 ///<reference path="Service.ts"/>
 ///<reference path="BasicList.ts"/>
    ///<reference path="../typings/moment.d.ts"/>
+    ///<reference path="../com/Registry.ts"/>
+
 
 module callcente2{
     interface VOData{
@@ -44,17 +46,23 @@ module callcente2{
         $TicketsCreated:JQuery;
         $TicketsClosed:JQuery;
         private collection:any={}
+        url:string='http://front-desk.ca/mi/callcenter/rem/getStatus?date=';
         constructor(public $view:JQuery,opts){
 
+            Registry.event.on(Registry.LOAD_DATA,(evt,date)=>{
+              this.loadData(date);
+            })
                 opts.avTime='avTime',
                 opts.agendsTotal='agendsTotal';
+
 
             this.collection['avTime'] = new TemplateCopm('#avTimeView','#AvTimeTempalte');
           //  this.collection['agendsTotal'] = new FieldComp('#agendsTotal');
            this.collection['inqueue'] = new FieldComp('#inqueue');
-           this.collection['current'] = new FieldComp('#CurrntTime');
+           this.collection['current'] = new FieldComp('#CurrentTime');
             this.collection['date'] = new FieldComp('#CurrntDate');
             this.collection['level'] = new FieldComp('#ServiceLevel');
+            this.collection['answd'] = new FieldComp('#Answered');
           //  this.collection['TicketsCreated'] = new FieldComp('#TicketsCreated');
            // this.collection['TicketsClosedSameDay'] = new FieldComp('#TicketsClosed');
 
@@ -66,26 +74,31 @@ module callcente2{
 
 
            if(opts.auto){
-                this.loadData();
-                this.timer = setInterval(()=>{ this.loadData();},2000);
+               // this.loadData();
+               // this.timer = setInterval(()=>{ this.loadData();},2000);
             }
         }
 
         timer:number;
         current = 1457586000+(60*60*7);
-        loadData():void{
-            this.current+=(60*5);
-            $.get('rem/getCurrent?stamp='+this.current).done((res)=>{
-                console.log(res);
-                var obj = res.result[0];
+        currentDate:string;
+
+        loadData(date:string):void{
+            this.currentDate = date;
+           // console.log('loadData '+date);
+           // this.current+=(60*5);
+            $.get(this.url+this.currentDate).done((res)=>{
+              //  console.log(res);
+                var obj = res.result.list[0];
+
                 this.collection['level'].setData(obj.level);
-                this.collection['inqueue'].setData(obj.inqueue);
-                var t:any  = this.formattime(obj.htime);
-                this.collection['avTime'].setData(t)
+                this.collection['inqueue'].setData(obj.queue);
+                var t:any  = this.formattime(obj.AHT);
+               this.collection['avTime'].setData(t);
+                this.collection['answd'].setData(obj.answd);
+                this.collection['current'].setData(moment(obj.t).format('MMM DD  h:mm'));
 
-                this.collection['current'].setData(moment.unix(this.current).format('LT'));
-
-                this.collection['date'].setData(moment.unix(obj.stamp).format('LL'));
+              //  this.collection['date'].setData(moment.unix(obj.stamp).format('LL'));
 
             })
         }
@@ -112,11 +125,14 @@ module callcente2{
         }
 
         private formattime(data):any{
+
             var out:any={};
             var m:number;
             var s:number;
+           // console.log('formattime  '+data);
 
             var num = Number(data);
+
             if(!isNaN(num)){
                 m=Math.floor(num/60);
                 s= num%60;
@@ -126,7 +142,7 @@ module callcente2{
                 out.v4='s';
                 return out;
             }
-            console.log(data);
+
             var out:any={}
             var ht = data.split(':');
             s = Number(ht[2]);
@@ -139,13 +155,13 @@ module callcente2{
                 out.v2='m';
             }
             if(s==0){
-                out.v3='';
+                out.v3='0';
                 out.v4='';
             }else {
                 out.v3=s;
                 out.v4='s';
             }
-            console.log(out);
+
             return out;
         }
 

@@ -1,20 +1,20 @@
 [
   {
-	  "id":1,
+	  "id":21,
     "code":"VOICE_UNKNOWN",
     "msg":"Agent device in an unknown state",
     "status":"MAKE BUSY NO REASON – CREATE A SYMBOL",
     "icon":"busy"
   },
   {
-	   "id":2,
+	   "id":20,
     "code":"VOICE_LOGGED_OUT",
     "msg":"Logged out agent device",
     "status":"SHOW AS LOGGED OUT",
     "icon":"offline"
   },
   {
-	  "id":3,
+	  "id":15,
     "code":"VOICE_IDLE",
     "msg":"Idle agent device.",
     "status":"WAITING FOR A CALL",
@@ -78,13 +78,6 @@
   },
   {
 	  "id":12,
-    "code":"VOICE_OFF_HOOK",
-    "msg":"Off-hook state for agent device.",
-    "status":"ON A CALL - ACD",
-    "icon":"acd"
-  },
-  {
-	  "id":13,
     "code":"VOICE_OFF_HOOK",
     "msg":"Off-hook state for agent device.",
     "status":"ON A CALL - ACD",

@@ -4,12 +4,16 @@
     ///<reference path="../typings/jquery.d.ts"/>
     ///<reference path="../typings/chartist.d.ts"/>
 ///<reference path="../typings/moment.d.ts"/>
+    ///<reference path="../typings/underscore.d.ts"/>
 ///<reference path="../typings/bootstrap.v3.datetimepicker.d.ts"/>
 
-    
+    ///<reference path="../com/Registry.ts"/>
+
 module graphs{
 
     import DP = BootstrapV3DatetimePicker;
+   // import interpolateNumber = d3.interpolateNumber;
+   // import stream = d3.geo.stream;
    // import text = d3.text;
     var emmiter:JQuery=$({});
     var ON_DATE_CAHGED:string='ON_DATA_CAHGED';
@@ -21,13 +25,19 @@ module graphs{
         $From:JQuery;
         $To:JQuery;
 
-        constructor(){
+        constructor(options){
+
            this.$From =  $('#datetimepicker6').datetimepicker();
             this.FromDP =  this.$From.data('DateTimePicker');
             this.$To = $("#datetimepicker7").datetimepicker({
                 useCurrent: false //Important! See issue #1075
             });
 
+            if(!options.datePicker){
+                this.$From.hide();
+                this.$To.hide();
+                return
+            }
             this.ToDP =  this.$To.data('DateTimePicker');
 
 
@@ -67,7 +77,7 @@ module graphs{
         }
     }
 
-    export class Test2 {
+    export class LineChart {
 
         private chart:Chartist.IChartistLineChart;
 
@@ -78,12 +88,15 @@ module graphs{
                 })
                ]
         }
-        loadData(from:number,to:number):void {
-            var loading:string = moment.unix(from).calendar()+' to: '+moment.unix(to).calendar();
 
+        loadData(from:string,to:string):void {
+           var loading:string = moment(from).calendar()+' to: '+ moment(to).calendar();
+
+            var url = _.template(this.url)({from:from,to:to});
+           // console.log(url);
             $('#DateRange').text(loading);
-            $.get('rem/statistics?from='+from+'&to='+to).done((res)=> {
-                console.log(res);
+            $.get(url).done((res)=> {
+               // console.log(res);
                 this.addVerticalLines();
                 var labels=[];
                 var series=[]
@@ -109,8 +122,8 @@ module graphs{
                         labels.push(moment(d).format('DD')+' '+ moment(d).format('LT'));
                     }
                     service.push(v.level);
-                    htime.push(v.htime);
-                    inqueue.push(v.inqueue*35);
+                    htime.push(v.AHT/3);
+                    inqueue.push(v.queue*35);
                 })
                 let data={
                     labels:labels,
@@ -141,20 +154,34 @@ $('#RangeTotal').text(count);
         }
 
 
+        url:string='http://front-desk.ca/mi/callcenter/rem/getstatusgraph?from=<%=from%>&to=<%=to%>';
+
+        constructor(private selector:string,options:any){
 
 
-        constructor(private selector:string){
+            Registry.event.on(Registry.LOAD_DATA,(evt,date:string)=>{
+                date = date.replace(' ','T');
+                var ar = date.split('T');
+                ar[1]=Registry.data[Registry.WORK_START_TIME];
+               var start:string = ar.join('T');
+                this.loadData(start,date)
 
-           var p:DatesPicker = new DatesPicker();
+            })
+                var p:DatesPicker = new DatesPicker(options || {});
+
+
             emmiter.on(ON_DATE_CAHGED,(evt,val1,val2)=>{
                 console.log(val1,val2);
-                this.loadData(val1,val2);
+              //  this.loadData(val1,val2);
             })
 
 
-            this.loadData(0,Number(moment().format('X')));
+
+
+          //  this.loadData(0,Number(moment().format('X')));
 
         }
+
 
     }
 }

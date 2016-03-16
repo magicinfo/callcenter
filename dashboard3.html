@@ -25,10 +25,19 @@
     <script src="libs/chartist.min.js"></script>
     <script src="libs/chartist-plugin-vertical-line.js"></script>
 
-
+    <script src="com/Registry.js"></script>
+    <script src="com/App.js"></script>
     <script src="com/ScriptImport.js"></script>
 </head>
 <body>
+<style>
+    .wrapper{
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+    }
+
+</style>
 <div class="wrapper">
     <div id="FieldsUpdate" class="row">
         <div class="col-lg-3 col-md-6">
@@ -36,17 +45,17 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-comments fa-5x"></i>
+                            <i class="fa fa-shopping-cart fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div id="ServiceLevel" class="huge">26</div>
-                            <div>Service Level</div>
+                            <div id="Answered" class="huge">0</div>
+                            <div>Answered</div>
                         </div>
                     </div>
                 </div>
                 <a href="#">
                     <div class="panel-footer">
-                        <span class="pull-left">What is service level</span>
+                        <span class="pull-left">Answered calls today</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -58,7 +67,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-tasks fa-5x"></i>
+                            <i class="fa fa-comment fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <script id="AvTimeTempalte" type="text/template">
@@ -86,17 +95,17 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-shopping-cart fa-5x"></i>
+                            <i class="fa fa-clock-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div id="CurrntTime" class="huge">124</div>
-                            <div id="CurrntDate">Current Time</div>
+                            <div  id="CurrentTime" class="huge">0</div>
+                            <div>Service Level <span id="ServiceLevel"></span> </div>
                         </div>
                     </div>
                 </div>
                 <a href="#">
                     <div class="panel-footer">
-                        <span class="pull-left">Time at reading take place</span>
+                        <span class="pull-left">Avarage service level</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
@@ -108,7 +117,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-support fa-5x"></i>
+                            <i class="fa fa-bell fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div id="inqueue" class="huge"></div>
@@ -116,13 +125,13 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+
                     <div class="panel-footer">
                         <span class="pull-left">Calls in queue</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
-                </a>
+
             </div>
         </div>
     </div>
@@ -163,8 +172,8 @@
                                 </style>
 
                                 <div class="col-md-6">
-                                <i class="fa fa-bar-chart-o fa-fw"></i>
-                                <span>New  Area Chart Example</span>
+                                <i class="fa fa-area-chart fa-fw"></i>
+                                <span>Live data</span>
                                 </div>
 
                                     <div class='col-md-3'>
@@ -200,57 +209,201 @@
                     </div>
                     <script>
 
-                        importScript('graphs/Test2.js',function(){
+                        importScript('graphs/LineChart.js',function(){
 
-                            var ch = new graphs.Test2('#area-chart-new');
+                            var ch = new graphs.LineChart('#area-chart-new',{});
                         })
 
                     </script>
                 </div>
 
+
+
                 <!-- /.panel-body -->
             </div>
             <!-- /.panel  End of Graph -->
+<style>
+    .circle-center{
+       display: inline-block;
+        background-color: white;
+        border-radius: 50%;
+        color: #575757;
+        padding: 12px;
+        min-width: 2em;
+
+
+    }
+    .separator{
+        height: 50px;
+    }
+</style>
+
+            <div class="separator hidden-xs">
+
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row text-center">
+                                <span  id="TicketsCreated" class="circle-center huge">
+0
+                                </span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="panel-footer">
+                            <span class="pull-left">Tickets craeted</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <div class="row text-center">
+                                                    <span class="circle-center huge">
+                                                       0
+                                                    </span>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="panel-footer">
+                                    <span class="pull-left">Tickets created</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row text-center">
+                                                    <span id="NumAgents" class="circle-center huge">
+                                                        0
+                                                    </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="panel-footer">
+                            <span class="pull-left">Number of agents</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+                    </div>
 
 
 
+                </div>
+
+            </div><!--End of row-->
+
+            <div class="separator hidden-xs">
+
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>
+                            <span>History</span>
+                        </div>
+
+                        <div class='col-md-3'>
+
+                        </div>
+                        <div class='col-md-3'>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /.panel-heading -->
 
 
-            <!-- Start of Table Agents-->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <style>
+                                #area-bars-new .ct-bar{
+                                    stroke: #2d8ed7;
+                                }
+                            </style>
+                            <p>% of Calls Closed within 24 Hours  </p>
+                                            <div id="area-bars-new" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+
+                                            </div>
+
+                        </div>
+
+                                            <script>
+
+                                                importScript('graphs/BarChart.js',function(){
+
+                                                    var ch = new graphs.BarChart('#area-bars-new',{id:1});
+                                                })
+
+
+                                            </script>
+                        <div class="col-sm-6">
+                            <style>
+                                #area-bars-new2 .ct-bar{
+                                    stroke: #22abd7;
+                                }
+                            </style>
+                            <p>% of Tickets Created in 24 hours </p>
+                            <div id="area-bars-new2" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+
+                            </div>
+
+                            <script>
+
+                                importScript('graphs/BarChart.js',function(){
+
+                                    var ch = new graphs.BarChart('#area-bars-new2',{id:1});
+                                })
+
+
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
 
 
 
-            <!-- /.panel -->
+                <!-- /.panel-body -->
+            </div>
 
-            <!-- /.panel -->
+
         </div>
         <!-- /.col-lg-8 -->
         <div class="col-sm-4">
+
+
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i> Agents
-                    <!--<div class="pull-right">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                Actions
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right" role="menu">
-                                <li><a href="#">Action</a>
-                                </li>
-                                <li><a href="#">Another action</a>
-                                </li>
-                                <li><a href="#">Something else here</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>-->
+                    <i class="fa fa-table fa-fw"></i> Agents
                 </div>
                 <!-- /.panel-heading -->
-                <div id="AgentsListView" class="panel-body">
+                <div id="AgentsListView"  class="panel-body">
                     <style>
                          .fa-minus-circle{
                              color: #d9534f;
@@ -272,10 +425,12 @@
                             color: #2aabd2;
                         }
                         #AgentsScroll{
-                            height: 500px;
+                            height: 800px;
                         }
 
                     </style>
+
+
 
                     <div id="AgentsScroll"  class="nano">
                             <div class="table-responsive nano-content">
@@ -309,6 +464,11 @@
 
 
             </div>
+
+
+
+
+
         </div>
 
     </div>

@@ -4,20 +4,29 @@
 ///<reference path="../typings/jquery.d.ts"/>
 ///<reference path="../typings/chartist.d.ts"/>
 ///<reference path="../typings/moment.d.ts"/>
+///<reference path="../typings/underscore.d.ts"/>
 ///<reference path="../typings/bootstrap.v3.datetimepicker.d.ts"/>
+///<reference path="../com/Registry.ts"/>
 var graphs;
 (function (graphs) {
+    // import interpolateNumber = d3.interpolateNumber;
+    // import stream = d3.geo.stream;
     // import text = d3.text;
     var emmiter = $({});
     var ON_DATE_CAHGED = 'ON_DATA_CAHGED';
     var DatesPicker = (function () {
-        function DatesPicker() {
+        function DatesPicker(options) {
             var _this = this;
             this.$From = $('#datetimepicker6').datetimepicker();
             this.FromDP = this.$From.data('DateTimePicker');
             this.$To = $("#datetimepicker7").datetimepicker({
                 useCurrent: false //Important! See issue #1075
             });
+            if (!options.datePicker) {
+                this.$From.hide();
+                this.$To.hide();
+                return;
+            }
             this.ToDP = this.$To.data('DateTimePicker');
             this.$From.on("dp.change", function (e) {
                 // this.from = e.date.format('X');
@@ -49,8 +58,8 @@ var graphs;
         return DatesPicker;
     })();
     graphs.DatesPicker = DatesPicker;
-    var Test2 = (function () {
-        function Test2(selector) {
+    var LineChart = (function () {
+        function LineChart(selector, options) {
             var _this = this;
             this.selector = selector;
             this.options = {
@@ -68,26 +77,36 @@ var graphs;
                     showLabel: true
                 }
             };
-            var p = new DatesPicker();
+            this.url = 'http://front-desk.ca/mi/callcenter/rem/getstatusgraph?from=<%=from%>&to=<%=to%>';
+            Registry.event.on(Registry.LOAD_DATA, function (evt, date) {
+                date = date.replace(' ', 'T');
+                var ar = date.split('T');
+                ar[1] = Registry.data[Registry.WORK_START_TIME];
+                var start = ar.join('T');
+                _this.loadData(start, date);
+            });
+            var p = new DatesPicker(options || {});
             emmiter.on(ON_DATE_CAHGED, function (evt, val1, val2) {
                 console.log(val1, val2);
-                _this.loadData(val1, val2);
+                //  this.loadData(val1,val2);
             });
-            this.loadData(0, Number(moment().format('X')));
+            //  this.loadData(0,Number(moment().format('X')));
         }
-        Test2.prototype.addVerticalLines = function () {
+        LineChart.prototype.addVerticalLines = function () {
             this.options.plugins = [
                 Chartist.plugins.verticalLine({
                     position: 'v'
                 })
             ];
         };
-        Test2.prototype.loadData = function (from, to) {
+        LineChart.prototype.loadData = function (from, to) {
             var _this = this;
-            var loading = moment.unix(from).calendar() + ' to: ' + moment.unix(to).calendar();
+            var loading = moment(from).calendar() + ' to: ' + moment(to).calendar();
+            var url = _.template(this.url)({ from: from, to: to });
+            // console.log(url);
             $('#DateRange').text(loading);
-            $.get('rem/statistics?from=' + from + '&to=' + to).done(function (res) {
-                console.log(res);
+            $.get(url).done(function (res) {
+                // console.log(res);
                 _this.addVerticalLines();
                 var labels = [];
                 var series = [];
@@ -111,8 +130,8 @@ var graphs;
                         labels.push(moment(d).format('DD') + ' ' + moment(d).format('LT'));
                     }
                     service.push(v.level);
-                    htime.push(v.htime);
-                    inqueue.push(v.inqueue * 35);
+                    htime.push(v.AHT / 3);
+                    inqueue.push(v.queue * 35);
                 });
                 var data = {
                     labels: labels,
@@ -122,11 +141,11 @@ var graphs;
                 $('#RangeTotal').text(count);
             });
         };
-        Test2.prototype.drawChart = function (data) {
+        LineChart.prototype.drawChart = function (data) {
             this.chart = new Chartist.Line(this.selector, data, this.options);
         };
-        return Test2;
+        return LineChart;
     })();
-    graphs.Test2 = Test2;
+    graphs.LineChart = LineChart;
 })(graphs || (graphs = {}));
 //# sourceMappingURL=Test2.js.map
