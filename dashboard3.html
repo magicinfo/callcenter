@@ -149,7 +149,6 @@
                 <div id="DatePicker" class="panel-heading">
                     <div class="row">
 
-
                                 <style>
                                     #DatePicker .form-group{
                                         margin-bottom: 0;;
@@ -168,6 +167,10 @@
                                         stroke: #e9aef4; }
                                     .ct-series-c .ct-slice-pie, .ct-series-c .ct-area {
                                         fill: #e9b4f4; }
+
+                                   #area-chart-new{
+                                       min-height: 185px;
+                                   }
 
                                 </style>
 
@@ -249,7 +252,8 @@
                         <div class="panel-heading">
                             <div class="row text-center">
                                 <span  id="TicketsCreated" class="circle-center huge">
-0
+
+                                    50
                                 </span>
 
                             </div>
@@ -269,7 +273,7 @@
                                 <div class="panel-heading">
                                     <div class="row text-center">
                                                     <span class="circle-center huge">
-                                                       0
+                                                       24
                                                     </span>
 
                                     </div>
@@ -277,7 +281,7 @@
                                 </div>
 
                                 <div class="panel-footer">
-                                    <span class="pull-left">Tickets created</span>
+                                    <span class="pull-left">Tickets closed</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
@@ -290,7 +294,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row text-center">
-                                                    <span id="NumAgents" class="circle-center huge">
+                                                    <span id="AgendsTotal" class="circle-center huge">
                                                         0
                                                     </span>
 
@@ -400,7 +404,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-table fa-fw"></i> Agents
+                    <i class="fa fa-user fa-fw"></i> Agents
                 </div>
                 <!-- /.panel-heading -->
                 <div id="AgentsListView"  class="panel-body">
@@ -425,7 +429,7 @@
                             color: #2aabd2;
                         }
                         #AgentsScroll{
-                            height: 800px;
+                            height: 760px;
                         }
 
                     </style>

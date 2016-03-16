@@ -57,13 +57,18 @@ module callcente2{
 
 
             this.collection['avTime'] = new TemplateCopm('#avTimeView','#AvTimeTempalte');
-          //  this.collection['agendsTotal'] = new FieldComp('#agendsTotal');
+           this.collection['agendsTotal'] = new FieldComp('#AgendsTotal');
            this.collection['inqueue'] = new FieldComp('#inqueue');
            this.collection['current'] = new FieldComp('#CurrentTime');
             this.collection['date'] = new FieldComp('#CurrntDate');
             this.collection['level'] = new FieldComp('#ServiceLevel');
             this.collection['answd'] = new FieldComp('#Answered');
-          //  this.collection['TicketsCreated'] = new FieldComp('#TicketsCreated');
+            Registry.event.on(Registry.LIST_NEW_DATA,(evt, data)=>{
+
+                this.collection['agendsTotal'].setData(data.result.list.length)
+
+            })
+           this.collection['TicketsCreated'] = new FieldComp('#TicketsCreated');
            // this.collection['TicketsClosedSameDay'] = new FieldComp('#TicketsClosed');
 
            // this.$TicketsCreated = $('#TicketsCreated');
@@ -97,6 +102,7 @@ module callcente2{
                this.collection['avTime'].setData(t);
                 this.collection['answd'].setData(obj.answd);
                 this.collection['current'].setData(moment(obj.t).format('MMM DD  h:mm'));
+               // this.collection['TicketsCreated']
 
               //  this.collection['date'].setData(moment.unix(obj.stamp).format('LL'));
 
