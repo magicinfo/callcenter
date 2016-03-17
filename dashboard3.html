@@ -154,9 +154,9 @@
                                         margin-bottom: 0;;
                                     }
                                     .ct-series-a .ct-point, .ct-series-a .ct-line, .ct-series-a .ct-bar, .ct-series-a .ct-slice-donut {
-                                        stroke: #d79372; }
+                                        stroke: #26abd7; }
                                     .ct-series-a .ct-slice-pie, .ct-series-a .ct-area {
-                                        fill: #d7aba6; }
+                                        fill: #0eb2d7; }
 
                                     .ct-series-b .ct-point, .ct-series-b .ct-line, .ct-series-b .ct-bar, .ct-series-b .ct-slice-donut {
                                         stroke: #2ff479; }
@@ -172,6 +172,18 @@
                                        min-height: 185px;
                                    }
 
+                                    #DateRange, #RangeTotal{
+                                        display: none;
+                                    }
+                                    .ct-series-a{
+                                       color: #337ab7;
+                                    }
+                                    .ct-series-c{
+                                        color: #d9534f;
+                                    }
+                                    .ct-series-b{
+                                        color:  #2ff479;;
+                                    }
                                 </style>
 
                                 <div class="col-md-6">
@@ -205,6 +217,11 @@
 
 
                 <div class="panel-body">
+                    <p id="LineLegends">
+                        <span class="fa fa-square fa-fw ct-series-a"></span> <span> Service level</span>
+                        <span class="fa fa-square fa-fw ct-series-b"></span> <span> Avarage time</span>
+                        <span class="fa fa-square fa-fw ct-series-c"></span> <span> Cals in queue</span>
+                    </p>
                     <p id="DateRange"></p>
                     <p id="RangeTotal" class="pull-right"></p>
                     <div id="area-chart-new" style="position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
