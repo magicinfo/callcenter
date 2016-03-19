@@ -14,8 +14,8 @@ var graphs;
     // import text = d3.text;
     var emmiter = $({});
     var ON_DATE_CAHGED = 'ON_DATA_CAHGED';
-    var DatesPicker = (function () {
-        function DatesPicker(options) {
+    var DatesPicker2 = (function () {
+        function DatesPicker2(options) {
             var _this = this;
             this.$From = $('#datetimepicker6').datetimepicker();
             this.FromDP = this.$From.data('DateTimePicker');
@@ -55,9 +55,9 @@ var graphs;
                 _this.to = val;
             });
         }
-        return DatesPicker;
+        return DatesPicker2;
     })();
-    graphs.DatesPicker = DatesPicker;
+    graphs.DatesPicker2 = DatesPicker2;
     var LineChart = (function () {
         function LineChart(selector, options) {
             var _this = this;
@@ -85,7 +85,7 @@ var graphs;
                 var start = ar.join('T');
                 _this.loadData(start, date);
             });
-            var p = new DatesPicker(options || {});
+            var p = new graphs.DatesPicker(options || {});
             emmiter.on(ON_DATE_CAHGED, function (evt, val1, val2) {
                 console.log(val1, val2);
                 //  this.loadData(val1,val2);

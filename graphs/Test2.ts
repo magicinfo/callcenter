@@ -17,7 +17,7 @@ module graphs{
    // import text = d3.text;
     var emmiter:JQuery=$({});
     var ON_DATE_CAHGED:string='ON_DATA_CAHGED';
-    export class DatesPicker{
+    export class DatesPicker2{
         from:number;
         to:number;
         FromDP:DP.Datetimepicker;
