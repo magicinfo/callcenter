@@ -9,26 +9,28 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var List2 = (function () {
-    function List2(listid) {
+    function List2(listid, options) {
         var _this = this;
-        this.currentDate = '2016-03-15T7:58:34';
+        this.getparams = '2016-03-15T7:58:34';
         this.collection = {};
         this.url = 'http://front-desk.ca/mi/callcenter/rem/getagents?date=';
+        for (var str in options)
+            this[str] = options[str];
         this.$view = $(listid);
         this.$tbody = this.$view.find('[data-id=list]:first');
         this.$nano = this.$view.find('.nano:first');
         require(['base', 'ListItem', 'nano'], function () {
-            _this.loadData(_this.currentDate);
+            _this.loadData(_this.getparams);
         });
         this.template = this.$view.find('[data-id=template]').html();
     }
     List2.prototype.loadData = function (date) {
         var _this = this;
-        this.currentDate = date;
-        // console.log(this.currentDate);
+        this.getparams = date;
+        console.log(this.url);
         $.get(this.url + date).done(function (data) {
             //   console.log(data);
-            _this.currentDate = data.stamp;
+            _this.getparams = data.stamp;
             Registry.event.triggerHandler(Registry.LIST_NEW_DATE, data.stamp);
             Registry.event.triggerHandler(Registry.LIST_NEW_DATA, data);
             var agents = data.result.list;
@@ -74,8 +76,8 @@ var List2 = (function () {
 })();
 var List3 = (function (_super) {
     __extends(List3, _super);
-    function List3(listId) {
-        _super.call(this, listId);
+    function List3(listId, options) {
+        _super.call(this, listId, options);
     }
     return List3;
 })(List2);

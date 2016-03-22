@@ -46,27 +46,99 @@
 </head>
 <body>
 <style>
+
     .wrapper{
         width: 100%;
         height: 100%;
         padding: 20px;
+        background-color:#FDFAC3 ;
+        background-image: url("http://localhost/callcenter/css/bgheader.png");
+        background-repeat: no-repeat;
+        background-size: 100% 255px;
     }
 
-    #AgentsList1 .nano{
-        height: 400px;
-    }
-    #AgentsList2 .nano{
-        height: 400px;
-    }
+
 
 </style>
 <div class="wrapper">
+    <div id="header1">
+        <style>
+            #header1{
+                height: 125px;
+            }
+            #Panel1{
+                height: 250px ;
+            }
+            #Panel2{
+                height: 390px ;
+            }
+
+        </style>
+
+    </div>
 <div class="row">
     <div class="col-lg-4">
+        <div id="Panel1" class="panel">
+
+        </div>
+        <div id="Panel2" class="panel">
+
+        </div>
 
     </div>
     <div class="col-lg-8">
+        <div id="clock">
+            <style>
+                #clock{
+                    height: 150px;
+                    background-color: rgba(0,0,0,0.3);
+                }
+
+            </style>
+
+        </div>
         <div id="AgentsList1" data-str="apps/List2">
+            <ul id="TableHeaders">
+<li>NAME</li><li>STATUS</li><li>DIAL</li><li>PRESCRIBER</li><li>NON-PRES</li>
+            </ul>
+            <style>
+                #TableHeaders{
+                    font-size: 40px;
+                    margin-bottom: 0;
+                    height:60px ;
+                    background-color:#005C95;
+                    color: white;
+                }
+                #TableHeaders>li{
+                    display: inline-block;
+                }
+                #AgentsList1 .nano{
+                    height: 445px;
+                }
+
+                #AgentsList1 table{
+
+                    color: white;
+                }
+                #AgentsList1 table{
+
+
+                }
+                #AgentsList1 table>tbody> tr{
+                    font-size: 30px;
+
+
+                }
+                #AgentsList1 table>tbody>tr:nth-child(odd) td {
+                    background: none repeat scroll 0 0 #418AB5;
+
+                }
+                #AgentsList1 table>tbody>tr:nth-child(even) td {
+                    background-color:#005C95;
+
+                }
+
+            </style>
             <div class="nano">
                 <div class="nano-content">
                     <table class="table table-responsive">
@@ -120,7 +192,7 @@
 
                     }
                     #AgentsList2 ul{
-                        width: 720px;
+                        width: 98%;
                         overflow: auto;
                     }
                 </style>

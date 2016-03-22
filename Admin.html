@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="libs/bootstrap.css">
+    <link rel="stylesheet" href="libs/nanoscroller.css">
+    <link rel="stylesheet" href="css/sb-admin-2.css">
+    <link rel="stylesheet" href="css/timeline.css">
+
+    <link rel="stylesheet" href="libs/font-awesome.css">
+
+    <script src="libs/jquery-2.1.4.min.js"></script>
+    <script  src="libs/require.js"></script>
+
+    <script>
+        'use strict';
+
+        require.config({
+            baseUrl: "",
+            paths: {
+                jquery                 : 'libs/jquery-2.1.4.min',
+                underscore             : 'libs/underscore-min',
+                moment             : 'libs/moment.min',
+                ListItem:'apps/ListItem2',
+                Reg:'com/Registry',
+                base:'apps/base',
+                nano:'libs/jquery.nanoscroller.min'
+            },
+            /*hbs: {
+             handlebarsPath: "handlebars"
+             },*/
+            /*  shim : {
+             mjs: {
+             exports: 'moment'
+             }
+             }*/
+        });
+
+       $(document).ready(function(){
+           console.log('ready');
+       })
+
+    </script>
+
+</head>
+<body>
+<style>
+
+
+</style>
+<div class="wrapper">
+<div class="col-lg-12">
+        <div id="Panel1" class="panel panel-default">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <a class="btn" data-id="add"><span class="fa fa-plus"> </span> Add</a>
+                    <input type="text" data-id="user" placeholder="username" >
+                    <input type="text" data-id="pass"  placeholder="password">
+                    <button class="btn-primary" id="SavePanel1">Save</button>
+                </div>
+                <div>
+                    <span class="fa fa-table"></span>
+                    Crawl messages
+                </div>
+
+            </div>
+            <div class="panel-body">
+                    <table class="table table-responsive">
+                        <tbody data-id="list">
+
+                        </tbody>
+                        <script type="text/html" data-id="template">
+                            <tr>
+                                <td><input  data-chk="active"  type="checkbox" /><td>
+                                <td data-text="msg" contenteditable="true"><td>
+                                <td><span data-id="delete" class="fa fa-close"></span><td>
+                            </td>
+
+                        </script>
+                    </table>
+            </div>
+            <div class="panel-footer">
+
+
+            </div>
+            <script>
+                require([
+                    'jquery',
+                    'underscore',
+                    'moment',
+                    'Reg',
+                    'apps/ListEditor'
+                ],function(){
+
+                    var options ={
+                        geturl:'http://front-desk.ca/mi/callcenter/dashboard2/crawl.php?',
+                      // url:'http://front-desk.ca/mi/callcenter/rem/getagents?date=',
+                        saveurl:'http://front-desk.ca/mi/callcenter/dashboard2/crawl.php?',
+                       getparams:'a=getall',
+                     // getparams:'2016-03-15T7:58:34',
+                        postparams:'a=post',
+                        btnSave:'#SavePanel1',
+                        btnAdd:'[data-id=add]:first',
+                        btnDelete:'[data-id=delete]:first'
+
+                    }
+                   var list = new ListEditor('#Panel1',options);
+
+                    list.init();
+
+
+                })
+            </script>
+
+
+
+        </div>
+</div>
+    </div>
+
+
+</body>
+</html>

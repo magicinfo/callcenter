@@ -11,12 +11,14 @@ class List2{
     $tbody:JQuery;
     $nano:JQuery;
     private template:string;
-    constructor(listid:string){
+    constructor(listid:string,options:any){
+        for(var str in options)this[str] = options[str];
+
         this.$view = $(listid);
         this.$tbody =  this.$view.find('[data-id=list]:first');
        this.$nano = this.$view.find('.nano:first');
         require(['base','ListItem','nano'],()=>{
-            this.loadData(this.currentDate);
+            this.loadData(this.getparams);
         })
 
 
@@ -24,17 +26,17 @@ class List2{
 
     }
 
-    currentDate:string = '2016-03-15T7:58:34';
+    getparams:string = '2016-03-15T7:58:34';
 
     collection:_.Dictionary<ListItem2> ={};
     stamp:number;
     url:string = 'http://front-desk.ca/mi/callcenter/rem/getagents?date=';
     private loadData(date:string):void{
-        this.currentDate = date;
-        // console.log(this.currentDate);
+        this.getparams = date;
+       console.log(this.url);
         $.get(this.url+date).done((data)=>{
             //   console.log(data);
-            this.currentDate = data.stamp;
+            this.getparams = data.stamp;
             Registry.event.triggerHandler(Registry.LIST_NEW_DATE,data.stamp)
             Registry.event.triggerHandler(Registry.LIST_NEW_DATA,data);
             var agents = data.result.list;
@@ -87,7 +89,7 @@ class List2{
 
 
 class List3 extends List2{
-    constructor(listId:string){
-        super(listId);
+    constructor(listId:string,options){
+        super(listId,options);
     }
 }

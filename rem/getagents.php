@@ -2,7 +2,7 @@
 //ini_set('display_errors', 1);
 //error_reporting(E_ALL ^ E_NOTICE);
 
-
+//2016-03-15T7:58:34
 $date=isset($_GET['date'])?$_GET['date']:0;
 if($date===0) die('hoh');
 $type = isset($_GET['type'])?$_GET['type']:0;

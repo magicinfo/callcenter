@@ -9,4 +9,9 @@
 <file name="getBarChart.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131026335746360884" remote="131026299600000000" Dst="2" />
 <file name="bars1.json" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131026359691599648" remote="131026324200000000" Dst="2" />
 <file name="bars2.json" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131026360149435832" remote="131026324200000000" Dst="2" />
+<file name="bsd.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030864911072110" remote="131030829000000000" Dst="2" />
+<file name="getagents1.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030674285027213" remote="131030638200000000" Dst="2" />
+<file name="getStatus1.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030680139543252" remote="131030644200000000" Dst="2" />
+<file name="daylyMetric.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030684284195446" remote="131030648400000000" Dst="2" />
+<file name="messenger.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030685414913592" remote="131030649600000000" Dst="2" />
 </dwsync>
