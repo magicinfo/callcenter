@@ -53,13 +53,13 @@ module listU {
         loadData():void {
             this.getparams;
             var url = this.geturl + this.getparams
-           /// console.log(url);
+
             $.get(url).done((data)=> {
                 //   console.log(data);
                 this.onData(data);
                // this.setData(data);
-                if (this.$nano.length)this.$nano.nanoScroller();
-                // $("#AgentsScroll").nanoScroller();
+
+
             }).fail((reason)=> {
                 console.log(reason);
             })
@@ -97,7 +97,8 @@ module listU {
                 }
             }
 
-          //  console.log(i);
+            if (this.$nano.length)this.$nano.nanoScroller();
+        console.log(this.$nano.length);
         }
 
 
@@ -108,12 +109,14 @@ module listU {
         $visible:_.Dictionary<JQuery>;
         $imgs:_.Dictionary<JQuery>;
         $chk:_.Dictionary<JQuery>;
+        $class:_.Dictionary<JQuery>;
 
         constructor($view:JQuery) {
             this.$texts = this.createCollection('data-text', $view);
             this.$visible = this.createCollection('data-vis', $view);
             this.$imgs = this.createCollection('data-img', $view);
             this.$chk = this.createCollection('data-chk', $view);
+            this.$class =  this.createCollection('data-class', $view);
         }
 
         createCollection(type:string, $view:JQuery):_.Dictionary<JQuery> {
@@ -134,7 +137,7 @@ module listU {
             for (var str in this.$visible)item[str] ? this.$visible[str].show() : this.$visible[str].hide();
             for (var str in this.$imgs)this.$imgs[str].css('background-image', 'url(' + item[str] + ')');
             for (var str in this.$chk)this.$chk[str].prop('checked', item[str]);
-
+            for (var str in this.$class)this.$class[str].attr('class', item[str]);
         }
     }
     class ListItem {
@@ -150,6 +153,7 @@ module listU {
         rc:R_C;
 
         constructor(item:any, template:string) {
+
             this.id = item.id;
             this.$view = $(template);
             this.rc = new R_C(this.$view);

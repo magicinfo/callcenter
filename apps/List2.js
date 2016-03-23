@@ -44,14 +44,10 @@ var listU;
             var _this = this;
             this.getparams;
             var url = this.geturl + this.getparams;
-            /// console.log(url);
             $.get(url).done(function (data) {
                 //   console.log(data);
                 _this.onData(data);
                 // this.setData(data);
-                if (_this.$nano.length)
-                    _this.$nano.nanoScroller();
-                // $("#AgentsScroll").nanoScroller();
             }).fail(function (reason) {
                 console.log(reason);
             });
@@ -86,7 +82,9 @@ var listU;
                     this.collection[item.key] = null;
                 }
             }
-            //  console.log(i);
+            if (this.$nano.length)
+                this.$nano.nanoScroller();
+            console.log(this.$nano.length);
         };
         return List2;
     })();
@@ -97,6 +95,7 @@ var listU;
             this.$visible = this.createCollection('data-vis', $view);
             this.$imgs = this.createCollection('data-img', $view);
             this.$chk = this.createCollection('data-chk', $view);
+            this.$class = this.createCollection('data-class', $view);
         }
         R_C.prototype.createCollection = function (type, $view) {
             var obj = {};
@@ -118,6 +117,8 @@ var listU;
                 this.$imgs[str].css('background-image', 'url(' + item[str] + ')');
             for (var str in this.$chk)
                 this.$chk[str].prop('checked', item[str]);
+            for (var str in this.$class)
+                this.$class[str].attr('class', item[str]);
         };
         return R_C;
     })();
