@@ -51,6 +51,8 @@
         width: 100%;
         height: 100%;
         padding: 20px;
+        padding-bottom: 0;
+        margin-bottom: 0;
         background-color:#FDFAC3 ;
         background-image: url("http://localhost/callcenter/css/bgheader.png");
         background-repeat: no-repeat;
@@ -91,7 +93,10 @@
             <style>
                 #clock{
                     height: 150px;
-                    background-color: rgba(0,0,0,0.3);
+                   /* background-color: rgba(0,0,0,0.3);*/
+
+                    background-image: url("css/header2.png");
+                    background-size: 100% 150px;
                 }
 
             </style>
@@ -298,7 +303,7 @@
                                 item.key=item.id;
                             }
                            //// data=ar;
-                            console.log(ar);
+                            //console.log(ar);
                           list.setData.call(list,ar);
                         }
 
@@ -318,6 +323,23 @@
 
 
     </div>
+
+
+
+</div>
+<div id="footer">
+    <style>
+        #footer{
+            width: 100%;
+            height: 40px;
+            margin:0;
+            border-top: solid 2px white;
+            background-color: #005D96;
+        }
+
+    </style>
+
+
 </div>
 
 </body>
