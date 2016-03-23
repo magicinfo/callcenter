@@ -5,7 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="libs/bootstrap.css">
     <link rel="stylesheet" href="libs/nanoscroller.css">
-    <link rel="stylesheet" href="css/sb-admin-2.css">
+    <link rel="stylesheet" href="css/brand.css">
     <link rel="stylesheet" href="css/timeline.css">
 
     <link rel="stylesheet" href="libs/font-awesome.css">
@@ -78,10 +78,10 @@
     </div>
 <div class="row">
     <div class="col-lg-4">
-        <div id="Panel1" class="panel">
+        <div id="Panel1" class="panel brand">
 
         </div>
-        <div id="Panel2" class="panel">
+        <div id="Panel2" class="panel brand">
 
         </div>
 
@@ -97,10 +97,8 @@
             </style>
 
         </div>
-        <div id="AgentsList1" data-str="apps/List2">
-            <ul id="TableHeaders">
-<li>NAME</li><li>STATUS</li><li>DIAL</li><li>PRESCRIBER</li><li>NON-PRES</li>
-            </ul>
+        <div id="AgentsList1" class="brand">
+
             <style>
                 #TableHeaders{
                     font-size: 40px;
@@ -139,6 +137,10 @@
                 }
 
             </style>
+            <ul id="TableHeaders">
+                <li>NAME</li><li>STATUS</li><li>DIAL</li><li>PRESCRIBER</li><li>NON-PRES</li>
+            </ul>
+
             <div class="nano">
                 <div class="nano-content">
                     <table class="table table-responsive">
@@ -147,11 +149,12 @@
                         </tbody>
                         <script type="text/html" data-id="template">
                             <tr>
-                                <td data-text="icon"><td>
-                                <td data-text="id"><td>
-                                <td data-text="msg"><td>
-                            </td>
-
+                                <td data-text="AGENT_FULL_NAME"></td>
+                                <td data-text="status"></td>
+                                <td data-text="Dial"></td>
+                                <td data-text="Prescriber"></td>
+                                <td data-text="Non- prescriber"></td>
+                            </tr>
                         </script>
                     </table>
 
@@ -164,9 +167,34 @@
                     'underscore',
                     'moment',
                     'Reg',
+                    'nano',
                     'apps/List2'
                 ],function(){
-                   var list = new List2('#AgentsList1');
+
+                    var options ={
+                        geturl:'http://front-desk.ca/mi/callcenter/dashboard2/bsd.php?',
+                        getparams:'report=d'
+
+                    }
+                   var list = new listU.List2('#AgentsList1',options);
+                    list.init();
+                    list.loadData();
+                    list.onData = function(data){
+                      ///  console.log(data);
+                        var ar = data.agents;
+                        for(var i=0,n=ar.length;i<n;i++){
+                            var item = ar[i];
+                            item.key=item.AGENT_POSITION_ID;
+                        }
+                        data=ar;
+                        list.setData.call(list,ar);
+                    }
+                    setInterval(function(){
+                       // console.log(list.getparams);
+                        if(list.getparams == 'report=d') list.getparams='report=w';
+                        else list.getparams = 'report=d';
+                        list.loadData();
+                    },5000);
                 })
             </script>
 
@@ -186,24 +214,45 @@
                     }
                     #AgentsList2 ul>li{
                         width: 120px;
+                      /*  height: 170px;*/
                         display: inline-block;
-                        margin: 12px;
+                        margin: 0px;
                         white-space: normal;
+                        border: solid 1px white;
+                        vertical-align: top;
 
                     }
                     #AgentsList2 ul{
-                        width: 98%;
+                        width: 100%;
                         overflow: auto;
+                        vertical-align: top;
+                    }
+                    #AgentsList2 .icon{
+                        width: 80px;
+                        height: 80px;
+                        background-size: contain;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        display: inline-block;
+                        margin: 10px 0 10px 0;
+                    }
+                    #AgentsList2 .id{
+                        border-bottom: solid 3px white;
+                        padding: 10px 0 10px 0;
+                    }
+                    #AgentsList2 .time{
+                       /* padding: 5px;*/
+                        min-height: 2em;
                     }
                 </style>
                 <div >
                     <div>
-                        <ul class="" data-id="list">
+                        <ul class="brand" data-id="list" onclick="">
                             <script type="text/html" data-id="template">
-                                <li class="text-center">
-                                    <div data-text="icon"> </div>
-                                    <div data-text="id"> </div>
-                                    <div data-text="msg"> </div>
+                                <li class="text-center brand">
+                                    <div data-text="id" class="id"> </div>
+                                    <div ><div class="icon" data-img="icon"></div></div>
+                                    <div data-text="time" class="time"></div>
                                 </li>
 
                             </script>
@@ -218,9 +267,49 @@
                         'underscore',
                         'moment',
                         'Reg',
+                        'nano',
                         'apps/List2'
-                    ],function(){
-                        var list = new List3('#AgentsList2');
+                    ],function(v,v2,moment){
+
+                        var stamp;
+                        var options ={
+                            geturl:'http://front-desk.ca/mi/callcenter/rem/getagents?date=',
+                            getparams:'2016-03-15T7:58:34'
+
+                        }
+                        var list = new listU.List2('#AgentsList2',options);
+                        list.init();
+                        list.loadData();
+                        var formatTime = function(num){
+                            var min = Math.floor(num/60);
+                            var sec = num-(min*60);
+                            return min+' min '+sec;
+                        }
+
+                        list.onData = function(data){
+                           //  console.log(data);
+                          stamp = data.stamp;
+
+                           var ar = data.result.list;
+                           for(var i=0,n=ar.length;i<n;i++){
+                               var item = ar[i];
+                               item.icon='icons/'+item.icon+'.png';
+                               item.time = item.t?formatTime(item.t):' ';
+                                item.key=item.id;
+                            }
+                           //// data=ar;
+                            console.log(ar);
+                          list.setData.call(list,ar);
+                        }
+
+
+                        setInterval(function(){
+                            list.getparams = stamp
+                            // console.log(list.getparams);
+                          //  if(list.getparams == 'report=d') list.getparams='report=w';
+                          //  else list.getparams = 'report=d';
+                            list.loadData();
+                        },5000);
                     })
                 </script>
 

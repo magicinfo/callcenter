@@ -47,7 +47,6 @@
      rc:R_C;
 
     constructor(item:any,template:string){
-
         this.id = item.id;
         this.$view=$(template);
         this.rc = new R_C(this.$view)
@@ -55,6 +54,7 @@
     }
 
     setData(item:VOAgent):void{
+        this.stamp = item.stamp;
         this.rc.setData(item);
     }
 

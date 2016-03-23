@@ -8,77 +8,146 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var List2 = (function () {
-    function List2(listid, options) {
-        var _this = this;
-        this.getparams = '2016-03-15T7:58:34';
-        this.collection = {};
-        this.url = 'http://front-desk.ca/mi/callcenter/rem/getagents?date=';
-        for (var str in options)
-            this[str] = options[str];
-        this.$view = $(listid);
-        this.$tbody = this.$view.find('[data-id=list]:first');
-        this.$nano = this.$view.find('.nano:first');
-        require(['base', 'ListItem', 'nano'], function () {
-            _this.loadData(_this.getparams);
-        });
-        this.template = this.$view.find('[data-id=template]').html();
-    }
-    List2.prototype.loadData = function (date) {
-        var _this = this;
-        this.getparams = date;
-        console.log(this.url);
-        $.get(this.url + date).done(function (data) {
-            //   console.log(data);
-            _this.getparams = data.stamp;
-            Registry.event.triggerHandler(Registry.LIST_NEW_DATE, data.stamp);
-            Registry.event.triggerHandler(Registry.LIST_NEW_DATA, data);
-            var agents = data.result.list;
-            console.log(agents);
-            _this.setData(_this.parseData(agents));
-            if (_this.$nano.length)
-                _this.$nano.nanoScroller();
-            // $("#AgentsScroll").nanoScroller();
-        }).fail(function (reason) {
-            console.log(reason);
-        });
-    };
-    List2.prototype.parseData = function (data) {
-        var ar = data;
-        var out = [];
-        var stamp = Date.now();
-        for (var i = 0, n = ar.length; i < n; i++)
-            out.push(new VOAgent(ar[i], stamp));
-        this.stamp = stamp;
-        return out;
-    };
-    List2.prototype.setData = function (data) {
-        var stamp = this.stamp;
-        var ar = data;
-        var coll = this.collection;
-        for (var i = 0, n = ar.length; i < n; i++) {
-            var item = ar[i];
-            if (coll[item.id])
-                coll[item.id].setData(item);
-            else {
-                coll[item.id] = new ListItem2(item, this.template);
-                coll[item.id].$view.appendTo(this.$tbody);
-            }
-            // ;
-            if (item.stamp !== stamp) {
-                this.collection[item.id].remove();
-                this.collection[item.id] = null;
-            }
+var listU;
+(function (listU) {
+    var VOItem = (function () {
+        function VOItem(obj, stamp) {
+            this.stamp = stamp;
+            for (var str in obj)
+                this[str] = obj[str];
         }
-        console.log(i);
-    };
-    return List2;
-})();
-var List3 = (function (_super) {
-    __extends(List3, _super);
-    function List3(listId, options) {
-        _super.call(this, listId, options);
-    }
-    return List3;
-})(List2);
+        return VOItem;
+    })();
+    var List2 = (function () {
+        function List2(listid, options) {
+            this.listid = listid;
+            this.options = options;
+            this.onData = function (data) {
+                console.log(data);
+            };
+            this.getparams = '2016-03-15T7:58:34';
+            this.collection = {};
+            this.geturl = 'http://front-desk.ca/mi/callcenter/rem/getagents?date=';
+            for (var str in options)
+                this[str] = options[str];
+        }
+        List2.prototype.init = function () {
+            this.$view = $(this.listid);
+            this.$tbody = this.$view.find('[data-id=list]:first');
+            this.$nano = this.$view.find('.nano:first');
+            //require(['nano'], ()=> {
+            //  this.loadData(this.getparams);
+            // })
+            this.template = this.$view.find('[data-id=template]').html();
+        };
+        List2.prototype.loadData = function () {
+            var _this = this;
+            this.getparams;
+            var url = this.geturl + this.getparams;
+            /// console.log(url);
+            $.get(url).done(function (data) {
+                //   console.log(data);
+                _this.onData(data);
+                // this.setData(data);
+                if (_this.$nano.length)
+                    _this.$nano.nanoScroller();
+                // $("#AgentsScroll").nanoScroller();
+            }).fail(function (reason) {
+                console.log(reason);
+            });
+        };
+        /*parseData(data:any[]):VOAgent[] {
+            var ar = data
+            var out:VOAgent[] = [];
+            var stamp = Date.now();
+            for (var i = 0, n = ar.length; i < n; i++)out.push(new VOAgent(ar[i], stamp))
+            this.stamp = stamp;
+            return out;
+
+        }*/
+        List2.prototype.setData = function (data) {
+            // console.log(this);
+            var stamp = Date.now();
+            var ar = data;
+            var coll = this.collection;
+            // console.log(coll);
+            for (var i = 0, n = ar.length; i < n; i++) {
+                var item = ar[i];
+                item.stamp = stamp;
+                if (coll[item.key])
+                    coll[item.key].setData(item);
+                else {
+                    coll[item.key] = new ListItem(item, this.template);
+                    coll[item.key].$view.appendTo(this.$tbody);
+                }
+                // ;
+                if (item.stamp !== stamp) {
+                    this.collection[item.key].remove();
+                    this.collection[item.key] = null;
+                }
+            }
+            //  console.log(i);
+        };
+        return List2;
+    })();
+    listU.List2 = List2;
+    var R_C = (function () {
+        function R_C($view) {
+            this.$texts = this.createCollection('data-text', $view);
+            this.$visible = this.createCollection('data-vis', $view);
+            this.$imgs = this.createCollection('data-img', $view);
+            this.$chk = this.createCollection('data-chk', $view);
+        }
+        R_C.prototype.createCollection = function (type, $view) {
+            var obj = {};
+            $view.find('[' + type + ']').each(function (i, el) {
+                obj[String(el.getAttribute(type))] = $(el);
+            });
+            return obj;
+        };
+        R_C.prototype.getObject = function (str) {
+            return this.$texts[str] || this.$visible[str] || this.$imgs[str] || this.$chk[str];
+        };
+        R_C.prototype.setData = function (item) {
+            //  console.log(item);
+            for (var str in this.$texts)
+                this.$texts[str].text(item[str]);
+            for (var str in this.$visible)
+                item[str] ? this.$visible[str].show() : this.$visible[str].hide();
+            for (var str in this.$imgs)
+                this.$imgs[str].css('background-image', 'url(' + item[str] + ')');
+            for (var str in this.$chk)
+                this.$chk[str].prop('checked', item[str]);
+        };
+        return R_C;
+    })();
+    var ListItem = (function () {
+        function ListItem(item, template) {
+            this.current = '';
+            this.timer = 0;
+            this.id = item.id;
+            this.$view = $(template);
+            this.rc = new R_C(this.$view);
+            this.setData(item);
+        }
+        ListItem.prototype.setData = function (item) {
+            this.stamp = item.stamp;
+            this.rc.setData(item);
+        };
+        ListItem.prototype.remove = function () {
+            var _this = this;
+            this.$view.fadeOut(function () {
+                _this.$view.remove();
+            });
+        };
+        return ListItem;
+    })();
+    var List3 = (function (_super) {
+        __extends(List3, _super);
+        function List3(listId, options) {
+            _super.call(this, listId, options);
+        }
+        return List3;
+    })(List2);
+})(listU || (listU = {}));
 //# sourceMappingURL=List2.js.map

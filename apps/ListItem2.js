@@ -42,6 +42,7 @@ var ListItem2 = (function () {
         this.setData(item);
     }
     ListItem2.prototype.setData = function (item) {
+        this.stamp = item.stamp;
         this.rc.setData(item);
     };
     ListItem2.prototype.remove = function () {
