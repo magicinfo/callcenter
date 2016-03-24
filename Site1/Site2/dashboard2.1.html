@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="libs/bootstrap.css">
+		<link rel="stylesheet" href="libs/nanoscroller.css">
+		<link rel="stylesheet" href="css/brand.css">		
+
+		<link rel="stylesheet" href="libs/font-awesome.css">
+
+		<script src="libs/jquery-2.1.4.min.js"></script>
+		<script  src="libs/require.js"></script>
+
+		<script>
+			'use strict';
+
+			require.config({
+				baseUrl: "",
+				paths: {
+					jquery                 : 'libs/jquery-2.1.4.min',
+					underscore             : 'libs/underscore-min',
+					moment             : 'libs/moment.min',
+					ListItem:'apps/ListItem2',
+					Reg:'com/Registry',
+					base:'apps/base',
+					nano:'libs/jquery.nanoscroller.min'
+				},
+				/*hbs: {
+				 handlebarsPath: "handlebars"
+				 },*/
+				/*  shim : {
+				 mjs: {
+				 exports: 'moment'
+				 }
+				 }*/
+			});
+
+			$(document).ready(function(){
+				console.log('ready');
+			})
+
+		</script>
+
+		<link href="css/mystyle.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<div>
+			<div class="col-xs-8" style="height:91vh; background:white; padding:0px;">
+			<div id="Table1">
+				<style>
+					.red{
+						color: red;
+					}
+					.green{
+						color: green;
+					}
+					.gold{
+						color: goldenrod;
+					}
+
+					#Table1 .td1{
+						width:45%;
+						padding-left:15px;
+					}
+					#Table1 .td2{
+						width:30%;
+						padding-left:10px;
+
+					}
+					#Table1 .td3{
+						width:25%;
+						padding-left:10px;
+					}
+					#Table1 .nano{
+						height: 81vh;
+						/*overflow-y: auto;*/
+					}
+					#Table1 table>tbody>tr:nth-child(odd) td {
+						background: none repeat scroll 0 0 #B5DFFE;
+
+					}
+					#Table1 table>tbody>tr:nth-child(even) td {
+						background-color:#EBF6FF;
+
+					}
+					#Table1 .fa{
+						width: 1em;
+						display: inline-block;
+						text-align: center;
+					}
+					#Table1 .fa-phone{
+						color: green;
+					}
+					#Table1 .fa-coffee{
+						color: goldenrod;
+					}
+
+					#Table1 .fa-minus-circle{
+						color: red;
+					}
+					#Table1 .fa-user{
+						color: #358076;
+					}
+					#Table1 .fa-users{
+						color: #106780;
+					}
+
+				</style>
+						<div class="div-one" style="width:45%; padding-left:20px;">
+							<p class="paragraf-one">AGENT NAME</p>
+						</div>
+						<div class="div-one" style="width:30%;">
+							<p class="paragraf-one">ELAPSED TIME</p>
+						</div>
+						<div class="div-one" style="width:25%;">
+							<p class="paragraf-one">AUX</p>
+						</div>
+
+				<div class="nano">
+					<div class="nano-content">
+						<table class="table table-responsive">
+							<tbody data-id="list">
+
+							</tbody>
+
+
+							<script type="text/html" data-id="template">
+								<tr class="myline">
+									<td>
+										<i class="fa fa-phone" data-class="fa"></i>
+									</td>
+									<td class="td1">
+										<span data-text="name" > I</span>
+									</td>
+									<td  class="td2">
+										<span data-text="timef" data-class="time_color" >00:02:01</span>
+									</td>
+									<td class="td3">
+										<span data-text="aux" data-class="tcolor"></span>
+									</td>
+								</tr>
+							</script>
+						</table>
+					</div>
+				</div>
+						<script>
+							require([
+								'jquery',
+								'underscore',
+								'moment',
+								'Reg',
+								'nano',
+								'apps/List2'
+							],function($,_,moment){
+
+								var options ={
+									geturl:'http://front-desk.ca/mi/callcenter/dashboard2/getagents?date=',
+									getparams:'2016-03-15T7:58:34',
+									list:'[data-id=list]:first'
+
+								}
+								var formatTime = function(num){
+									if(isNaN(num)) return '';
+									var h = Math.floor(num/60/60);
+
+									var min = Math.floor(num/60);
+									var sec = num-(min*60);
+									return h+':'+(min<10?'0'+min:min)+':'+(sec<10?'0'+sec:sec);
+								}
+
+								var list = new listU.List2('#Table1',options);
+								list.init();
+								list.loadData();
+
+
+								list.onData = function(data){
+									//  console.log(data);
+									var ar = data.result.list;
+									for(var i=0,n=ar.length;i<n;i++){
+										var item = ar[i];
+										item.key=item.id;
+										item.fa= 'fa fa-'+item.fa;
+										item.tcolor= (item.color=='green'?'':item.color);
+										item.timef = formatTime(item.time);
+									}
+									//data=ar;
+									console.log(ar);
+									list.setData.call(list,ar);
+								}
+								setInterval(function(){
+									// console.log(list.getparams);
+									//if(list.getparams == 'report=d') list.getparams='report=w';
+									//else list.getparams = 'report=d';
+								//	list.loadData();
+								},5000);
+
+							})
+
+
+
+						</script>
+
+			</div>
+
+
+			</div>
+
+			<div class="col-xs-4" style="height:40vh; background:black; padding:0px;">
+				<div class="div-one" style="width:100%; ; border-bottom:3px solid #000000!important;">
+					<p class="paragraf-one">REALTIME STATS</p>
+				</div>
+				
+				<table class="table table-two">
+					<tbody>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:yellow;">Calls Waiting</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">2</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#ffa655;">Oldest Call Waiting</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">0:05</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span style="padding-right:5px; color:white;">636</span>
+							</td>
+						</tr>
+						
+						
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-xs-4" style="height:51vh; background:#6abfff; padding:0px;">
+				<div class="div-one" style="width:100%; border-bottom:0px solid #000000!important;">
+					<p class="paragraf-one">DAILY METRICS</p> 
+				</div>
+				
+				<table class="table table-bordered table-condensed table-three">
+					<tbody>
+						<tr class="myline">
+							<td style="width:70%; ">
+								<span style="padding-left:5px;">Calls Received</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">650</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Aband Calls > 10sec</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">22</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Abandon Rate</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">3.53%</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Abandon Time</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">1:18</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Speed of Answer</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">0:33</span>
+							</td>
+						</tr>
+						
+						
+						
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Speed of Answer</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">0:33</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Speed of Answer</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">0:33</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Speed of Answer</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">0:33</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Speed of Answer</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">0:33</span>
+							</td>
+						</tr>
+						
+						
+						
+						
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Handle Time</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span style="padding-right:5px;">4:34</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>				
+			</div>
+
+			<div class="col-xs-12 div-two">
+				<p class="paragraf-two">Text message goes here. It could be different length</p>
+			</div>
+			
+			
+		</div>
+	</body>
+</html>

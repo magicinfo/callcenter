@@ -98,7 +98,7 @@ module listU {
             }
 
             if (this.$nano.length)this.$nano.nanoScroller();
-        console.log(this.$nano.length);
+        //console.log(this.$nano.length);
         }
 
 

@@ -68,7 +68,7 @@ function parseFile($raw,$satamp){
 		$item->name = (string)explode(',',$node->Name)[0];
 		
 		$sec = rand(10,60*10);
-		if($sec>50*5)
+		//if($sec>50*5)
 		
 		$item->time=$sec;		
 		$state = rand(1,9);;//(string)$node->State;
