@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="libs/bootstrap.css">
+    <link rel="stylesheet" href="libs/nanoscroller.css">   
+
+    <link rel="stylesheet" href="libs/font-awesome.css">
+
+    <script src="libs/jquery-2.1.4.min.js"></script>
+    <script  src="libs/require.js"></script>
+
+    <script>
+        'use strict';
+
+        require.config({
+            baseUrl: "",
+            paths: {
+                jquery                 : 'libs/jquery-2.1.4.min',
+                underscore             : 'libs/underscore-min',
+                moment             : 'libs/moment.min',
+                ListItem:'apps/ListItem2',
+                Reg:'com/Registry',
+                base:'apps/base',
+                nano:'libs/jquery.nanoscroller.min'
+            },
+            /*hbs: {
+             handlebarsPath: "handlebars"
+             },*/
+            /*  shim : {
+             mjs: {
+             exports: 'moment'
+             }
+             }*/
+        });
+
+       $(document).ready(function(){
+           console.log('ready');
+       })
+
+    </script>
+
+</head>
+<body>
+<style>
+    #Panel1 .panel-heading>*{
+        display: inline;
+    }
+
+</style>
+<div class="wrapper">
+<div class="col-lg-12">
+        <div id="Panel1" class="panel panel-default">
+            <div class="modal" data-id="editpanel">
+                <style>
+                    #Panel1 .modal img{
+                        max-width: 100%;
+                    }
+                </style>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-id="close">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <img data-img="icon" >
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" data-text="filename" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-id="save">Save</button>
+                            <button type="button" class="btn btn-default" data-id="close">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="panel-heading">
+                <div>
+                    <span class="fa fa-table"></span>
+                    Assets manager
+                </div>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <a data-id="upload" class="hidden" style="position: relative">
+                        <input type="file" style="position: absolute; margin-left: 200px"  />
+                    </a>
+                    <a class="btn" data-id="add"><span class="fa fa-plus"> </span> Add</a>
+                    <a class="btn" data-id="edit"><span class="fa fa-edit"> </span> Edit</a>
+                    <a class="btn" data-id="delete"><span class="fa fa-minus"> </span> Delete</a>
+                    <div data-id="logingroup">
+                            <input type="text" data-id="user" placeholder="username" >
+                            <input type="password" data-id="pass"  placeholder="password" >
+                            <button class="btn-primary" data-id="login">Login</button>
+                    </div>
+                <button class="btn-primary pull-right" data-id="logout">Log Out</button>
+
+
+
+
+            </div>
+            <div id="Assets" class="panel-body">
+                <style>
+                    #Assets .icon{
+                        width: 2em;
+                        height: 2em;
+                        background-size: 100%;
+                    }
+                    #Assets .selected{
+                        background-color: khaki;
+                    }
+
+                </style>
+                    <table class="table table-responsive">
+                        <tbody data-id="list">
+
+                        </tbody>
+                        <script type="text/html" data-id="template">
+                            <tr>
+                                <td><div class="icon" data-img="icon"> </div><td>
+                                <td data-text="filename"><td>
+                            </td>
+
+                        </script>
+                    </table>
+            </div>
+            <div class="panel-footer">
+
+
+            </div>
+            <script>
+                require([
+                    'jquery',
+                    'underscore',
+                    'moment',
+                    'Reg',
+                    'apps/AssetsManager'
+                ],function(){
+
+                    var service ='service/assets?';
+                    var options ={
+                        serviceUrl:'service/assets?',
+                      // url:'http://front-desk.ca/mi/callcenter/rem/getagents?date=',
+                        saveurl:'service/assets?',
+                       getparams:'a=assets',
+                     // getparams:'2016-03-15T7:58:34',
+                        postparams:'a=upload',
+                       // btnSave:'#SavePanel1',
+                        btnUpload:'[data-id=upload]:first',
+                        btnDelete:'[data-id=delete]:first'
+                    }
+
+                   var list = new upload.ListUpload('#Panel1',options);
+
+                    list.init();
+                    list.loadData();
+                    list.onData = function(data){
+                        console.log(data);
+                        if(data.error){
+                            $('#Panel1 [data-id=logingroup]:first').show();
+
+
+                            return;
+                        }
+
+                        $('#Panel1 [data-id=logingroup]:first').hide();
+                        var out = [];
+                        data.assets.map(function(val){
+                            out.push({filename:val,icon:'assets/'+val})
+                        })
+
+                        list.setData(out);
+                    }
+
+                    $('#Panel1 [data-id=login]:first').click(function(){
+                        var user = $('#Panel1 [data-id=user]:first').val();
+                        var pass = $('#Panel1 [data-id=pass]:first').val();
+                        $.post(options.serviceUrl+'a=login',JSON.stringify({user:{user:user,pass:pass}})).done(function(res){
+                           if(res.result=='loggedin') list.loadData();
+                            else alert(res.result);
+                        }).fail(function(res){ alert(res)});
+
+                    })
+                    $('#Panel1 [data-id=logout]:first').click(function(){
+                        $.get(options.serviceUrl+'a=logout').done(function(res){
+                            $('#Panel1 [data-id=logingroup]:first').show();
+                            console.log(res);
+                        })
+                    })
+
+                    $('#Panel1 [data-id=add]:first').click(function(){
+                        $('#Panel1 [data-id=upload]:first').toggleClass('hidden');
+                    })
+
+                    $('#Panel1 [data-id=edit]:first').click(function(){
+                        var sel= list.getSelected();
+                        if(!sel)  return;
+
+                        console.log(sel);
+                        editpanel.find('[data-img=icon]').attr('src',sel.icon);
+                        editpanel.find('[data-text=filename]').data('oldname',sel.filename).val(sel.filename);
+                        editpanel.show();
+
+                    })
+                    var editpanel = $('#Panel1 [data-id=editpanel]:first');
+                    editpanel.find('[data-id=close]').click(function(){
+                        editpanel.hide();
+                    })
+                    editpanel.find('[data-id=save]:first').click(function(){
+
+                        var input = editpanel.find('[data-text=filename]');
+                        var oldname = input .data('oldname');
+                        var newname = input.val();
+                        var out = {oldname:oldname,newname:newname};
+                        console.log(out);
+                        $.post(options.serviceUrl+'a=rename',JSON.stringify(out)).done(function(res){
+
+                            if(res.success) {
+                                editpanel.fadeOut();
+                                list.loadData();
+                            }
+                        }).fail(function(err){ console.log(err)});
+
+                    })
+
+
+
+
+                })
+            </script>
+
+
+
+        </div>
+
+
+</div>
+    </div>
+
+
+</body>
+</html>

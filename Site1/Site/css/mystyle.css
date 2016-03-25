@@ -19,8 +19,9 @@
 }
 
 .table-one td{
-	border-right:3px solid #ffffff!important;
-	border-left:3px solid #ffffff!important;
+	vertical-align:middle;
+	border-right-style:solid;
+	border-right-color:#ffffff!important;
 }
 
 .table-two tr{

@@ -55,7 +55,7 @@
 	display: inline-table;
 	font-family:Calibri;
 	font-weight:bolder;
-	font-size:2.8vh;
+	/*font-size:2.8vh;*/
 }
 
 .table-three table	{
@@ -66,7 +66,7 @@
 .table-three tbody{
 	overflow-y: auto;
 	height:42vh;
-	position: absolute;
+	/*position: absolute;*/
 }
 
 .div-one{
@@ -92,21 +92,24 @@
 	margin-bottom:auto;
 	color:white;
 	font-weight:bolder;
-	font-size:3.5vh;
+	font-size: x-large;
+	/*font-size:3.5vh;*/
 }
 
 .paragraf-two{
 	font-family:Calibri;
 	margin:auto;
 	font-weight:bolder;
-	font-size:3vh;
+	font-size: large;
+	/*font-size:3vh;*/
 	color:#e0e0e4;
 }
 
 .myline{
 	font-family:Calibri;
 	font-weight:bolder;
-	font-size:3.5vh;
+	font-size: large;
+	/*font-size:3.5vh;*/
 }
 
 .mycell{

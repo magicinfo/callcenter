@@ -11,8 +11,6 @@
 		<script type="text/javascript" src="js/jquery-1.12.2.js"></script>
 		
 		<script type="text/javascript">
-					
-		
 			window.onload = function () {
 				var paragraphs = $("nobr");
 				var speedlimit=2000;
@@ -68,8 +66,89 @@
 									flag = false;
 									$('#roller nobr').css({position:'relative',left:0,top:0});
 								}
-								setTimeout(sendGetQuery, 2000);
+								setTimeout(sendGetQuery, 20000);
 							}
+						}
+					});
+				}
+				
+				function sendGetQueryTable1 () {
+					$.ajax({
+						type: "GET",
+						url: "http://front-desk.ca/mi/callcenter/dashboard2/getagents?date=2016-03-15T7:58:34",
+						dataType: "json",
+
+						success: function (obj) {
+							$("tbody#mainbody").empty();
+						
+							var temp = obj.result;
+							$.each(temp.list, function(i, val) {
+								var hours = 0;
+								var minutes = 0;
+								var seconds = 0;
+								if (val.time >= 3600){
+									hours = Math.floor(val.time/3600);
+									minutes = val.time%3600;
+									seconds = minutes%60;
+									minutes = Math.floor(minutes/60);
+								}
+								else{
+									minutes = Math.floor(val.time/60);
+									seconds = val.time%60;	
+								}
+								
+								if (hours < 10)
+									hours = "0" + hours;
+								if (minutes < 10)
+									minutes = "0" + minutes;
+								if (seconds < 10)
+									seconds = "0" + seconds;
+									
+								var time = hours + ":" + minutes + ":" + seconds;
+							
+								var pos1 = val.name.indexOf('*');
+								if (pos1 != -1)
+									pos1 = pos1 + 8;
+								else
+									pos1 = 0;
+									
+								var name = val.name.slice(pos1);
+									
+								var pos2 = name.indexOf('~');
+								if (pos2 != -1)
+									pos2 = pos1 + 1;
+								else
+									pos2 = 0;
+								
+								name = name.slice(pos2);
+								
+								var aux = val.aux;
+								if (aux == null)
+									aux = "&nbsp;";
+								
+								var fa = val.fa;
+								if (fa == null)
+									fa = "&nbsp;";
+								
+								var tagtr = ("<tr id='"+ val.id +"'></tr>");
+								$("tbody#mainbody").append(tagtr);
+								
+								$("#" + val.id).append("<td id='picture'><i></i></td><td id='name'><span>" + name + "</span></td><td id='time'><span>" + time +"</span></td><td id='aux'><span>"+ aux +"</span></td>");
+								
+								
+								$("#" + val.id + " #picture i").addClass("fa fa-" + fa).css({"color":val.color,"padding":"5px"});
+								
+								$("#" + val.id + " #picture").css({"width":"7%", "text-align":"center", "border-right-width":"0px"});
+								
+								$("#" + val.id + " #name").css({"width":"40%", "border-left-width":"0px"});
+								
+								$("#" + val.id + " #time").css({"width":"28%", "padding-left":"10px", "color":val.time_color});
+								
+								$("#" + val.id + " #aux").css({"width":"25%", "padding-left":"10px", "color":val.time_color});
+								
+								$("tbody#mainbody tr").addClass("myline");	
+							});
+							setTimeout(sendGetQueryTable1, 60000);
 						}
 					});
 				}
@@ -87,7 +166,7 @@
 							$("#oldest").text(temp.oldest);
 							$("#answered").text(temp.answered);
 							
-							setTimeout(sendGetQueryTable2, 6000);
+							setTimeout(sendGetQueryTable2, 60000);
 						}
 					});
 				}
@@ -104,7 +183,7 @@
 							$("#received").text(temp.received);
 							$("#abandcalls").text(temp.abandcalls);
 							$("#abandrate").text(temp.abandrate);
-							<!-- $("#abandrate").css('color', temp.abandrate_color); -->
+							$("#abandrate").css('color', temp.abandrate_color);
 							$("#avgaband").text(temp.avgaband);
 							$("#avgspeed").text(temp.avgspeed);
 							$("#avghandl").text(temp.avghandl);
@@ -114,27 +193,21 @@
 					});
 				}
 				
-				
 				sendGetQuery ();
+				sendGetQueryTable1 ();
 				sendGetQueryTable2 ();
 				sendGetQueryTable3 ();
-				
 			}
 		</script>
-		
-		
-
-
-	
 	</head>
 
 	<body>
 		<div>
 			<div class="col-xs-8" style="height:91vh; background:white; padding:0px;">
-				<div class="div-one" style="width:45%; padding-left:20px;">
+				<div class="div-one" style="width:47%; padding-left:20px;">
 					<p class="paragraf-one">AGENT NAME</p>
 				</div>
-				<div class="div-one" style="width:30%;">
+				<div class="div-one" style="width:28%;">
 					<p class="paragraf-one">ELAPSED TIME</p> 
 				</div>
 				<div class="div-one" style="width:25%;">
@@ -142,200 +215,7 @@
 				</div>
 
 				<table class="table table-striped table-condensed table-one">
-					<tbody>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-coffee" style="color:#ffa655; padding:5px;"></i>
-								<span>Dolinak, A</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#ffa655;">
-								<span>00:01:25</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#ffa655;">
-								<span>Project</span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Ingino, I</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:02:01</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Runyon, C</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:03:43</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>St John, L</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:red;">
-								<span>00:10:37</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Frutchey, A</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:01:15</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-minus-circle" style="color:red; padding:5px;"></i>
-								<span>Kunz, K</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:00:30</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Jones, J</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:03:15</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Rousey, R</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:02:09</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Pasquiao, M</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:01:28</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-coffee" style="color:#ffa655; padding:5px;"></i>
-								<span>Mayweather, F</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#ffa655;">
-								<span>00:01:25</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#ffa655;">
-								<span>Meeting</span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Angela, C</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:01:25</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Debra, S</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:00:45</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-coffee" style="color:#ffa655; padding:5px;"></i>
-								<span>Irene, F</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#ffa655;">
-								<span>00:01:25</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#ffa655;">
-								<span>Meeting</span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Angela, C</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:01:25</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-phone" style="color:#30942f; padding:5px;"></i>
-								<span>Debra, S</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#30942f;">
-								<span>00:00:45</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#30942f;">
-								<span></span>
-							</td>
-						</tr>
-						<tr class="myline">
-							<td style="width:45%; padding-left:15px;">
-								<i class="fa fa-coffee" style="color:#ffa655; padding:5px;"></i>
-								<span>Irene, F</span>
-							</td>
-							<td style="width:30%; padding-left:10px; color:#ffa655;">
-								<span>00:01:25</span>
-							</td>
-							<td style="width:25%; padding-left:10px; color:#ffa655;">
-								<span>Meeting</span>
-							</td>
-						</tr>
-					</tbody>
+					<tbody id="mainbody"></tbody>
 				</table>
 			</div>
 

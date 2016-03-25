@@ -66,7 +66,20 @@
 </style>
 <div class="wrapper">
     <div id="header1">
+        <div id="DailyWeekly" class="pull-right">
+
+<h1>Daily</h1>
+        </div>
         <style>
+            #DailyWeekly{
+                margin-right: 150px;
+                margin-top: 50px;
+                font-size: xx-large;
+                text-transform: uppercase;
+                color: white;
+                font-weight: bold;
+                text-shadow: 3px 2px 3px #0f0f0f;
+            }
             #header1{
                 height: 125px;
             }
@@ -232,7 +245,8 @@
 
             <style>
                 #TableHeaders{
-                    font-size: 40px;
+                    font-size: xx-large;
+                    line-height: 60px;
                     margin-bottom: 0;
                     height:60px ;
                     background-color:#005C95;
@@ -266,10 +280,42 @@
                     background-color:#005C95;
 
                 }
+                #AgentsList1 td{
+                    min-width: 2em;
+                }
+
+               #AgentsList1 .col1{
+                    width:32%;
+                }
+
+                #AgentsList1 .col2{
+                    width:17% ;
+                }
+
+               #AgentsList1 .col3{
+                   width:11%;
+
+               }
+                #AgentsList1 .col4, #AgentsList1 .col5{
+                    width:16%;
+                    font-size: large;
+                }
+                #TableHeaders{
+                    white-space: nowrap;
+                }
+                #AgentsList1 .icon{
+                    width: 1.5em;
+                    height: 1.5em;
+                    background-size: 100%;
+                }
 
             </style>
             <ul id="TableHeaders">
-                <li>NAME</li><li>STATUS</li><li>DIAL</li><li>PRESCRIBER</li><li>NON-PRES</li>
+                <li class="col1">NAME</li>
+                <li class="col2">STATUS</li>
+                <li class="col3" >DIAL</li>
+                <li class="col4" >PRESCRIBER</li>
+                <li class="col5" >NON-PRES</li>
             </ul>
 
             <div class="nano">
@@ -280,8 +326,8 @@
                         </tbody>
                         <script type="text/html" data-id="template">
                             <tr>
-                                <td data-text="AGENT_FULL_NAME"></td>
-                                <td data-text="status"></td>
+                                <td data-text="name"></td>
+                                <td><div  data-img="icon" class="icon"></div></td>
                                 <td data-text="Dial"></td>
                                 <td data-text="Prescriber"></td>
                                 <td data-text="Non- prescriber"></td>
@@ -303,7 +349,7 @@
                 ],function(){
 
                     var options ={
-                        geturl:'http://front-desk.ca/mi/callcenter/dashboard2/bsd.php?',
+                        geturl:'http://callcenter.front-desk.ca//dashboard2/bsd.php?',
                         getparams:'report=d'
 
                     }
@@ -315,6 +361,7 @@
                         var ar = data.agents;
                         for(var i=0,n=ar.length;i<n;i++){
                             var item = ar[i];
+                            item.icon = 'icons/'+item.icon+'.png';
                             item.key=item.AGENT_POSITION_ID;
                         }
                         data=ar;
@@ -322,8 +369,14 @@
                     }
                     setInterval(function(){
                        // console.log(list.getparams);
-                        if(list.getparams == 'report=d') list.getparams='report=w';
-                        else list.getparams = 'report=d';
+                        if(list.getparams == 'report=d') {
+                            list.getparams='report=w';
+                           $('#DailyWeekly').text('Weekly Report');
+                        }
+                        else {
+                            list.getparams = 'report=d';
+                            $('#DailyWeekly').text('Daily Report');
+                        }
                         list.loadData();
                     },5000);
                 })

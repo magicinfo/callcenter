@@ -5,8 +5,13 @@
 <file name="realStatus.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030858807211958" remote="131030822400000000" Dst="2" />
 <file name=".htaccess" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030773074099025" remote="131030764200000000" Dst="2" />
 <file name="auxReason.json" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131032427127061815" remote="131032390800000000" Dst="2" />
-<file name="bsd.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131031372024161501" remote="131031336000000000" Dst="2" />
 <file name="daylyMetric.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131030786619648040" remote="131031352200000000" Dst="2" />
-<file name="crawl.php" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131031623271138927" remote="131031587400000000" Dst="2" />
-<file name="crawl.json" server="ftp.front-desk.ca/public_html/mi/callcenter/" local="131031599410000000" remote="131031563400000000" Dst="2" />
+<file name=".htaccess" server="ftp.front-desk.ca" local="131030773074099025" remote="131033152200000000" Dst="2" />
+<file name="auxReason.json" server="ftp.front-desk.ca" local="131032427127061815" remote="131033152200000000" Dst="2" />
+<file name="daylyMetric.php" server="ftp.front-desk.ca" local="131031460560824994" remote="131033152200000000" Dst="2" />
+<file name="PersonState.json" server="ftp.front-desk.ca" local="131030799755982362" remote="131033152200000000" Dst="2" />
+<file name="getagents.php" server="ftp.front-desk.ca" local="131032429279252291" remote="131033152200000000" Dst="2" />
+<file name="realStatus.php" server="ftp.front-desk.ca" local="131030858807211958" remote="131033152200000000" Dst="2" />
+<file name="saveCrawl.php" server="ftp.front-desk.ca" local="131031460356507118" remote="131033152200000000" Dst="2" />
+<file name="crawl.json" server="ftp.front-desk.ca" local="131033152200000000" remote="131033152200000000" Dst="2" />
 </dwsync>

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <dwsync>
-<file name="happy-icon.png" server="ftp.front-desk.ca" local="131032590232541275" remote="131033140200000000" Dst="2" />
 <file name="busy.png" server="ftp.front-desk.ca" local="131032231569426148" remote="131033140200000000" Dst="2" />
-<file name="laugh-icon.png" server="ftp.front-desk.ca" local="131032590845391469" remote="131033140200000000" Dst="2" />
 <file name="acd.png" server="ftp.front-desk.ca" local="131022895178915973" remote="131033140200000000" Dst="2" />
 <file name="offline.png" server="ftp.front-desk.ca" local="131022895180835971" remote="131033140200000000" Dst="2" />
 <file name="idle.png" server="ftp.front-desk.ca" local="131032267784543504" remote="131033140200000000" Dst="2" />
 <file name="offline2.png" server="ftp.front-desk.ca" local="131032232094773727" remote="131033140200000000" Dst="2" />
-<file name="reflective-icon.png" server="ftp.front-desk.ca" local="131032589576411153" remote="131033140200000000" Dst="2" />
-<file name="sad-icon.png" server="ftp.front-desk.ca" local="131032588809330901" remote="131033140200000000" Dst="2" />
 <file name="outbound.png" server="ftp.front-desk.ca" local="131032278877382748" remote="131033140200000000" Dst="2" />
+<file name="good.png" server="ftp.front-desk.ca" local="131033216864586695" remote="131033184600000000" Dst="2" />
+<file name="bad.png" server="ftp.front-desk.ca" local="131033217536526724" remote="131033185200000000" Dst="2" />
+<file name="great.png" server="ftp.front-desk.ca" local="131033217096026698" remote="131033185200000000" Dst="2" />
+<file name="ok.png" server="ftp.front-desk.ca" local="131033217869166741" remote="131033185200000000" Dst="2" />
+<file name="worse.png" server="ftp.front-desk.ca" local="131033218303816757" remote="131033185200000000" Dst="2" />
 </dwsync>
