@@ -3,22 +3,26 @@
  */
     ///<reference path="base.ts"/>
     ///<reference path="ListItem2.ts"/>
+    ///<reference path="../typings/greensock.d.ts"/>
+
+
 
 module listU {
 
-
+   // import ListItem = dash.ListItem;
     class VOItem{
         key:number
         id:number;
-       // b_r:number;
+       stamp:number;
         t:number;
         icon:string;
         sort:number;
         msg:string;
-        constructor(obj:any,public stamp:number){
+        constructor(obj:any){
             for(var str in obj)this[str]=obj[str];
         }
     }
+
    export class List2 {
         $view:JQuery;
         $tbody:JQuery;
@@ -28,6 +32,27 @@ module listU {
         }
         private template:string;
 
+       isUp:boolean;
+       $nanoContent:JQuery;
+
+       scrollUp():void{
+           //jQuery.fx.interval = 50;
+
+           if(!this.$nanoContent) this.$nanoContent = this.$nano.find('.nano-content');
+           var h:number = this.$nanoContent[0].scrollHeight-this.$nanoContent.height();
+           if(this.isUp){
+              // TweenMax.to(this.$nanoContent.children(0),3,{y:0});
+             this.$nanoContent.animate({'scrollTop':0},2000);
+               this.isUp= false;
+           }
+           else{
+              // TweenMax.to(this.$nanoContent.children(0),3,{y:-h});
+              // console.log(h);
+               this.$nanoContent.animate({'scrollTop':h},2000);
+               this.isUp= true;
+           }
+       }
+
         constructor(private listid:string, private options:any) {
             for (var str in options)this[str] = options[str];
         }
@@ -36,6 +61,7 @@ module listU {
            this.$view = $(this.listid);
            this.$tbody = this.$view.find('[data-id=list]:first');
            this.$nano = this.$view.find('.nano:first');
+
            //require(['nano'], ()=> {
            //  this.loadData(this.getparams);
            // })
@@ -46,7 +72,7 @@ module listU {
 
         getparams:string = '2016-03-15T7:58:34';
 
-        collection:_.Dictionary<ListItem> = {};
+        collection:_.Dictionary<ListRow> = {};
         stamp:number;
         geturl:string = 'http://front-desk.ca/mi/callcenter/rem/getagents?date=';
 
@@ -65,113 +91,253 @@ module listU {
             })
         }
 
-        /*parseData(data:any[]):VOAgent[] {
-            var ar = data
-            var out:VOAgent[] = [];
-            var stamp = Date.now();
-            for (var i = 0, n = ar.length; i < n; i++)out.push(new VOAgent(ar[i], stamp))
-            this.stamp = stamp;
-            return out;
 
-        }*/
+
+       rows:ListRow[];
+
+
+
+       private data:VOItem[];
+
+       setDataDone():void{
+          // this.removeItems();
+       }
+
+       currentStamp:number;
 
         setData(data:VOItem[]) {
+            this.data = data;
+            this.current = Date.now();
+            this.rows = [];
+            this.current = -1;
+            this.renderData();
+        }
+
+       renderData():void{
+           this.current++;
+           if(this.current >= this.data.length){
+               this.setDataDone();
+               return;
+           }
            // console.log(this);
-            var stamp:number = Date.now();
-            var ar = data
+            var ar = this.data;
             var coll = this.collection;
+           // for (var i = 0, n = ar.length; i < n; i++) {
+                var item = ar[this.current];
+                item.stamp = this.current;
+
+                if (coll[item.key])coll[item.key].setData(item);
+                else  coll[item.key] = new ListRow(item, this.template);
+
+                this.rows.push(coll[item.key]);
+                setTimeout(()=>{this.renderData()},20);
+           coll[item.key].insertAt(this.$tbody, this.current) ;
+           // }
+
+
+
+
+        }
+
+
+       private removeItemsDone():void{
+           this.current = -1;
+           this.sortOrder();
+       }
+       private sortOrderDone():void{
+
+
+       }
+       private current:number;
+       sortOrder():void{
+           this.current ++;
+           if(this.current >= this.rows.length){
+               this.sortOrderDone();
+               return;
+           }
+          // this.views;
+           var ar = this.rows;
+               var item = ar[ this.current];
+               if(item.order != this.current){
+                   item.insertAt(this.$tbody, this.current) ;
+                   setTimeout(()=>this.sortOrder(),2);
+               }
+
+
+       }
+
+
+       removeItems():void{
+           var ar = this.data
+           var coll = this.collection;
            // console.log(coll);
-            for (var i = 0, n = ar.length; i < n; i++) {
-                var item = ar[i];
-                item.stamp = stamp;
-                if (coll[item.key]) coll[item.key].setData(item);
-                else {
-                    coll[item.key] = new ListItem(item, this.template);
-                    coll[item.key].$view.appendTo(this.$tbody)
-                    // console.log(coll[item.id].$view);
-                }
-                // ;
-                if (item.stamp !== stamp) {
-                    this.collection[item.key].remove();
-                    this.collection[item.key] = null;
-                }
+           for(var str in coll){
+               if(coll[str] && coll[str].stamp !== this.stamp){
+                   coll[str].remove();
+                 //this.collection[str] = null;
+               }
+           }
+
+           this.removeItemsDone();
+       }
+
+    }
+
+
+
+    class ItemValue {
+        $view:JQuery;
+        setValue(val:string):void{
+            switch(this.type){
+                case 'text':
+                    this.$view.text(val);
+                    break;
+                case 'img':
+                  //  return $oldEl.css('background-image', 'url(' + val + ')');
+                    break;
+                case 'class':
+                  this.$view.attr('class', val);
+                    break;
             }
 
-            if (this.$nano.length)this.$nano.nanoScroller();
-        //console.log(this.$nano.length);
         }
 
-
-    }
-
-    class R_C {
-        $texts:_.Dictionary<JQuery>;
-        $visible:_.Dictionary<JQuery>;
-        $imgs:_.Dictionary<JQuery>;
-        $chk:_.Dictionary<JQuery>;
-        $class:_.Dictionary<JQuery>;
-
-        constructor($view:JQuery) {
-            this.$texts = this.createCollection('data-text', $view);
-            this.$visible = this.createCollection('data-vis', $view);
-            this.$imgs = this.createCollection('data-img', $view);
-            this.$chk = this.createCollection('data-chk', $view);
-            this.$class =  this.createCollection('data-class', $view);
-        }
-
-        createCollection(type:string, $view:JQuery):_.Dictionary<JQuery> {
-            var obj:any = {};
-            $view.find('[' + type + ']').each(function (i, el) {
-                obj[String(el.getAttribute(type))] = $(el);
-            })
-            return obj;
-        }
-
-        getObject(str:string) {
-            return this.$texts[str] || this.$visible[str] || this.$imgs[str] || this.$chk[str];
-        }
-
-        setData(item:VOItem) {
-            //  console.log(item);
-            for (var str in this.$texts)this.$texts[str].text(item[str]);
-            for (var str in this.$visible)item[str] ? this.$visible[str].show() : this.$visible[str].hide();
-            for (var str in this.$imgs)this.$imgs[str].css('background-image', 'url(' + item[str] + ')');
-            for (var str in this.$chk)this.$chk[str].prop('checked', item[str]);
-            for (var str in this.$class)this.$class[str].attr('class', item[str]);
+        constructor(public index:string, public el:HTMLElement, public type:string){
+            if(index=='fa'){
+                this.setValue = (val)=>{
+                    var $old = this.$view;
+                    var $el =  $old.clone();
+                    setTimeout(()=>{
+                        $old.hide('slow',()=>{
+                            $old.remove();
+                        });
+                    },500);
+                    $el.appendTo($old.parent());
+                    $el.attr('class', val);
+                    this.$view = $el;
+                }
+            }
+            if(index=='aux'){
+                this.setValue = (val)=>{
+                    var $old = this.$view;
+                    var $el =  $old.clone();
+                    setTimeout(()=>{
+                        $old.hide('slow',()=>{
+                            $old.remove();
+                        });
+                    },500);
+                    $el.appendTo($old.parent());
+                    $el.text(val);
+                    this.$view = $el;
+                }
+            }
+            this.$view = $(el);
         }
     }
-    class ListItem {
-        $icon:JQuery;
+
+
+    class ListRow {
         $view:JQuery;
-        $msg:JQuery;
-        $id:JQuery;
         id:number;
         stamp:number;
         $timeout:JQuery;
         current:string = '';
         timer:number = 0;
         rc:R_C;
+        order:number;
+       // data:VOItem;
+        private item:VOItem;
+        //$els:_.Dictionary<JQuery>;
+
+        values:_.Dictionary<ItemValue>
 
         constructor(item:any, template:string) {
-
+            this.stamp = item.stamp;
             this.id = item.id;
-            this.$view = $(template);
-            this.rc = new R_C(this.$view);
+            var $view = $(template);
+            var $els:any  = {};
+
+            var values:any ={};
+
+
+
+          /*  this.$view.find('[data-id]').each(function (i, el:HTMLElement) {
+                var ind:string = String(el.getAttribute('data-id'));
+                var type:string = String(el.getAttribute('data-type'));
+                values[ind] = new ItemValue(ind,el,type);
+            })
+*/
+            this.createCollection(values,'data-text','text', $view);
+            this.createCollection(values,'data-vis','vis', $view);
+           this.createCollection(values,'data-img','img', $view);
+            this.createCollection(values,'data-chk','chk', $view);
+            this.createCollection(values,'data-class','class',$view);
+
+            $view.hide();
+            this.$view = $view;
+            this.values = values;
+            this.item = new VOItem({});
+
+           // this.rc = new R_C(this.$view);
+         //   this.rc.addListener('fa',(res)=>{
+          //      console.log('this.onIconChanged '+res);
+          //  })
             this.setData(item);
+            this.order = -1;
+
         }
+
+        createCollection( values:any,data_type:string,type:string, $view:JQuery):void {
+            $view.find('[' + data_type + ']').each(function (i, el:HTMLElement) {
+                var ind:string = String(el.getAttribute(data_type));
+                values[ind] =  new ItemValue(ind,el,type);
+            })
+
+        }
+
+
+        insertAt($cont,i:number):void{
+            var lastIndex = $cont.children().size();
+            if(i < lastIndex)this.setOrder($cont,i);
+             else  $cont.append(this.$view);
+            this.$view.fadeIn();
+        }
+
+        setOrder($cont,i:number):void{
+            this.order = i;
+            $cont.children().eq(i).before(this.$view);
+        }
+
+
 
         setData(item:VOItem):void {
             this.stamp = item.stamp;
-            this.rc.setData(item);
+            for(var str in item){
+                if(this.values[str] && item[str] != this.item[str]){
+                   if(this.values[str]) this.values[str].setValue(item[str]);
+                   // if(this.$els[str])  this.$els[str] = this.setNewValue(this.$els[str],item[str]);
+                   // else console.log(' no display '+str);
+                }
+
+            }
+            this.item = item;
+         //   this.rc.setData(item);
+            this.show();
         }
 
         lastTime:number;
-        currentTime:number;
-
         remove():void {
             this.$view.fadeOut(()=> {
+                this.order = -1;
                 this.$view.remove()
             })
+        }
+
+        hide():void{
+            this.$view.fadeOut();
+        }
+        show():void{
+            this.$view.fadeIn();
         }
 
 

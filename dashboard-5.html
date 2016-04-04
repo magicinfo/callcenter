@@ -28,18 +28,23 @@
 					ListItem:'apps/ListItem2',
 					Reg:'com/Registry',
 					base:'apps/base',
-					nano:'libs/jquery.nanoscroller.min'
+					nano:'libs/jquery.nanoscroller.min',
+					app5:'apps/App5'
 
 				},
 				/*hbs: {
 				 handlebarsPath: "handlebars"
 				 },*/
 				shim : {
-					backbone               : {
+					backbone : {
 						deps   : ['jquery', 'underscore'],
 						exports: 'Backbone'
+					},
+					app5:{
+						deps:['backbone']
 					}
 				}
+
 			});
 
 			$(document).ready(function(){
@@ -158,24 +163,24 @@
 					<div class="nano">
 						<div class="nano-content">
 							<table class="table table-responsive">
-								<tbody data-id="list">
+								<tbody id="TableList" tbody data-id="list">
 
 								</tbody>
 
-								<script type="text/html" data-id="template">
+								<script type="text/html" id="row-template">
 									<tr class="myline">
 										<td class="td0">
-											<div class="icon" ><div class="fa fa-phone" data-class="fa"></div></div>
+											<div class="icon" ><div class="<%=fa%>"></div></div>
 										</td>
 										<td class="td1">
-											<span data-text="name"> I</span>
+											<span><%=name%></span>
 										</td>
 										<td  class="td2">
-											<span data-text="timef" data-class="time_color" >00:02:01</span>
+											<span><%=time%></span>
 										</td>
 										<td class="td3">
 											<div class="animation">
-												<div data-text="aux" data-class="tcolor" ></div>
+												<div class="<%=tcolor%>" ></div>
 											</div>
 
 										</td>
@@ -193,8 +198,10 @@
 									'moment',
 									'Reg',
 									'nano',
-									'apps/List2'
-								],function($,_,moment){
+									'backbone',
+									'app5'
+								],function($,_,moment,reg,nano,Backbone){
+
 
 									var options ={
 										geturl:'http://callcenter.front-desk.ca/service/getagents?date=',
@@ -212,7 +219,11 @@
 										return h+':'+(min<10?'0'+min:min)+':'+(sec<10?'0'+sec:sec);
 									}
 
-									var list = new listU.List2('#Table1',options);
+
+
+									var table = new TableView();
+
+									/*var list = new listU.List2('#Table1',options);
 									list.init();
 									list.loadData();
 
@@ -245,7 +256,7 @@
 									setInterval(function(){
 									//	list.scrollUp();
 									},6000)
-
+*/
 								})
 
 							</script>
@@ -369,6 +380,7 @@
 
 
 				window.onload = function () {
+					return;
 					var paragraphs = $("nobr");
 					var speedlimit=2000;
 					var scrolldelay=500;

@@ -58,15 +58,18 @@
                 <style>
                     #Panel1 .modal img{
                         max-width: 100%;
+                        margin: 12px;
                     }
                 </style>
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-id="close">&times;</button>
-                            <h4 class="modal-title">Modal Header</h4>
+                            <h4 class="modal-title">Edit Asset</h4>
+
                         </div>
                         <div class="modal-body">
+                            <input type="file" data-id="reupload" />
                             <div>
                                 <img data-img="icon" >
                             </div>
@@ -155,7 +158,8 @@
                         postparams:'a=upload',
                        // btnSave:'#SavePanel1',
                         btnUpload:'[data-id=upload]:first',
-                        btnDelete:'[data-id=delete]:first'
+                        btnDelete:'[data-id=delete]:first',
+                        btnEdit:'[data-id=edit]:first'
                     }
 
                    var list = new upload.ListUpload('#Panel1',options);
@@ -173,8 +177,10 @@
 
                         $('#Panel1 [data-id=logingroup]:first').hide();
                         var out = [];
+                        var stamp ='';
+                        if(list.newimage)  stamp ='?'+ Math.round(Date.now()/1000);
                         data.assets.map(function(val){
-                            out.push({filename:val,icon:'assets/'+val})
+                            out.push({filename:val,icon:'assets/'+val+stamp});
                         })
 
                         list.setData(out);
@@ -198,37 +204,6 @@
 
                     $('#Panel1 [data-id=add]:first').click(function(){
                         $('#Panel1 [data-id=upload]:first').toggleClass('hidden');
-                    })
-
-                    $('#Panel1 [data-id=edit]:first').click(function(){
-                        var sel= list.getSelected();
-                        if(!sel)  return;
-
-                        console.log(sel);
-                        editpanel.find('[data-img=icon]').attr('src',sel.icon);
-                        editpanel.find('[data-text=filename]').data('oldname',sel.filename).val(sel.filename);
-                        editpanel.show();
-
-                    })
-                    var editpanel = $('#Panel1 [data-id=editpanel]:first');
-                    editpanel.find('[data-id=close]').click(function(){
-                        editpanel.hide();
-                    })
-                    editpanel.find('[data-id=save]:first').click(function(){
-
-                        var input = editpanel.find('[data-text=filename]');
-                        var oldname = input .data('oldname');
-                        var newname = input.val();
-                        var out = {oldname:oldname,newname:newname};
-                        console.log(out);
-                        $.post(options.serviceUrl+'a=rename',JSON.stringify(out)).done(function(res){
-
-                            if(res.success) {
-                                editpanel.fadeOut();
-                                list.loadData();
-                            }
-                        }).fail(function(err){ console.log(err)});
-
                     })
 
 

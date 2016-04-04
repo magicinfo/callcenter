@@ -53,10 +53,13 @@ if($_SESSION['user'] !== 'admin'){
 			$out->error= $file["error"];
 			return $out;
 		}
-		$filename= $file["name"];				
+		
+		//$filename= isset($_GET['filename'])?$_GET['filename']:$file["name"];	
+		$filename=$file["name"];				
 		if(move_uploaded_file($file["tmp_name"],'../'.$folder.'/'.$filename)){
 			$out->success='success';
 			$out->result=$folder.'/'.$filename;
+			$out->filename = $filename;
 		}
 		
 		echo json_encode($out);
@@ -67,8 +70,10 @@ if($_SESSION['user'] !== 'admin'){
 	$filename = $_GET['filename'];
 	$out=new stdClass();
 	//if(strpos('/',$filename) !== NULL) return $out;
+	
 	$file = '../'.$folder.'/'.$filename;
-	$res = unlink($file);	
+	$res=0;
+	if(file_exists($file)) $res = unlink($file);	
 	if($res){
 		$out->success='success';
 		$out->result='removed';
@@ -81,12 +86,22 @@ else if($a == 'rename'){
 	$data = json_decode(file_get_contents('php://input'));
 	$newname = $data->newname;
 	$oldname = $data->oldname;
-	
+	if($newname == $oldname){
+		$out->success='samename';
+		echo json_encode($out);
+		exit();
+		
+	}
+	$newfile = '../'.$folder.'/'.$newname;
+	$oldfile = '../'.$folder.'/'.$oldname;
+	$replaced=0;
+	if(file_exists($newfile))$replaced = unlink($newfile);
 	$out=new stdClass();
-	$res = rename('../'.$folder.'/'.$oldname,'../'.$folder.'/'.$newname);		
+	$res = rename($oldfile,$newfile);	
 	if($res) {
 		$out->success='success';	
 		$out->newname = $folder.'/'.$newname;
+		if($replaced)$out->replaced = $newname;
 	}
 	echo json_encode($out);
 		exit();

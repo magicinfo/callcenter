@@ -112,8 +112,11 @@ module upload {
        onData:Function;
        onDelete:Function;
        onEdit:Function;
+
        private btnUpload:string;
        private btnDelete:string;
+       private btnEdit:string;
+
 
         constructor(private listid:string, private options:any) {
             for (var str in options)this[str] = options[str];
@@ -133,6 +136,7 @@ module upload {
 
             if(this.btnUpload)$(this.listid+' '+this.btnUpload).change((evt)=>this.uploadFile(evt))
             if(this.btnDelete) $(this.listid+' '+this.btnDelete).click((evt)=>this.deleteFile(evt));
+           if(this.btnEdit) $(this.listid+' '+this.btnEdit).click((evt)=>this.openEditPanel(evt));
 
         }
 
@@ -181,6 +185,93 @@ module upload {
             return out;
         }
 
+       $editPanel:JQuery;
+       $editImasge:JQuery;
+       $editInput:JQuery;
+       private initEditPanel():void{
+           this.$editPanel =  $(this.listid+' [data-id=editpanel]:first');
+          // console.log(  this.$editPanel);
+           this.$editImasge =   this.$editPanel.find('[data-img=icon]');
+           this.$editInput = this.$editPanel.find('[data-text=filename]');
+           this.$editPanel.find('[data-id=close]').click(()=>{  this.$editPanel.fadeOut();});
+           this.$editPanel.find('[data-id=save]:first').click(()=>this.saveEditImage())
+           this.$editPanel.find('[data-id=reupload]:first').change((evt)=>this.reuploadImage(evt));
+
+       }
+
+       reuploadImage(evt:JQueryEventObject):void{
+           console.log('reupload');
+           var filename:string = this.$editInput.val();
+           var input:any = evt.target;
+           var file= input.files[0];
+           var form = new FormData();
+           form.append('file',file);
+           $.ajax({
+               url:this.serviceUrl+'a=upload',
+               type: 'POST',
+               dataType: 'json',
+               data: form,
+               cache: false,
+               contentType: false,
+               processData: false
+           }).done((res)=>{
+               console.log(res);
+               if(res.error){
+                   alert(res.error);
+                   return;
+               }
+
+               this.$editImasge.attr('src',res.result);
+               this.$editImasge.data('newimg',res.filename);
+              // this.$editPanel.fadeOut();
+               this.loadData();
+           }).fail((res)=>{
+               console.log('fail',res);
+           });
+       }
+
+      newimage:string;
+       saveEditImage():void{
+           var input  = this.$editInput;
+           var oldname = input.data('oldname');
+           var newname = input.val();
+           var newimg = this.$editImasge.data('newimg');
+           if(newimg)oldname = newimg;
+
+           var out = {oldname:oldname,newname:newname};
+
+           $.post(this.serviceUrl+'a=rename',JSON.stringify(out)).done((res)=>{
+               if(res.error){
+                   alert(res.error);
+                   return;
+               }
+               console.log(res);
+               if(res.success) {
+                 if(res.replaced) this.newimage = res.newname;
+                   else this.newimage = null;
+                   this.$editPanel.fadeOut();
+                   this.loadData();
+               }else if(res.error) alert(res.error);
+
+           }).fail(function(err){ console.log(err)});
+
+
+       }
+        openEditPanel(evt:JQueryEventObject):void{
+            var sel= this.getSelected();
+            if(!sel)  return;
+
+            console.log(sel);
+            if(!this.$editPanel) this.initEditPanel()
+            this.$editImasge.attr('src',sel.icon);
+            this.$editImasge.data('oldimg',sel.icon);
+            this.$editImasge.data('newimg',null);
+          //  $(this.listid+' '+this.btnUpload).val('');
+
+            this.$editInput.data('oldname',sel.filename).val(sel.filename);
+
+            this.$editPanel.show();
+        }
 
        uploadFile(evt:JQueryEventObject):void{
                var input:any = evt.target;
@@ -197,7 +288,8 @@ module upload {
                    processData: false
                }).done((res)=>{
                    console.log(res);
-                   this.loadData();
+                   if(res.error) alert(res.error)
+                   else this.loadData();
                }).fail((res)=>{
                    console.log('fail',res);
                });

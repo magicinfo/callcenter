@@ -1,6 +1,6 @@
 <?
-
-
+echo md5('uplight').','.md5('uplight.ca');
+exit();
 $settings = json_decode(file_get_contents('settings.json'));
 $url= $settings->url;
 

@@ -9,57 +9,70 @@
 		<link rel="stylesheet" href="css/font-awesome-4.5.0/css/font-awesome.min.css">
 		<link href="css/mystyle.css" rel="stylesheet">
 		<script type="text/javascript" src="js/jquery-1.12.2.js"></script>
+		<script type="text/javascript" src="js/js-scroll.js"></script>
 		
 		<script type="text/javascript">
 			window.onload = function () {
-				var paragraphs = $("nobr");
-				var speedlimit=2000;
-				var scrolldelay=500;
+				var speedlimit=20000;
+				var scrolldelay=0;
 				var width;
 				var widthContainer;
 				var speed;
 				var flag = false;
-			
+						
 				var scrollforward = function(w,wc,speed){
 					$('#roller nobr').delay(scrolldelay).animate({
-						left:-(w-wc)},speed,function(){
-							if (flag)
+						left:-(w-wc)-wc},speed,"linear",function(){
+							if (flag){
 								scrollbackward(w,wc,speed);
+							}
 							else
 								return false;
 						});
 				}
 
 				var scrollbackward = function(w,wc,speed){
-					$('#roller nobr').delay(scrolldelay).animate({
-						left:0},speed,function(){
-							if (flag)
-								scrollforward(w,wc,speed);
-							else
-								return false;
-						});
+					var str = $("nobr").html();
+					$("nobr span").remove();
+					$("nobr").html(str);
+					width=$('#roller nobr').width()/2;
+					widthContainer=$('#roller').width();
+					speed=speedlimit*(width/widthContainer);
+					$('#roller nobr').css({position:'absolute',left:0,top:0});
+					if (flag)
+						scrollforward(width,widthContainer,speed);
+					else
+						return false;
 				}
 				
 				function sendGetQuery () {
 					$.ajax({
 						type: "GET",
-						url: "http://front-desk.ca/mi/callcenter/rem/messenger",
+						url: "http://callcenter.front-desk.ca/service/crawl?a=get",
 						dataType: "json",
 
 						success: function (obj) {
-							var temp = obj.result;
-							var str = paragraphs.text();
+							var temp = obj.list;
+							var textMess = "";
+							$.each(temp, function(i, val) {
+								textMess += val + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+							});
 							
-							if(temp !== str){
-								paragraphs.text(temp);
+							textMess = "<span>" + textMess + "</span>";
+							var str = $("nobr span:first").html();
+							str = "<span>" + str + "</span>";
+							
+							if(textMess !== str){
+								$("nobr").html(textMess);
 								$('#roller').html(''+$('#roller').html()+'');
-								$('#roller nobr').css({position:'absolute',left:0,top:0});
 								width=$('#roller nobr').width();
 								widthContainer=$('#roller').width();
 								speed=speedlimit*(width/widthContainer);
-					
+								
 								if(width>widthContainer){
 									flag = true;
+									$("nobr").append(textMess);
+									$('#roller nobr').css({position:'absolute',left:0,top:0});
 									scrollforward(width,widthContainer,speed);
 								}
 								else{
@@ -72,15 +85,89 @@
 					});
 				}
 				
+				function inicializeTable(){
+					sendGetQueryTable2 ();
+					sendGetQueryTable3 ();
+					sendGetQueryTable1 ();
+					
+					setTimeout(sendGetQueryTableUpdate, 60000);
+				}
+				
+				function updateTable (item, list) {
+					if (item < list.length){
+						var hours = 0;
+						var minutes = 0;
+						var seconds = 0;
+						if (list[item].time >= 3600){
+							hours = Math.floor(list[item].time/3600);
+							minutes = list[item].time%3600;
+							seconds = minutes%60;
+							minutes = Math.floor(minutes/60);
+						}
+						else{
+							minutes = Math.floor(list[item].time/60);
+							seconds = list[item].time%60;	
+						}
+						
+						if (hours < 10)
+							hours = "0" + hours;
+						if (minutes < 10)
+							minutes = "0" + minutes;
+						if (seconds < 10)
+							seconds = "0" + seconds;
+							
+						var time = hours + ":" + minutes + ":" + seconds;
+													
+						var aux = list[item].aux;
+						if (aux == null)
+							aux = "";
+						
+						var fa = list[item].fa;
+						if (fa == null)
+							fa = "&nbsp;";
+								
+						$("#" + list[item].id + " #picture i").removeClass().addClass("fa fa-" + fa).css({"color":list[item].color});
+						
+						$("#" + list[item].id).removeData();
+						$("#" + list[item].id).data("clock", list[item].time);
+						
+						$("#" + list[item].id + " #time span").text(time);
+						$("#" + list[item].id + " #time").css({"color":list[item].time_color});
+						
+						$("#" + list[item].id + " #aux span").text(aux);
+						$("#" + list[item].id + " #aux").css({"color":list[item].time_color});
+						item++;
+						setTimeout(function(){updateTable(item, list)}, 500);
+					}
+					else
+						return false;
+				}
+				
+				function sendGetQueryTableUpdate () {
+					sendGetQueryTable2 ();
+					sendGetQueryTable3 ();
+				
+					$.ajax({
+						type: "GET",
+						url: "http://callcenter.front-desk.ca/service/getagents?date=2016-03-15T7:58:34",
+						dataType: "json",
+
+						success: function (obj) {
+							var temp = obj.result;
+							setTimeout(function(){updateTable(0, temp.list)}, 500);
+							setTimeout(sendGetQueryTableUpdate, 60000);
+						}
+					});
+				}
+				
 				function sendGetQueryTable1 () {
 					$.ajax({
 						type: "GET",
-						url: "http://front-desk.ca/mi/callcenter/dashboard2/getagents?date=2016-03-15T7:58:34",
+						url: "http://callcenter.front-desk.ca/service/getagents?date=2016-03-15T7:58:34",
 						dataType: "json",
 
 						success: function (obj) {
 							$("tbody#mainbody").empty();
-						
 							var temp = obj.result;
 							$.each(temp.list, function(i, val) {
 								var hours = 0;
@@ -135,6 +222,7 @@
 								
 								$("#" + val.id).append("<td id='picture'><i></i></td><td id='name'><span>" + name + "</span></td><td id='time'><span>" + time +"</span></td><td id='aux'><span>"+ aux +"</span></td>");
 								
+								$("#" + val.id).data("clock", val.time);
 								
 								$("#" + val.id + " #picture i").addClass("fa fa-" + fa).css({"color":val.color,"padding":"5px"});
 								
@@ -146,10 +234,47 @@
 								
 								$("#" + val.id + " #aux").css({"width":"25%", "padding-left":"10px", "color":val.time_color});
 								
-								$("tbody#mainbody tr").addClass("myline");	
+								$("tbody#mainbody tr").addClass("myline");
 							});
-							setTimeout(sendGetQueryTable1, 60000);
-						}
+							
+							$(".table-scroll").showLocation();
+							
+							setInterval(function(){
+								$("#mainbody tr").each( function(index, element) {
+									var id = $(element).attr("id");
+									var clock = $(element).data("clock");
+									clock += 1;
+									
+									var hours = 0;
+									var minutes = 0;
+									var seconds = 0;
+									if (clock >= 3600){
+										hours = Math.floor(clock/3600);
+										minutes = clock%3600;
+										seconds = minutes%60;
+										minutes = Math.floor(minutes/60);
+									}
+									else{
+										minutes = Math.floor(clock/60);
+										seconds = clock%60;
+									}
+
+									if (hours < 10)
+										hours = "0" + hours;
+									if (minutes < 10)
+										minutes = "0" + minutes;
+									if (seconds < 10)
+										seconds = "0" + seconds;
+										
+									var time = hours + ":" + minutes + ":" + seconds;
+									$("#"+id + " td:eq(2) span").text(time);
+									
+									
+									$(element).removeData();
+									$(element).data("clock", clock);
+								});
+							},1000);
+						}							
 					});
 				}
 				
@@ -165,8 +290,6 @@
 							$("#waiting").text(temp.waiting.value);
 							$("#oldest").text(temp.oldest);
 							$("#answered").text(temp.answered);
-							
-							setTimeout(sendGetQueryTable2, 60000);
 						}
 					});
 				}
@@ -187,16 +310,12 @@
 							$("#avgaband").text(temp.avgaband);
 							$("#avgspeed").text(temp.avgspeed);
 							$("#avghandl").text(temp.avghandl);
-							
-							setTimeout(sendGetQueryTable3, 60000);
 						}
 					});
 				}
-				
+								
+				inicializeTable();
 				sendGetQuery ();
-				sendGetQueryTable1 ();
-				sendGetQueryTable2 ();
-				sendGetQueryTable3 ();
 			}
 		</script>
 	</head>
@@ -214,8 +333,8 @@
 					<p class="paragraf-one">AUX</p>
 				</div>
 
-				<table class="table table-striped table-condensed table-one">
-					<tbody id="mainbody"></tbody>
+				<table class="table table-striped table-condensed table-one table-scroll">
+					<tbody id="mainbody" class="body-scroll"></tbody>
 				</table>
 			</div>
 
@@ -315,7 +434,7 @@
 
 			<div class="col-xs-12 div-two">
 				<div id="roller" class="div-foor" style="text-align:center">
-					<nobr class="paragraf-two">&nbsp;</nobr>
+					<nobr class="paragraf-two"><span>&nbsp;</span></nobr>
 				</div>
 			</div>
 			

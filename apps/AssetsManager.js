@@ -103,6 +103,8 @@ var upload;
                 $(this.listid + ' ' + this.btnUpload).change(function (evt) { return _this.uploadFile(evt); });
             if (this.btnDelete)
                 $(this.listid + ' ' + this.btnDelete).click(function (evt) { return _this.deleteFile(evt); });
+            if (this.btnEdit)
+                $(this.listid + ' ' + this.btnEdit).click(function (evt) { return _this.openEditPanel(evt); });
         };
         ListUpload.prototype.getSelected = function () {
             return this.selected ? this.selected.getDaata() : 0;
@@ -139,6 +141,87 @@ var upload;
             }
             return out;
         };
+        ListUpload.prototype.initEditPanel = function () {
+            var _this = this;
+            this.$editPanel = $(this.listid + ' [data-id=editpanel]:first');
+            // console.log(  this.$editPanel);
+            this.$editImasge = this.$editPanel.find('[data-img=icon]');
+            this.$editInput = this.$editPanel.find('[data-text=filename]');
+            this.$editPanel.find('[data-id=close]').click(function () { _this.$editPanel.fadeOut(); });
+            this.$editPanel.find('[data-id=save]:first').click(function () { return _this.saveEditImage(); });
+            this.$editPanel.find('[data-id=reupload]:first').change(function (evt) { return _this.reuploadImage(evt); });
+        };
+        ListUpload.prototype.reuploadImage = function (evt) {
+            var _this = this;
+            console.log('reupload');
+            var filename = this.$editInput.val();
+            var input = evt.target;
+            var file = input.files[0];
+            var form = new FormData();
+            form.append('file', file);
+            $.ajax({
+                url: this.serviceUrl + 'a=upload',
+                type: 'POST',
+                dataType: 'json',
+                data: form,
+                cache: false,
+                contentType: false,
+                processData: false
+            }).done(function (res) {
+                console.log(res);
+                if (res.error) {
+                    alert(res.error);
+                    return;
+                }
+                _this.$editImasge.attr('src', res.result);
+                _this.$editImasge.data('newimg', res.filename);
+                // this.$editPanel.fadeOut();
+                _this.loadData();
+            }).fail(function (res) {
+                console.log('fail', res);
+            });
+        };
+        ListUpload.prototype.saveEditImage = function () {
+            var _this = this;
+            var input = this.$editInput;
+            var oldname = input.data('oldname');
+            var newname = input.val();
+            var newimg = this.$editImasge.data('newimg');
+            if (newimg)
+                oldname = newimg;
+            var out = { oldname: oldname, newname: newname };
+            $.post(this.serviceUrl + 'a=rename', JSON.stringify(out)).done(function (res) {
+                if (res.error) {
+                    alert(res.error);
+                    return;
+                }
+                console.log(res);
+                if (res.success) {
+                    if (res.replaced)
+                        _this.newimage = res.newname;
+                    else
+                        _this.newimage = null;
+                    _this.$editPanel.fadeOut();
+                    _this.loadData();
+                }
+                else if (res.error)
+                    alert(res.error);
+            }).fail(function (err) { console.log(err); });
+        };
+        ListUpload.prototype.openEditPanel = function (evt) {
+            var sel = this.getSelected();
+            if (!sel)
+                return;
+            console.log(sel);
+            if (!this.$editPanel)
+                this.initEditPanel();
+            this.$editImasge.attr('src', sel.icon);
+            this.$editImasge.data('oldimg', sel.icon);
+            this.$editImasge.data('newimg', null);
+            //  $(this.listid+' '+this.btnUpload).val('');
+            this.$editInput.data('oldname', sel.filename).val(sel.filename);
+            this.$editPanel.show();
+        };
         ListUpload.prototype.uploadFile = function (evt) {
             var _this = this;
             var input = evt.target;
@@ -155,7 +238,10 @@ var upload;
                 processData: false
             }).done(function (res) {
                 console.log(res);
-                _this.loadData();
+                if (res.error)
+                    alert(res.error);
+                else
+                    _this.loadData();
             }).fail(function (res) {
                 console.log('fail', res);
             });

@@ -47,6 +47,7 @@ var ListItem2 = (function () {
     };
     ListItem2.prototype.remove = function () {
         var _this = this;
+        console.log('removing ' + this.id);
         this.$view.fadeOut(function () { _this.$view.remove(); });
     };
     return ListItem2;

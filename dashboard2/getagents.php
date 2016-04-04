@@ -17,8 +17,26 @@ $out->id= $record->id;
 $out->stamp = $record ->stamp;
 
 if($type && $type=='raw')$result = simplexml_load_string($record->rawdata);
-else $result = parseFile($record->rawdata,$out->stamp);
+else{
+	
+	 $result = parseFile($record->rawdata,$out->stamp);
+	 //$result->list =  makeLengthDifferent($result->list);
+	 
+}
+
+
+//$out->total= count($result->list);
 $out->result = $result; 
+
+function makeLengthDifferent($ar){
+	$out = array();
+	$total = count($ar);
+	for($i=0;$i<$total;$i++){
+		if($i % 2) $out[] = $ar[$i];
+		
+	}
+	return $out;	
+}
 
 function getRecord($id){
 	$dbname = 'frontdes_callcenter';

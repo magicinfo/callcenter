@@ -62,6 +62,7 @@
     currentTime:number;
 
     remove():void{
+        console.log('removing '+this.id);
         this.$view.fadeOut(()=>{this.$view.remove()})
     }
 

@@ -3,6 +3,7 @@
  */
 ///<reference path="base.ts"/>
 ///<reference path="ListItem2.ts"/>
+///<reference path="../typings/greensock.d.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -10,9 +11,9 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var listU;
 (function (listU) {
+    // import ListItem = dash.ListItem;
     var VOItem = (function () {
-        function VOItem(obj, stamp) {
-            this.stamp = stamp;
+        function VOItem(obj) {
             for (var str in obj)
                 this[str] = obj[str];
         }
@@ -31,6 +32,23 @@ var listU;
             for (var str in options)
                 this[str] = options[str];
         }
+        List2.prototype.scrollUp = function () {
+            //jQuery.fx.interval = 50;
+            if (!this.$nanoContent)
+                this.$nanoContent = this.$nano.find('.nano-content');
+            var h = this.$nanoContent[0].scrollHeight - this.$nanoContent.height();
+            if (this.isUp) {
+                // TweenMax.to(this.$nanoContent.children(0),3,{y:0});
+                this.$nanoContent.animate({ 'scrollTop': 0 }, 2000);
+                this.isUp = false;
+            }
+            else {
+                // TweenMax.to(this.$nanoContent.children(0),3,{y:-h});
+                // console.log(h);
+                this.$nanoContent.animate({ 'scrollTop': h }, 2000);
+                this.isUp = true;
+            }
+        };
         List2.prototype.init = function () {
             this.$view = $(this.listid);
             this.$tbody = this.$view.find('[data-id=list]:first');
@@ -52,96 +70,199 @@ var listU;
                 console.log(reason);
             });
         };
-        /*parseData(data:any[]):VOAgent[] {
-            var ar = data
-            var out:VOAgent[] = [];
-            var stamp = Date.now();
-            for (var i = 0, n = ar.length; i < n; i++)out.push(new VOAgent(ar[i], stamp))
-            this.stamp = stamp;
-            return out;
-
-        }*/
+        List2.prototype.setDataDone = function () {
+            // this.removeItems();
+        };
         List2.prototype.setData = function (data) {
+            this.data = data;
+            this.current = Date.now();
+            this.rows = [];
+            this.current = -1;
+            this.renderData();
+        };
+        List2.prototype.renderData = function () {
+            var _this = this;
+            this.current++;
+            if (this.current >= this.data.length) {
+                this.setDataDone();
+                return;
+            }
             // console.log(this);
-            var stamp = Date.now();
-            var ar = data;
+            var ar = this.data;
+            var coll = this.collection;
+            // for (var i = 0, n = ar.length; i < n; i++) {
+            var item = ar[this.current];
+            item.stamp = this.current;
+            if (coll[item.key])
+                coll[item.key].setData(item);
+            else
+                coll[item.key] = new ListRow(item, this.template);
+            this.rows.push(coll[item.key]);
+            setTimeout(function () { _this.renderData(); }, 20);
+            coll[item.key].insertAt(this.$tbody, this.current);
+            // }
+        };
+        List2.prototype.removeItemsDone = function () {
+            this.current = -1;
+            this.sortOrder();
+        };
+        List2.prototype.sortOrderDone = function () {
+        };
+        List2.prototype.sortOrder = function () {
+            var _this = this;
+            this.current++;
+            if (this.current >= this.rows.length) {
+                this.sortOrderDone();
+                return;
+            }
+            // this.views;
+            var ar = this.rows;
+            var item = ar[this.current];
+            if (item.order != this.current) {
+                item.insertAt(this.$tbody, this.current);
+                setTimeout(function () { return _this.sortOrder(); }, 2);
+            }
+        };
+        List2.prototype.removeItems = function () {
+            var ar = this.data;
             var coll = this.collection;
             // console.log(coll);
-            for (var i = 0, n = ar.length; i < n; i++) {
-                var item = ar[i];
-                item.stamp = stamp;
-                if (coll[item.key])
-                    coll[item.key].setData(item);
-                else {
-                    coll[item.key] = new ListItem(item, this.template);
-                    coll[item.key].$view.appendTo(this.$tbody);
-                }
-                // ;
-                if (item.stamp !== stamp) {
-                    this.collection[item.key].remove();
-                    this.collection[item.key] = null;
+            for (var str in coll) {
+                if (coll[str] && coll[str].stamp !== this.stamp) {
+                    coll[str].remove();
                 }
             }
-            if (this.$nano.length)
-                this.$nano.nanoScroller();
-            //console.log(this.$nano.length);
+            this.removeItemsDone();
         };
         return List2;
     })();
     listU.List2 = List2;
-    var R_C = (function () {
-        function R_C($view) {
-            this.$texts = this.createCollection('data-text', $view);
-            this.$visible = this.createCollection('data-vis', $view);
-            this.$imgs = this.createCollection('data-img', $view);
-            this.$chk = this.createCollection('data-chk', $view);
-            this.$class = this.createCollection('data-class', $view);
+    var ItemValue = (function () {
+        function ItemValue(index, el, type) {
+            var _this = this;
+            this.index = index;
+            this.el = el;
+            this.type = type;
+            if (index == 'fa') {
+                this.setValue = function (val) {
+                    var $old = _this.$view;
+                    var $el = $old.clone();
+                    setTimeout(function () {
+                        $old.hide('slow', function () {
+                            $old.remove();
+                        });
+                    }, 500);
+                    $el.appendTo($old.parent());
+                    $el.attr('class', val);
+                    _this.$view = $el;
+                };
+            }
+            if (index == 'aux') {
+                this.setValue = function (val) {
+                    var $old = _this.$view;
+                    var $el = $old.clone();
+                    setTimeout(function () {
+                        $old.hide('slow', function () {
+                            $old.remove();
+                        });
+                    }, 500);
+                    $el.appendTo($old.parent());
+                    $el.text(val);
+                    _this.$view = $el;
+                };
+            }
+            this.$view = $(el);
         }
-        R_C.prototype.createCollection = function (type, $view) {
-            var obj = {};
-            $view.find('[' + type + ']').each(function (i, el) {
-                obj[String(el.getAttribute(type))] = $(el);
-            });
-            return obj;
+        ItemValue.prototype.setValue = function (val) {
+            switch (this.type) {
+                case 'text':
+                    this.$view.text(val);
+                    break;
+                case 'img':
+                    //  return $oldEl.css('background-image', 'url(' + val + ')');
+                    break;
+                case 'class':
+                    this.$view.attr('class', val);
+                    break;
+            }
         };
-        R_C.prototype.getObject = function (str) {
-            return this.$texts[str] || this.$visible[str] || this.$imgs[str] || this.$chk[str];
-        };
-        R_C.prototype.setData = function (item) {
-            //  console.log(item);
-            for (var str in this.$texts)
-                this.$texts[str].text(item[str]);
-            for (var str in this.$visible)
-                item[str] ? this.$visible[str].show() : this.$visible[str].hide();
-            for (var str in this.$imgs)
-                this.$imgs[str].css('background-image', 'url(' + item[str] + ')');
-            for (var str in this.$chk)
-                this.$chk[str].prop('checked', item[str]);
-            for (var str in this.$class)
-                this.$class[str].attr('class', item[str]);
-        };
-        return R_C;
+        return ItemValue;
     })();
-    var ListItem = (function () {
-        function ListItem(item, template) {
+    var ListRow = (function () {
+        function ListRow(item, template) {
             this.current = '';
             this.timer = 0;
-            this.id = item.id;
-            this.$view = $(template);
-            this.rc = new R_C(this.$view);
-            this.setData(item);
-        }
-        ListItem.prototype.setData = function (item) {
             this.stamp = item.stamp;
-            this.rc.setData(item);
+            this.id = item.id;
+            var $view = $(template);
+            var $els = {};
+            var values = {};
+            /*  this.$view.find('[data-id]').each(function (i, el:HTMLElement) {
+                  var ind:string = String(el.getAttribute('data-id'));
+                  var type:string = String(el.getAttribute('data-type'));
+                  values[ind] = new ItemValue(ind,el,type);
+              })
+  */
+            this.createCollection(values, 'data-text', 'text', $view);
+            this.createCollection(values, 'data-vis', 'vis', $view);
+            this.createCollection(values, 'data-img', 'img', $view);
+            this.createCollection(values, 'data-chk', 'chk', $view);
+            this.createCollection(values, 'data-class', 'class', $view);
+            $view.hide();
+            this.$view = $view;
+            this.values = values;
+            this.item = new VOItem({});
+            // this.rc = new R_C(this.$view);
+            //   this.rc.addListener('fa',(res)=>{
+            //      console.log('this.onIconChanged '+res);
+            //  })
+            this.setData(item);
+            this.order = -1;
+        }
+        ListRow.prototype.createCollection = function (values, data_type, type, $view) {
+            $view.find('[' + data_type + ']').each(function (i, el) {
+                var ind = String(el.getAttribute(data_type));
+                values[ind] = new ItemValue(ind, el, type);
+            });
         };
-        ListItem.prototype.remove = function () {
+        ListRow.prototype.insertAt = function ($cont, i) {
+            var lastIndex = $cont.children().size();
+            if (i < lastIndex)
+                this.setOrder($cont, i);
+            else
+                $cont.append(this.$view);
+            this.$view.fadeIn();
+        };
+        ListRow.prototype.setOrder = function ($cont, i) {
+            this.order = i;
+            $cont.children().eq(i).before(this.$view);
+        };
+        ListRow.prototype.setData = function (item) {
+            this.stamp = item.stamp;
+            for (var str in item) {
+                if (this.values[str] && item[str] != this.item[str]) {
+                    if (this.values[str])
+                        this.values[str].setValue(item[str]);
+                }
+            }
+            this.item = item;
+            //   this.rc.setData(item);
+            this.show();
+        };
+        ListRow.prototype.remove = function () {
             var _this = this;
             this.$view.fadeOut(function () {
+                _this.order = -1;
                 _this.$view.remove();
             });
         };
-        return ListItem;
+        ListRow.prototype.hide = function () {
+            this.$view.fadeOut();
+        };
+        ListRow.prototype.show = function () {
+            this.$view.fadeIn();
+        };
+        return ListRow;
     })();
     var List3 = (function (_super) {
         __extends(List3, _super);

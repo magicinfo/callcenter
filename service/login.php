@@ -1,6 +1,6 @@
 <?php
 class Login{
-	function getRole($data){		
+	function getRole($data,$file_name){		
 		$user = $data->user;
 		if(!$user) return 0;
 		$user->user = md5($user->user);
@@ -21,6 +21,16 @@ class Login{
 			if($user->user == $val->user && $user->pass == $val->pass) return 'admin';
 		}
 		return 'nouser';
+	}
+	
+	function getUser($file_name){		
+		$root = (string)$_SERVER['DOCUMENT_ROOT'];
+		$ind = strpos($root,'public_html');
+		if($ind===FALSE) $ind = strpos($root,'www');
+		$root = substr($root,0,$ind);
+		$users_file = $root.$file_name;	
+		if(!file_exists($users_file)) return 'nofile';	
+		return json_decode(file_get_contents($users_file));		
 	}
 	
 }

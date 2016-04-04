@@ -12,8 +12,11 @@
 	border-color:#ffffff;
 }
 
-.table-one tbody{
+.body-scroll {
 	overflow-y: auto;
+}
+
+.table-one tbody{
 	height:82vh;
 	position: absolute;
 }
