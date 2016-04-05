@@ -9,16 +9,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var listU;
-(function (listU) {
-    // import ListItem = dash.ListItem;
-    var VOItem = (function () {
-        function VOItem(obj) {
-            for (var str in obj)
-                this[str] = obj[str];
-        }
-        return VOItem;
-    })();
+var uplight;
+(function (uplight) {
     var List2 = (function () {
         function List2(listid, options) {
             this.listid = listid;
@@ -136,56 +128,28 @@ var listU;
         };
         return List2;
     })();
-    listU.List2 = List2;
+    uplight.List2 = List2;
     var ItemValue = (function () {
-        function ItemValue(index, el, type) {
+        function ItemValue(index, el) {
             var _this = this;
             this.index = index;
             this.el = el;
-            this.type = type;
-            if (index == 'fa') {
-                this.setValue = function (val) {
-                    var $old = _this.$view;
-                    var $el = $old.clone();
-                    setTimeout(function () {
-                        $old.hide('slow', function () {
-                            $old.remove();
-                        });
-                    }, 500);
-                    $el.appendTo($old.parent());
-                    $el.attr('class', val);
-                    _this.$view = $el;
-                };
-            }
-            if (index == 'aux') {
-                this.setValue = function (val) {
-                    var $old = _this.$view;
-                    var $el = $old.clone();
-                    setTimeout(function () {
-                        $old.hide('slow', function () {
-                            $old.remove();
-                        });
-                    }, 500);
-                    $el.appendTo($old.parent());
-                    $el.text(val);
-                    _this.$view = $el;
-                };
-            }
+            ItemValue.disp.on(index, function (evt, val) {
+                if (val == -1)
+                    val += _this.oldValue;
+                _this.setValue(val);
+            });
             this.$view = $(el);
         }
         ItemValue.prototype.setValue = function (val) {
-            switch (this.type) {
-                case 'text':
-                    this.$view.text(val);
-                    break;
-                case 'img':
-                    //  return $oldEl.css('background-image', 'url(' + val + ')');
-                    break;
-                case 'class':
-                    this.$view.attr('class', val);
-                    break;
-            }
+            this.$view = ItemValue.format[this.index](this.$view, val);
+            this.oldValue = val;
         };
+        ItemValue.prototype.destroy = function () {
+            ItemValue.disp.off(this.index);
+        };
+        ItemValue.disp = $({});
+        ItemValue.format = {};
         return ItemValue;
     })();
     var ListRow = (function () {
@@ -197,34 +161,29 @@ var listU;
             var $view = $(template);
             var $els = {};
             var values = {};
-            /*  this.$view.find('[data-id]').each(function (i, el:HTMLElement) {
-                  var ind:string = String(el.getAttribute('data-id'));
-                  var type:string = String(el.getAttribute('data-type'));
-                  values[ind] = new ItemValue(ind,el,type);
-              })
-  */
-            this.createCollection(values, 'data-text', 'text', $view);
-            this.createCollection(values, 'data-vis', 'vis', $view);
-            this.createCollection(values, 'data-img', 'img', $view);
-            this.createCollection(values, 'data-chk', 'chk', $view);
-            this.createCollection(values, 'data-class', 'class', $view);
+            $view.find('[data-id]').each(function (i, el) {
+                _.map(el.getAttribute('data-id').split(','), function (ind) { values[ind] = new ItemValue(ind, el); });
+            });
+            //  this.createValues(values,'data-text','text', $view);
+            //  this.createValues(values,'data-vis','vis', $view);
+            // this.createValues(values,'data-img','img', $view);
+            // this.createValues(values,'data-chk','chk', $view);
+            // this.createValues(values,'data-class','class',$view);
             $view.hide();
             this.$view = $view;
             this.values = values;
-            this.item = new VOItem({});
-            // this.rc = new R_C(this.$view);
-            //   this.rc.addListener('fa',(res)=>{
-            //      console.log('this.onIconChanged '+res);
-            //  })
+            this.item = { key: 0, id: 0, stamp: 0, t: 0, icon: '', sort: 0, msg: '' };
             this.setData(item);
             this.order = -1;
         }
-        ListRow.prototype.createCollection = function (values, data_type, type, $view) {
-            $view.find('[' + data_type + ']').each(function (i, el) {
-                var ind = String(el.getAttribute(data_type));
-                values[ind] = new ItemValue(ind, el, type);
-            });
-        };
+        /*  createValues(values:any,data_type:string,type:string, $view:JQuery):void {
+              $view.find('[' + data_type + ']').each(function (i, el:HTMLElement) {
+                  var ind:string = String(el.getAttribute(data_type));
+                  values[ind] =  new ItemValue(ind,el,type);
+              })
+  
+          }
+  */
         ListRow.prototype.insertAt = function ($cont, i) {
             var lastIndex = $cont.children().size();
             if (i < lastIndex)
@@ -240,10 +199,8 @@ var listU;
         ListRow.prototype.setData = function (item) {
             this.stamp = item.stamp;
             for (var str in item) {
-                if (this.values[str] && item[str] != this.item[str]) {
-                    if (this.values[str])
-                        this.values[str].setValue(item[str]);
-                }
+                if (this.values[str] && item[str] != this.item[str])
+                    this.values[str].setValue(item[str]);
             }
             this.item = item;
             //   this.rc.setData(item);
@@ -251,6 +208,8 @@ var listU;
         };
         ListRow.prototype.remove = function () {
             var _this = this;
+            for (var str in this.values)
+                this.values[str].destroy();
             this.$view.fadeOut(function () {
                 _this.order = -1;
                 _this.$view.remove();
@@ -262,8 +221,55 @@ var listU;
         ListRow.prototype.show = function () {
             this.$view.fadeIn();
         };
+        ListRow.disp = $({});
         return ListRow;
     })();
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    setInterval(function () { ItemValue.disp.triggerHandler('time', -1); }, 1000);
+    var formatTime = function (num) {
+        if (isNaN(num))
+            return '';
+        var h = Math.floor(num / 60 / 60);
+        var min = Math.floor(num / 60);
+        var sec = num - (min * 60);
+        return h + ':' + (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec);
+    };
+    ItemValue.format['time'] = function ($view, val) {
+        return $view.text(formatTime(val));
+    };
+    ItemValue.format['name'] = function ($view, val) {
+        return $view.text(val);
+    };
+    ItemValue.format['aux'] = function ($view, val) {
+        var $old = $view;
+        var $el = $old.clone();
+        setTimeout(function () {
+            $old.hide('slow', function () {
+                $old.remove();
+            });
+        }, 500);
+        $el.appendTo($old.parent());
+        $el.text(val);
+        return $el;
+    };
+    ItemValue.format['icon'] = function ($view, val) {
+        var $old = $view;
+        var $el = $old.clone();
+        setTimeout(function () {
+            $old.hide('slow', function () {
+                $old.remove();
+            });
+        }, 500);
+        $el.appendTo($old.parent());
+        $el.attr('class', val);
+        return $el;
+    };
+    ItemValue.format['time_color'] = function ($view, val) {
+        return $view.attr('class', val);
+    };
+    ItemValue.format['aux_color'] = function ($view, val) {
+        return $view.attr('class', val);
+    };
     var List3 = (function (_super) {
         __extends(List3, _super);
         function List3(listId, options) {
@@ -271,5 +277,5 @@ var listU;
         }
         return List3;
     })(List2);
-})(listU || (listU = {}));
+})(uplight || (uplight = {}));
 //# sourceMappingURL=List2.js.map

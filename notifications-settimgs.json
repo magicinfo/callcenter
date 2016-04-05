@@ -1,0 +1,55 @@
+{
+  "group": [
+    {
+      "id": 1,
+      "label": "Connections",
+      "actions": ["assept_reject","one_time"],
+      "redirect":"profile/{sender-id}#notification/{notification-id}"
+    },
+    {
+      "id": 2,
+      "label": "Messages",
+      "actions":["one_time"],
+      "redirect":"messages/#notification/{notification-id}"
+    },
+    {
+      "id": 3,
+      "label": "Alliance",
+      "actions": ["assept_reject","one_time"],
+      "redirect":"alliances/#notification/{notification-id}"
+    },
+    {
+      "id": 4,
+      "label": "Tasks",
+      "actions": ["assept_reject","one_time"],
+      "redirect":"atasks/#notification/{notification-id}"
+
+    },
+    {
+      "id": 3,
+      "label": "Service",
+      "actions": ["assept_reject","one_time"],
+      "redirect":"services/#notification/{notification-id}"
+      "popup":"service/notification-details/{notification-id}"
+    },
+    {
+      "id": 6,
+      "label": "Comments",
+      "actions": ["one_time"],
+      "redirect":"comments/#notification/{notification-id}"
+    }
+  ],
+  "actions":{
+    "accept-reject":{
+      "accept":
+      {
+        "type":"POST",
+        "url":"service/notification/accept/{notification-id}"
+      }, "reject":  {
+        "type":"POST",
+        "url":"service/notification/reject/{notification-id}"
+      }
+    },
+    "one_time":0
+  }
+}

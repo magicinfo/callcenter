@@ -133,12 +133,10 @@
 							overflow: hidden;
 
 						}
-						#Table1 .icon>div{
-						/*	position:absolute;
-							left: 0;
-							top: 0;
-							width: 1em;
-							height: 1em;*/
+						#Table1 tr{
+							font-family:Calibri;
+							font-weight:bolder;
+							font-size: xx-large;
 
 						}
 						#Table1 .animation{
@@ -168,9 +166,8 @@
 								</tbody>
 
 								<script type="text/html" id="row-template">
-									<tr class="myline">
 										<td class="td0">
-											<div class="icon" ><div class="<%=fa%>"></div></div>
+											<div class="icon" ><div class="<%=icon%>"></div></div>
 										</td>
 										<td class="td1">
 											<span><%=name%></span>
@@ -180,11 +177,10 @@
 										</td>
 										<td class="td3">
 											<div class="animation">
-												<div class="<%=tcolor%>" ></div>
+												<div class="<%=time_color%>" ></div>
 											</div>
 
 										</td>
-									</tr>
 								</script>
 
 

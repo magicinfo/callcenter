@@ -66,7 +66,12 @@
 							color: goldenrod;
 						}
 
+						#Table1 tr{
+							font-family:Calibri;
+							font-weight:bolder;
+							font-size: xx-large;
 
+						}
 						#Table1 .td0{
 							width:5%;
 						}
@@ -163,19 +168,19 @@
 								</tbody>
 
 								<script type="text/html" data-id="template">
-									<tr class="myline">
+									<tr>
 										<td class="td0">
-											<div class="icon" ><div class="fa fa-phone" data-class="fa"></div></div>
+											<div class="icon" ><div class="fa fa-phone"  data-id="icon"></div></div>
 										</td>
 										<td class="td1">
-											<span data-text="name"> I</span>
+											<span data-id="name"> I</span>
 										</td>
 										<td  class="td2">
-											<span data-text="timef" data-class="time_color" >00:02:01</span>
+											<span data-id="time,time_color"  >00:02:01</span>
 										</td>
 										<td class="td3">
 											<div class="animation">
-												<div data-text="aux" data-class="tcolor" ></div>
+												<div data-id="aux,aux_color" ></div>
 											</div>
 
 										</td>
@@ -193,7 +198,8 @@
 									'moment',
 									'Reg',
 									'nano',
-									'apps/List2'
+									'apps/Formatter',
+									'com/TableStatic'
 								],function($,_,moment){
 
 									var options ={
@@ -203,16 +209,7 @@
 
 									}
 
-									var formatTime = function(num){
-										if(isNaN(num)) return '';
-										var h = Math.floor(num/60/60);
-
-										var min = Math.floor(num/60);
-										var sec = num-(min*60);
-										return h+':'+(min<10?'0'+min:min)+':'+(sec<10?'0'+sec:sec);
-									}
-
-									var list = new listU.List2('#Table1',options);
+									var list = new uplight.TableStatic('#Table1',options);
 									list.init();
 									list.loadData();
 
@@ -225,9 +222,8 @@
 										for(var i=0,n=ar.length;i<n;i++){
 											var item = ar[i];
 											item.key=item.id;
-											item.fa= 'fa fa-'+item.fa;
-											item.tcolor = (item.color=='green'?'':item.color);
-											item.timef = formatTime(item.time);
+											item.icon = 'fa fa-'+item.fa;
+											item.aux_color = (item.color=='green'?'':item.color);
 										}
 										//data=ar;
 										//console.log(ar);
@@ -236,9 +232,6 @@
 
 									setInterval(function(){
 										list.getparams = stamp
-										// console.log(list.getparams);
-										//if(list.getparams == 'report=d') list.getparams='report=w';
-										//else list.getparams = 'report=d';
 										list.loadData();
 									},5000);
 

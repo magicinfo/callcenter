@@ -7,10 +7,9 @@
 
 
 
-module listU {
+module uplight {
 
-   // import ListItem = dash.ListItem;
-    class VOItem{
+  interface  VOItem{
         key:number
         id:number;
        stamp:number;
@@ -18,15 +17,16 @@ module listU {
         icon:string;
         sort:number;
         msg:string;
-        constructor(obj:any){
+       /* constructor(obj:any){
             for(var str in obj)this[str]=obj[str];
-        }
+        }*/
     }
 
    export class List2 {
         $view:JQuery;
         $tbody:JQuery;
         $nano:JQuery;
+
         onData = function (data) {
             console.log(data);
         }
@@ -187,51 +187,25 @@ module listU {
 
     class ItemValue {
         $view:JQuery;
-        setValue(val:string):void{
-            switch(this.type){
-                case 'text':
-                    this.$view.text(val);
-                    break;
-                case 'img':
-                  //  return $oldEl.css('background-image', 'url(' + val + ')');
-                    break;
-                case 'class':
-                  this.$view.attr('class', val);
-                    break;
-            }
+        static disp:JQuery=$({});
+        static format:any={};
+        oldValue:any;
 
+        setValue(val:string):void{
+                this.$view = ItemValue.format[this.index](this.$view,val);
+                this.oldValue = val;
         }
 
-        constructor(public index:string, public el:HTMLElement, public type:string){
-            if(index=='fa'){
-                this.setValue = (val)=>{
-                    var $old = this.$view;
-                    var $el =  $old.clone();
-                    setTimeout(()=>{
-                        $old.hide('slow',()=>{
-                            $old.remove();
-                        });
-                    },500);
-                    $el.appendTo($old.parent());
-                    $el.attr('class', val);
-                    this.$view = $el;
-                }
-            }
-            if(index=='aux'){
-                this.setValue = (val)=>{
-                    var $old = this.$view;
-                    var $el =  $old.clone();
-                    setTimeout(()=>{
-                        $old.hide('slow',()=>{
-                            $old.remove();
-                        });
-                    },500);
-                    $el.appendTo($old.parent());
-                    $el.text(val);
-                    this.$view = $el;
-                }
-            }
+
+        constructor(public index:string, public el:HTMLElement){
+            ItemValue.disp.on(index,(evt,val)=>{
+                if(val == -1) val += this.oldValue;
+                this.setValue(val)
+            })
             this.$view = $(el);
+        }
+        destroy():void{
+            ItemValue.disp.off(this.index);
         }
     }
 
@@ -243,13 +217,14 @@ module listU {
         $timeout:JQuery;
         current:string = '';
         timer:number = 0;
-        rc:R_C;
         order:number;
        // data:VOItem;
         private item:VOItem;
         //$els:_.Dictionary<JQuery>;
 
         values:_.Dictionary<ItemValue>
+
+        static  disp:JQuery = $({})
 
         constructor(item:any, template:string) {
             this.stamp = item.stamp;
@@ -259,42 +234,34 @@ module listU {
 
             var values:any ={};
 
+           $view.find('[data-id]').each(function (i, el:HTMLElement) {
+                _.map(el.getAttribute('data-id').split(','),function(ind){ values[ind] = new ItemValue(ind,el);});
 
 
-          /*  this.$view.find('[data-id]').each(function (i, el:HTMLElement) {
-                var ind:string = String(el.getAttribute('data-id'));
-                var type:string = String(el.getAttribute('data-type'));
-                values[ind] = new ItemValue(ind,el,type);
             })
-*/
-            this.createCollection(values,'data-text','text', $view);
-            this.createCollection(values,'data-vis','vis', $view);
-           this.createCollection(values,'data-img','img', $view);
-            this.createCollection(values,'data-chk','chk', $view);
-            this.createCollection(values,'data-class','class',$view);
 
+          //  this.createValues(values,'data-text','text', $view);
+          //  this.createValues(values,'data-vis','vis', $view);
+          // this.createValues(values,'data-img','img', $view);
+           // this.createValues(values,'data-chk','chk', $view);
+           // this.createValues(values,'data-class','class',$view);
             $view.hide();
             this.$view = $view;
             this.values = values;
-            this.item = new VOItem({});
-
-           // this.rc = new R_C(this.$view);
-         //   this.rc.addListener('fa',(res)=>{
-          //      console.log('this.onIconChanged '+res);
-          //  })
+            this.item = { key:0,id:0, stamp:0, t:0, icon:'', sort:0, msg:''};
             this.setData(item);
             this.order = -1;
 
         }
 
-        createCollection( values:any,data_type:string,type:string, $view:JQuery):void {
+      /*  createValues(values:any,data_type:string,type:string, $view:JQuery):void {
             $view.find('[' + data_type + ']').each(function (i, el:HTMLElement) {
                 var ind:string = String(el.getAttribute(data_type));
                 values[ind] =  new ItemValue(ind,el,type);
             })
 
         }
-
+*/
 
         insertAt($cont,i:number):void{
             var lastIndex = $cont.children().size();
@@ -308,17 +275,10 @@ module listU {
             $cont.children().eq(i).before(this.$view);
         }
 
-
-
         setData(item:VOItem):void {
             this.stamp = item.stamp;
             for(var str in item){
-                if(this.values[str] && item[str] != this.item[str]){
-                   if(this.values[str]) this.values[str].setValue(item[str]);
-                   // if(this.$els[str])  this.$els[str] = this.setNewValue(this.$els[str],item[str]);
-                   // else console.log(' no display '+str);
-                }
-
+                if(this.values[str] && item[str] != this.item[str]) this.values[str].setValue(item[str]);
             }
             this.item = item;
          //   this.rc.setData(item);
@@ -327,6 +287,8 @@ module listU {
 
         lastTime:number;
         remove():void {
+            for(var str in this.values)this.values[str].destroy();
+
             this.$view.fadeOut(()=> {
                 this.order = -1;
                 this.$view.remove()
@@ -342,6 +304,58 @@ module listU {
 
 
     }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+    setInterval(function(){ ItemValue.disp.triggerHandler('time',-1)},1000);
+
+    var formatTime = function(num){
+        if(isNaN(num)) return '';
+
+        var h = Math.floor(num/60/60);
+
+        var min = Math.floor(num/60);
+        var sec = num-(min*60);
+        return h+':'+(min<10?'0'+min:min)+':'+(sec<10?'0'+sec:sec);
+    }
+
+
+    ItemValue.format['time']= function($view,val){
+        return $view.text(formatTime(val));
+    }
+    ItemValue.format['name']= function($view,val){
+        return  $view.text(val);
+    }
+    ItemValue.format['aux']= function($view,val){
+        var $old = $view;
+        var $el =  $old.clone();
+        setTimeout(()=>{
+            $old.hide('slow',()=>{
+                $old.remove();
+            });
+        },500);
+        $el.appendTo($old.parent());
+        $el.text(val);
+        return $el;
+    }
+    ItemValue.format['icon']= function($view,val){
+        var $old = $view;
+        var $el =  $old.clone();
+        setTimeout(()=>{
+            $old.hide('slow',()=>{
+                $old.remove();
+            });
+        },500);
+        $el.appendTo($old.parent());
+        $el.attr('class', val);
+        return $el;
+    }
+    ItemValue.format['time_color']= function($view,val){
+        return  $view.attr('class', val);
+    }
+    ItemValue.format['aux_color']= function($view,val){
+        return  $view.attr('class', val);
+    }
+
 
 
     class List3 extends List2 {

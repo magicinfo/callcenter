@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title></title>
+		
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/font-awesome-4.5.0/css/font-awesome.min.css">
+		<link href="css/mystyle.css" rel="stylesheet">
+		<script type="text/javascript" src="js/jquery-1.12.2.js"></script>
+		
+		<script type="text/javascript">
+			window.onload = function () {
+				var paragraphs = $("nobr");
+				var speedlimit=2000;
+				var scrolldelay=500;
+				var width;
+				var widthContainer;
+				var speed;
+				var flag = false;
+							
+				var scrollforward = function(w,wc,speed){
+					$('#roller nobr').delay(scrolldelay).animate({
+						left:-(w-wc)},speed,function(){
+							if (flag)
+								scrollbackward(w,wc,speed);
+							else
+								return false;
+						});
+				}
+
+				var scrollbackward = function(w,wc,speed){
+					$('#roller nobr').delay(scrolldelay).animate({
+						left:0},speed,function(){
+							if (flag)
+								scrollforward(w,wc,speed);
+							else
+								return false;
+						});
+				}
+				
+				function sendGetQuery () {
+					$.ajax({
+						type: "GET",
+						url: "http://front-desk.ca/mi/callcenter/rem/messenger",
+						dataType: "json",
+
+						success: function (obj) {
+							var temp = obj.result;
+							var str = paragraphs.text();
+							
+							if(temp !== str){
+								paragraphs.text(temp);
+								$('#roller').html(''+$('#roller').html()+'');
+								$('#roller nobr').css({position:'absolute',left:0,top:0});
+								width=$('#roller nobr').width();
+								widthContainer=$('#roller').width();
+								speed=speedlimit*(width/widthContainer);
+					
+								if(width>widthContainer){
+									flag = true;
+									scrollforward(width,widthContainer,speed);
+								}
+								else{
+									flag = false;
+									$('#roller nobr').css({position:'relative',left:0,top:0});
+								}
+								setTimeout(sendGetQuery, 20000);
+							}
+						}
+					});
+				}
+				
+				function scrollingTable (item) {
+					var number = $("tbody#mainbody tr").length;
+					var height = $("tbody#mainbody tr:first").height();
+					number = number - Math.floor(($("tbody#mainbody").height())/height);
+					if (item <= (number)){
+						$("#mainbody").animate({scrollTop:height*item}, 'slow');
+						item++;
+						setTimeout(function () {scrollingTable(item)}, 2000);
+					}
+					else{
+						item = 1;
+						$("#mainbody").animate({scrollTop:0}, number*100);
+						setTimeout(function () {scrollingTable(item)}, 2000 + number*100);
+					}
+				}
+				
+				function inicializeTable(){
+					$.ajax({
+						type: "GET",
+						url: "http://front-desk.ca/mi/callcenter/dashboard2/getagents?date=2016-03-15T7:58:34",
+						dataType: "json",
+
+						success: function (obj) {
+							$("tbody#mainbody").empty();
+							var temp = obj.result;
+							$.each(temp.list, function(i, val) {
+								var hours = 0;
+								var minutes = 0;
+								var seconds = 0;
+								if (val.time >= 3600){
+									hours = Math.floor(val.time/3600);
+									minutes = val.time%3600;
+									seconds = minutes%60;
+									minutes = Math.floor(minutes/60);
+								}
+								else{
+									minutes = Math.floor(val.time/60);
+									seconds = val.time%60;	
+								}
+								
+								if (hours < 10)
+									hours = "0" + hours;
+								if (minutes < 10)
+									minutes = "0" + minutes;
+								if (seconds < 10)
+									seconds = "0" + seconds;
+									
+								var time = hours + ":" + minutes + ":" + seconds;
+							
+								var pos1 = val.name.indexOf('*');
+								if (pos1 != -1)
+									pos1 = pos1 + 8;
+								else
+									pos1 = 0;
+									
+								var name = val.name.slice(pos1);
+									
+								var pos2 = name.indexOf('~');
+								if (pos2 != -1)
+									pos2 = pos1 + 1;
+								else
+									pos2 = 0;
+								
+								name = name.slice(pos2);
+								
+								var aux = val.aux;
+								if (aux == null)
+									aux = "&nbsp;";
+								
+								var fa = val.fa;
+								if (fa == null)
+									fa = "&nbsp;";
+								
+								var tagtr = ("<tr id='"+ val.id +"'></tr>");
+								$("tbody#mainbody").append(tagtr);
+								
+								$("#" + val.id).append("<td id='picture'><i></i></td><td id='name'><span>" + name + "</span></td><td id='time'><span>" + time +"</span></td><td id='aux'><span>"+ aux +"</span></td>");
+								
+								
+								$("#" + val.id + " #picture i").addClass("fa fa-" + fa).css({"color":val.color,"padding":"5px"});
+								
+								$("#" + val.id + " #picture").css({"width":"7%", "text-align":"center", "border-right-width":"0px"});
+								
+								$("#" + val.id + " #name").css({"width":"40%", "border-left-width":"0px"});
+								
+								$("#" + val.id + " #time").css({"width":"28%", "padding-left":"10px", "color":val.time_color});
+								
+								$("#" + val.id + " #aux").css({"width":"25%", "padding-left":"10px", "color":val.time_color});
+								
+								$("tbody#mainbody tr").addClass("myline");
+							});
+						}
+					});
+				}
+				
+				
+				function updateTable (item, list) {
+					if (item < list.length){
+						var hours = 0;
+						var minutes = 0;
+						var seconds = 0;
+						if (list[item].time >= 3600){
+							hours = Math.floor(list[item].time/3600);
+							minutes = list[item].time%3600;
+							seconds = minutes%60;
+							minutes = Math.floor(minutes/60);
+						}
+						else{
+							minutes = Math.floor(list[item].time/60);
+							seconds = list[item].time%60;	
+						}
+						
+						if (hours < 10)
+							hours = "0" + hours;
+						if (minutes < 10)
+							minutes = "0" + minutes;
+						if (seconds < 10)
+							seconds = "0" + seconds;
+							
+						var time = hours + ":" + minutes + ":" + seconds;
+													
+						var aux = list[item].aux;
+						if (aux == null)
+							aux = "";
+						
+						var fa = list[item].fa;
+						if (fa == null)
+							fa = "&nbsp;";
+								
+						$("#" + list[item].id + " #picture i").removeClass().addClass("fa fa-" + fa).css({"color":list[item].color});
+						
+						$("#" + list[item].id + " #time span").text(time);
+						$("#" + list[item].id + " #time").css({"color":list[item].time_color});
+						
+						$("#" + list[item].id + " #aux span").text(aux);
+						$("#" + list[item].id + " #aux").css({"color":list[item].time_color});
+						item++;
+						setTimeout(function(){updateTable(item, list)}, 500);
+					}
+					else
+						return false;
+				}
+				
+				function sendGetQueryTable1 () {
+					$.ajax({
+						type: "GET",
+						url: "http://front-desk.ca/mi/callcenter/dashboard2/getagents?date=2016-03-15T7:58:34",
+						dataType: "json",
+
+						success: function (obj) {
+							var temp = obj.result;
+							setTimeout(function(){updateTable(0, temp.list)}, 500);
+							setTimeout(sendGetQueryTable1, 60000);
+						}
+					});
+				}
+				
+				function sendGetQueryTable2 () {
+					$.ajax({
+						type: "GET",
+						url: "http://front-desk.ca/mi/callcenter/dashboard2/realStatus.php?date=2016-03-15T7:58:34",
+						dataType: "json",
+
+						success: function (obj) {
+							var temp = obj.result;
+							
+							$("#waiting").text(temp.waiting.value);
+							$("#oldest").text(temp.oldest);
+							$("#answered").text(temp.answered);
+							
+							setTimeout(sendGetQueryTable2, 60000);
+						}
+					});
+				}
+				
+				function sendGetQueryTable3 () {
+					$.ajax({
+						type: "GET",
+						url: "http://front-desk.ca/mi/callcenter/dashboard2/daylyMetric",
+						dataType: "json",
+
+						success: function (obj) {
+							var temp = obj.result;
+							
+							$("#received").text(temp.received);
+							$("#abandcalls").text(temp.abandcalls);
+							$("#abandrate").text(temp.abandrate);
+							$("#abandrate").css('color', temp.abandrate_color);
+							$("#avgaband").text(temp.avgaband);
+							$("#avgspeed").text(temp.avgspeed);
+							$("#avghandl").text(temp.avghandl);
+							
+							setTimeout(sendGetQueryTable3, 60000);
+						}
+					});
+				}
+				
+				inicializeTable();
+				sendGetQuery ();
+				setTimeout(sendGetQueryTable1, 10000);
+				sendGetQueryTable2 ();
+				sendGetQueryTable3 ();
+				setTimeout(function(){scrollingTable(1)}, 5000);
+			}
+		</script>
+	</head>
+
+	<body>
+		<div>
+			<div class="col-xs-8" style="height:91vh; background:white; padding:0px;">
+				<div class="div-one" style="width:47%; padding-left:20px;">
+					<p class="paragraf-one">AGENT NAME</p>
+				</div>
+				<div class="div-one" style="width:28%;">
+					<p class="paragraf-one">ELAPSED TIME</p> 
+				</div>
+				<div class="div-one" style="width:25%;">
+					<p class="paragraf-one">AUX</p>
+				</div>
+
+				<table class="table table-striped table-condensed table-one">
+					<tbody id="mainbody"></tbody>
+				</table>
+			</div>
+
+			<div class="col-xs-4" style="height:40vh; background:black; padding:0px;">
+				<div class="div-one" style="width:100%; ; border-bottom:3px solid #000000!important;">
+					<p class="paragraf-one">REALTIME STATS</p>
+				</div>
+				
+				<table class="table table-two">
+					<tbody>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:yellow;">Calls Waiting</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span id="waiting" style="padding-right:5px; color:white;">&nbsp;</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#ffa655;">Oldest Call Waiting</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span id="oldest" style="padding-right:5px; color:white;">&nbsp;</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px; color:#54b739;">Calls Answered</span>
+							</td>
+							<td style="width:30%; text-align:right;">
+								<span id="answered" style="padding-right:5px; color:white;">&nbsp;</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="col-xs-4" style="height:51vh; background:#6abfff; padding:0px;">
+				<div class="div-one" style="width:100%; border-bottom:0px solid #000000!important;">
+					<p class="paragraf-one">DAILY METRICS</p> 
+				</div>
+				
+				<table class="table table-bordered table-condensed table-three">
+					<tbody>
+						<tr class="myline">
+							<td style="width:70%; ">
+								<span style="padding-left:5px;">Calls Received</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span id="received" style="padding-right:5px;">&nbsp;</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Aband Calls > 10sec</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span id="abandcalls" style="padding-right:5px;">&nbsp;</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Abandon Rate</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span id="abandrate" style="padding-right:5px;">&nbsp;</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Abandon Time</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span id="avgaband" style="padding-right:5px;">&nbsp;</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Speed of Answer</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span id="avgspeed" style="padding-right:5px;">&nbsp;</span>
+							</td>
+						</tr>
+						<tr class="myline">
+							<td style="width:70%;">
+								<span style="padding-left:5px;">Avg Handle Time</span>
+							</td>
+							<td style="width:30%; text-align:right; background:#c1e6ff;">
+								<span id="avghandl" style="padding-right:5px;">&nbsp;</span>
+							</td>
+						</tr>
+					</tbody>
+				</table>				
+			</div>
+
+			<div class="col-xs-12 div-two">
+				<div id="roller" class="div-foor" style="text-align:center">
+					<nobr class="paragraf-two">&nbsp;</nobr>
+				</div>
+			</div>
+			
+			
+		</div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>
