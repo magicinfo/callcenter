@@ -13,41 +13,9 @@
 		<link rel="stylesheet" href="libs/font-awesome.css">
 
 		<script src="libs/jquery-2.1.4.min.js"></script>
-		<script  src="libs/require.js"></script>
-
-		<script>
-			'use strict';
-
-			require.config({
-				baseUrl: "",
-				paths: {
-					jquery: 'libs/jquery-2.1.4.min',
-					underscore: 'libs/underscore-min',
-					backbone: 'libs/backbone-min',
-					moment: 'libs/moment.min',
-					ListItem:'apps/ListItem2',
-					Reg:'com/Registry',
-					base:'apps/base',
-					nano:'libs/jquery.nanoscroller.min'
-
-				},
-				/*hbs: {
-				 handlebarsPath: "handlebars"
-				 },*/
-				shim : {
-					backbone               : {
-						deps   : ['jquery', 'underscore'],
-						exports: 'Backbone'
-					}
-				}
-			});
-
-			$(document).ready(function(){
-				console.log('ready');
-			})
-
-		</script>
-
+		<script src="libs/underscore-min.js"></script>
+		<script src="libs/moment.min.js"></script>
+		<script src="libs/jquery.nanoscroller.min.js"></script>
 		<link href="css/mystyle.css" rel="stylesheet">
 	</head>
 
@@ -216,16 +184,13 @@
 							</table>
 						</div>
 					</div>
+					<script  src="com/ItemValue.js"></script>
+					<script  src="com/TableRow.js"></script>
+					<script  src="apps/Formatter.js"></script>
+					<script  src="com/TableStatic.js"></script>
+
 							<script>
-								require([
-									'jquery',
-									'underscore',
-									'moment',
-									'Reg',
-									'nano',
-									'apps/Formatter',
-									'com/TableInfin'
-								],function($,_,moment){
+								$(document).ready(function(){
 
 									var options ={
 										geturl:'http://callcenter.front-desk.ca/service/getagents?date=',
@@ -234,7 +199,7 @@
 
 									}
 
-									var list = new tableInfin.Table('#Table1',options);
+									var list = new table4.Table('#Table1',options);
 									list.init();
 									list.loadData();
 
@@ -261,7 +226,7 @@
 									},5000);
 
 									setInterval(function(){
-									//	list.scrollUp();
+										//	list.scrollUp();
 									},6000)
 
 								})
