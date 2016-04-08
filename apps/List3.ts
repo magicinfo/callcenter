@@ -12,7 +12,7 @@ module table3 {
     import ItemValue = table.ItemValue
     import ListRow = table2.ListRow
   class  VOItem{
-        key:number
+        key:string;
         id:number;
        stamp:number;
         t:number;
@@ -129,7 +129,10 @@ module table3 {
                 item.stamp = this.current;
 
                 if (coll[item.key])coll[item.key].setData(item);
-                else  coll[item.key] = new ListRow(item, this.template);
+                else {
+                    coll[item.key] = new ListRow(item);
+                    coll[item.key].template =  this.template
+                }
 
                 this.rows.push(coll[item.key]);
                 setTimeout(()=>{this.renderData()},20);

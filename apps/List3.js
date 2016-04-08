@@ -89,8 +89,10 @@ var table3;
             item.stamp = this.current;
             if (coll[item.key])
                 coll[item.key].setData(item);
-            else
-                coll[item.key] = new ListRow(item, this.template);
+            else {
+                coll[item.key] = new ListRow(item);
+                coll[item.key].template = this.template;
+            }
             this.rows.push(coll[item.key]);
             setTimeout(function () { _this.renderData(); }, 20);
             coll[item.key].insertAt(this.$tbody, this.current);
